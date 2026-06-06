@@ -536,7 +536,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const correo   = formLogin.querySelector('input[type="email"]').value;
             const password = formLogin.querySelector('input[type="password"]').value;
             try {
-                const res  = await fetch('http://localhost:3000/auth/login', {
+                const res  = await fetch('https://proyecto-oasis-ar.onrender.com/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ correo, password })
