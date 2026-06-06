@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oasis Pool Booking</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo-container" id="nav-logo">
+                <img src="images/logo.png" alt="Oasis Logo" class="logo-img-nav">
+                <span class="logo-text">Oasis Pool Booking</span>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#" id="tab-home" class="nav-item active">Home</a></li>
+                <li><a href="#" id="tab-book" class="nav-item">Book Now</a></li>
+                <li class="mobile-auth-item" style="display:none;">
+                    <button class="btn-auth-menu" id="open-auth-btn">Sign Up / Log In</button>
+                </li>
+            </ul>
+            <div class="navbar-auth">
+                <button class="btn-auth" id="open-auth-btn-desktop">Sign Up / Log In</button>
+                <div class="user-menu" id="user-menu" style="display:none;">
+                    <button class="user-menu-trigger" id="user-menu-trigger">
+                        <i class="fa-solid fa-circle-user"></i>
+                        <span id="user-menu-name">Usuario</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="user-dropdown">
+                        <a href="#" id="dropdown-reservas"><i class="fa-regular fa-calendar-days"></i> Mis Reservas</a>
+                        <a href="#" id="dropdown-logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main style="margin-top: 75px;">
+        
+        <section id="view-home" class="page-view active">
+            
+            <div class="hero">
+                <div class="hero-logo-box">
+                    <img src="images/logo.png" alt="Oasis Big Logo" class="logo-img-hero">
+                </div>
+                <h1>Dive Into Your Perfect Day</h1>
+                <p>Book your private pool experience with Oasis. Flexible plans, premium facilities, unforgettable moments.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" id="hero-start-booking">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Start Booking
+                    </button>
+                    <button class="btn-secondary" id="hero-view-plans">View Plans</button>
+                </div>
+                <div class="wave-container">
+                    <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+                        <path d="M0,96 C288,160 576,192 864,160 C1152,128 1296,64 1440,32 L1440,200 L0,200 Z" class="wave-fill"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="features">
+                <h2 class="section-title">Why Choose Oasis?</h2>
+                <p class="section-subtitle">Experience premium pool booking with features designed for your convenience</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-regular fa-calendar-days"></i></div>
+                        <h3>Easy Booking</h3>
+                        <p>Select your date and time with our intuitive calendar interface</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-regular fa-clock"></i></div>
+                        <h3>Flexible Plans</h3>
+                        <p>Choose from hourly plans that fit your schedule perfectly</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-users"></i></div>
+                        <h3>Group Ready</h3>
+                        <p>Accommodate any group size with our spacious pool facilities</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper"><i class="fa-solid fa-shield-halved"></i></div>
+                        <h3>Secure Payment</h3>
+                        <p>Safe and reliable payment processing for peace of mind</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plans-section" id="plans-section-target">
+                <h2>Our Pricing Plans</h2>
+                <p class="subtitle">Choose the perfect plan for your pool experience</p>
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <h3>Hourly Pass</h3>
+                        <div class="price">$45.000</div>
+                        <span class="period">3 hours experience</span>
+                        <button class="btn-plan open-booking-trigger" data-plan-id="1">Select Plan</button>
+                    </div>
+                    <div class="plan-card popular">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3>Half Day Pass</h3>
+                        <div class="price">$75.000</div>
+                        <span class="period">5 hours experience</span>
+                        <button class="btn-plan open-booking-trigger" data-plan-id="2">Select Plan</button>
+                    </div>
+                    <div class="plan-card">
+                        <h3>Full Day Pass</h3>
+                        <div class="price">$120.000</div>
+                        <span class="period">8 hours experience</span>
+                        <button class="btn-plan open-booking-trigger" data-plan-id="3">Select Plan</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-section-container">
+                <div class="cta-section">
+                    <div class="cta-wave-top">
+                        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                            <path d="M0,32 C288,85.3 576,112 864,112 C1152,112 1296,85.3 1440,32 L1440,0 L0,0 Z" fill="#ffffff"></path>
+                        </svg>
+                    </div>
+                    <div class="cta-content">
+                        <h2>Ready to Make a Splash?</h2>
+                        <p>Book your pool experience today and create unforgettable memories</p>
+                        <button class="btn-cta open-booking-trigger">Book Your Pool Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-book" class="page-view">
+            <div class="booking-wizard-container">
+                
+                <div class="wizard-header">
+                    <h2>Book Your Pool Experience</h2>
+                    <p>Complete your booking in just a few simple steps</p>
+                    
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-line-bg">
+                            <div class="progress-line-fill" id="wizard-progress-line"></div>
+                        </div>
+                        <div class="progress-steps">
+                            <div class="step-item active" id="step-dot-1">
+                                <div class="step-circle">1</div>
+                                <span class="step-label">Plan</span>
+                            </div>
+                            <div class="step-item" id="step-dot-2">
+                                <div class="step-circle">2</div>
+                                <span class="step-label">Details</span>
+                            </div>
+                            <div class="step-item" id="step-dot-3">
+                                <div class="step-circle">3</div>
+                                <span class="step-label">Add-ons</span>
+                            </div>
+                            <div class="step-item" id="step-dot-4">
+                                <div class="step-circle">4</div>
+                                <span class="step-label">Payment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wizard-content-box">
+                    
+                    <div class="wizard-step-panel active" id="wizard-step-1">
+                        <div class="step-title-block">
+                            <h3>Step 1: Select Plan</h3>
+                            <p>Choose the perfect plan for your pool day</p>
+                        </div>
+                        
+                        <div class="wizard-plans-grid">
+                            <div class="wizard-plan-card" data-plan="cobro-normal">
+                                <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
+                                <h4>Cobro Normal</h4>
+                                <span class="plan-duration"><i class="fa-regular fa-clock"></i> 1 hour</span>
+                                <div class="plan-price-tag">$15.000 <span class="currency">COP</span></div>
+                                <p class="plan-desc">Perfect for a quick refreshing swim</p>
+                                <button type="button" class="select-plan-action-btn">Select Plan</button>
+                            </div>
+                            <div class="wizard-plan-card" data-plan="plan-1" data-plan-id="1">
+                                <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
+                                <div class="popular-badge-wizard">Most Popular</div>
+                                <h4>Plan 1</h4>
+                                <span class="plan-duration"><i class="fa-regular fa-clock"></i> 3 hours</span>
+                                <div class="plan-price-tag">$45.000 <span class="currency">COP</span></div>
+                                <p class="plan-desc">Ideal for family fun and relaxation</p>
+                                <button type="button" class="select-plan-action-btn">Select Plan</button>
+                            </div>
+                            <div class="wizard-plan-card" data-plan="plan-2" data-plan-id="2">
+                                <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
+                                <h4>Plan 2</h4>
+                                <span class="plan-duration"><i class="fa-regular fa-clock"></i> 5 hours</span>
+                                <div class="plan-price-tag">$75.000 <span class="currency">COP</span></div>
+                                <p class="plan-desc">Great for parties and celebrations</p>
+                                <button type="button" class="select-plan-action-btn">Select Plan</button>
+                            </div>
+                            <div class="wizard-plan-card" data-plan="plan-3" data-plan-id="3">
+                                <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
+                                <h4>Plan 3</h4>
+                                <span class="plan-duration"><i class="fa-regular fa-clock"></i> 8 hours</span>
+                                <div class="plan-price-tag">$120.000 <span class="currency">COP</span></div>
+                                <p class="plan-desc">Full day of unlimited pool enjoyment</p>
+                                <button type="button" class="select-plan-action-btn">Select Plan</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wizard-step-panel" id="wizard-step-2">
+                        <div class="step-title-block">
+                            <h3>Step 2: Details</h3>
+                            <p>Select your preferred date, time, and guest count</p>
+                        </div>
+                        
+                        <div class="wizard-input-block">
+                            <label class="wizard-block-label">Reservation Date</label>
+                            <div class="date-input-wrapper">
+                                <input type="date" id="wizard-date-picker" required>
+                            </div>
+                        </div>
+
+                        <div class="wizard-input-block">
+                            <label class="wizard-block-label">Start Time</label>
+                            <div class="wizard-hours-grid">
+                                <button type="button" class="hour-grid-btn" data-hour="8">08:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="9">09:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="10">10:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="11">11:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="12">12:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="13">13:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="14">14:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="15">15:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="16">16:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="17">17:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="189">18:00</button>
+                            </div>
+                        </div>
+
+                        <div class="wizard-input-block">
+                            <label class="wizard-block-label">Approximate Number of Guests</label>
+                            <div class="wizard-counter-container">
+                                <button type="button" class="counter-control-btn" id="wizard-minus-btn">—</button>
+                                <input type="number" id="wizard-guests-input" value="1" min="1" max="50" readonly>
+                                <button type="button" class="counter-control-btn" id="wizard-plus-btn">+</button>
+                            </div>
+                            <span class="counter-hint-text">Enter the expected number of guests for your reservation (1-50)</span>
+                        </div>
+                    </div>
+
+                    <div class="wizard-step-panel" id="wizard-step-3">
+                        <div class="step-title-block">
+                            <h3>Step 3: Add-ons</h3>
+                            <p>Enhance your experience with additional options</p>
+                        </div>
+                        <div class="addons-grid">
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon" value="towel">
+                                <span>Premium Towel Set</span>
+                            </label>
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon" value="snacks">
+                                <span>Poolside Snacks</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="wizard-step-panel" id="wizard-step-4">
+                        <div class="step-title-block"><h3>Step 4: Payment</h3></div>
+                        <div class="payment-method">
+                            <p>Select your payment method</p>
+                            <button class="payment-btn">Credit Card</button>
+                            <button class="payment-btn">PSE / Debit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="wizard-actions-footer">
+                    <button type="button" class="btn-wizard-nav prev-btn hidden" id="wizard-prev-btn">
+                        <i class="fa-solid fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn-wizard-nav next-btn" id="wizard-next-btn" disabled>
+                        Next <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ======================== MIS RESERVAS ======================== -->
+        <section id="view-reservas" class="page-view">
+            <div class="reservas-container">
+                <div class="reservas-header">
+                    <div class="reservas-header-left">
+                        <h2><i class="fa-regular fa-calendar-days"></i> Mis Reservas</h2>
+                        <p>Consulta y gestiona todas tus reservas en Oasis</p>
+                    </div>
+                    <button class="btn-nueva-reserva" id="reservas-nueva-btn">
+                        <i class="fa-solid fa-plus"></i> Nueva Reserva
+                    </button>
+                </div>
+
+                <!-- Filtros de estado -->
+                <div class="reservas-filtros">
+                    <button class="filtro-btn active" data-filtro="todas">Todas</button>
+                    <button class="filtro-btn" data-filtro="confirmada">Confirmadas</button>
+                    <button class="filtro-btn" data-filtro="pendiente">Pendientes</button>
+                    <button class="filtro-btn" data-filtro="cancelada">Canceladas</button>
+                </div>
+
+                <!-- Estado: Cargando -->
+                <div class="reservas-loading" id="reservas-loading">
+                    <div class="loading-spinner"></div>
+                    <p>Cargando tus reservas...</p>
+                </div>
+
+                <!-- Estado: Sin reservas -->
+                <div class="reservas-empty" id="reservas-empty" style="display:none;">
+                    <div class="empty-icon"><i class="fa-regular fa-calendar-xmark"></i></div>
+                    <h3>No tienes reservas aún</h3>
+                    <p>¡Haz tu primera reserva y disfruta de la experiencia Oasis!</p>
+                    <button class="btn-nueva-reserva" id="reservas-empty-btn">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Reservar Ahora
+                    </button>
+                </div>
+
+                <!-- Lista de reservas -->
+                <div class="reservas-list" id="reservas-list" style="display:none;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-container">
+            <button class="modal-close" id="close-auth-btn">&times;</button>
+            
+            <div class="modal-header">
+                <h2>Welcome to Oasis Pool Booking</h2>
+                <p>Sign in to your account or create a new one to start booking</p>
+            </div>
+            
+            <div class="auth-tabs-container">
+                <button class="auth-tab-btn active" id="tab-login-btn">Log In</button>
+                <button class="auth-tab-btn" id="tab-signup-btn">Sign Up</button>
+            </div>
+
+            <form id="form-login" class="auth-form active">
+                <div class="input-group">
+                    <label>Email</label>
+
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope"></i>
+
+                        <input
+                            type="email"
+                            placeholder="your.email@example.com"
+                        >
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="••••••••"
+                        >
+
+                        <i class="fa-regular fa-eye password-toggle"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn-auth-submit">Log In</button>
+            </form>
+
+            <form id="form-signup" class="auth-form">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>First Name</label>
+                        <input type="text" id="signup-firstname" placeholder="John" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Last Name</label>
+                        <input type="text" id="signup-lastname" placeholder="Doe" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="signup-email" placeholder="your.email@example.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="signup-phone" placeholder="+57 300 123 4567" required>
+                </div>
+                <div class="input-group">
+                    <label>Document Number</label>
+                    <input type="text" id="signup-document" placeholder="1234567890" required inputmode="numeric" pattern="[0-9]+">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="signup-password" placeholder="........" required>
+                </div>
+                <button type="submit" class="btn-auth-submit">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
