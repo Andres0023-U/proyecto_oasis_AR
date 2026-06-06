@@ -648,7 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const fecha         = datePicker?.value;
                 const hora_inicio   = selectedHour || null;
                 const num_invitados = parseInt(guestsInput?.value || "1");
-                const duraciones    = { 'plan-1': 3, 'plan-2': 5, 'plan-3': 8 };
+                const duraciones    = { 'plan-1': 1, 'plan-2': 3, 'plan-3': 5, 'plan-4': 8};
                 const duracion      = duraciones[selectedPlan] || 3;
 
                 const usuario = JSON.parse(localStorage.getItem('usuario'));
@@ -660,10 +660,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!fecha)       { alert('❌ Selecciona una fecha');          return; }
                 if (!hora_inicio) { alert('❌ Selecciona una hora de inicio'); return; }
 
+
+                const [hh, mm] = hora_inicio.split(':').map(Number);
+                const hora_fin = `${String(Math.floor((hh * 60 + mm + duracion * 60) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + duracion * 60) % 60).padStart(2, '0')}`
                 const reservaData = {
                     id_usuario:    usuario.id_usuario,
                     fecha_reserva: fecha,
                     hora_inicio:   hora_inicio,
+                    hora_fin:      hora_fin,
                     num_invitados: num_invitados,
                     observaciones: `Plan: ${selectedPlan}`
                 };
