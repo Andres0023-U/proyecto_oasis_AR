@@ -1,3 +1,5 @@
+console.log("🟢 script.js cargado");
+alert("JS cargó");
 // ==========================================================================
 // CONTROL INTERACTIVO DE PESTAÑAS (HOME/BOOK NOW) Y ACCIONES - OASIS
 // ==========================================================================
@@ -760,5 +762,12 @@ document.addEventListener("DOMContentLoaded", () => {
     updateWizardUI();
     if (datePicker) datePicker.min = getTodayString();
     actualizarHorasDisponibles();
+
+    fetch('https://proyecto-oasis-ar.onrender.com')
+    .then(res => res.json())
+    .then(data => {
+        console.log('Reservas desde backend:', data);
+    })
+    .catch(err => console.error('Error:', err));
 
 });

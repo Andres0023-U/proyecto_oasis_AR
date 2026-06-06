@@ -20,3 +20,13 @@ app.listen(PORT, () => {
 
 const authRoutes = require('./src/routes/authRoutes');
 app.use('/auth', authRoutes);
+
+const pool = require('./src/config/db');
+
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('❌ Error DB:', err);
+  } else {
+    console.log('🟢 DB conectada:', res.rows);
+  }
+});
