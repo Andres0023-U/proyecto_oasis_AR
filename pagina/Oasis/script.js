@@ -1,5 +1,3 @@
-console.log("🟢 script.js cargado");
-alert("JS cargó");
 // ==========================================================================
 // CONTROL INTERACTIVO DE PESTAÑAS (HOME/BOOK NOW) Y ACCIONES - OASIS
 // ==========================================================================
