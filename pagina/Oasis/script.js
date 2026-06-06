@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const token = localStorage.getItem('token');
-            const res   = await fetch(`http://localhost:3000/reservas/usuario/${usuario.id_usuario}`, {
+            const res   = await fetch(`https://proyecto-oasis-ar.onrender.com/reservas/usuario/${usuario.id_usuario}`, {
                 headers: token ? { 'Authorization': `Bearer ${token}` } : {}
             });
             const data = await res.json();
@@ -321,7 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!confirm(`¿Confirmas cancelar la reserva #${id}?`)) return;
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`http://localhost:3000/reservas/${id}`, {
+            const res = await fetch(`https://proyecto-oasis-ar.onrender.com/reservas/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -564,7 +564,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const telefono = document.getElementById('signup-phone')?.value;
             const password = document.getElementById('signup-password')?.value;
             try {
-                const res  = await fetch('http://localhost:3000/auth/register', {
+                const res  = await fetch('https://proyecto-oasis-ar.onrender.com/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ documento: correo, nombre, apellido, correo, telefono, password })
@@ -670,7 +670,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     observaciones: `Plan: ${selectedPlan}`
                 };
 
-                fetch('http://localhost:3000/reservas', {
+                fetch('https://proyecto-oasis-ar.onrender.com/reservas', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(reservaData)
