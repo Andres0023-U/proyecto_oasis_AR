@@ -59,17 +59,6 @@ header {
 /* El logo ocupa todo el espacio sobrante a la izquierda */
 .logo-container {
     flex: 1;
-}
-
-/* Links + auth agrupados juntos a la derecha */
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 32px;
-    margin-right: 24px;
-}
-
-.logo-container {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -89,16 +78,13 @@ header {
     letter-spacing: -0.5px;
 }
 
-.mobile-auth-item {
-    display: none;
-}
-
+/* Links + auth agrupados juntos a la derecha */
 .nav-links {
     display: flex;
     list-style: none;
     gap: 32px;
+    margin-right: 24px;
 }
-
 
 .nav-item {
     text-decoration: none;
@@ -110,6 +96,14 @@ header {
 
 .nav-item:hover, .nav-item.active {
     color: var(--primary-blue);
+}
+
+.navbar-auth {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 32px;
+    position: relative;
 }
 
 .btn-auth {
@@ -132,15 +126,93 @@ header {
     color: var(--white);
 }
 
+/* Ocultar botón hamburguesa en escritorio */
+.menu-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--primary-dark);
+}
+
+.mobile-auth-item {
+    display: none;
+}
+
+/* User dropdown menu */
+.user-menu {
+    position: relative;
+}
+
+.user-menu-trigger {
+    background: transparent;
+    border: 2px solid #0f4c81;
+    color: #0f4c81;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.user-menu-trigger:hover {
+    background: rgba(15, 76, 129, 0.1);
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 8px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    min-width: 180px;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.user-dropdown a:hover {
+    background: #f0f4ff;
+    color: #2563eb;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
 /* ==========================================================================
    2. SECCIÓN HERO (BIENVENIDA CON OLA FLUIDA Y LOGO CENTRAL)
    ========================================================================== */
 .hero {
-    background: linear-gradient(135deg, #072139 0%, #11375c 60%, #1c5383 100%);
+    background-image: url('images/piscina.jpeg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 80vh;
+    width: 100%;
     padding: 80px 20px 160px 20px;
     text-align: center;
     position: relative;
     color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .hero-logo-box {
@@ -181,6 +253,19 @@ header {
     display: flex;
     justify-content: center;
     gap: 16px;
+}
+
+/* El contenedor del texto tiene su propia capa protectora */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    color: white;
+    text-align: center;
+    max-width: 600px;
 }
 
 .btn-primary {
@@ -236,46 +321,6 @@ header {
 
 .wave-fill {
     fill: var(--bg-light);
-}
-
-.hero {
-    /* Usamos tu imagen */
-    background-image: url('images/piscina.jpeg'); 
-    
-    /* Configuración para que se vea bien en todas las pantallas */
-    background-size: cover;          /* La imagen se expande sin distorsionarse */
-    background-position: center center; /* Mantiene el centro como punto focal */
-    background-repeat: no-repeat;
-    
-    /* Altura del Hero (ajústalo según tu diseño, ej: 80vh para que ocupe gran parte de la pantalla) */
-    min-height: 80vh; 
-    width: 100%;
-    
-    /* Flexbox para centrar el contenido (título y botón de inicio) */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    
-    /* Para que el texto sea legible sobre la imagen */
-    position: relative;
-}
-
-/* El contenedor del texto tiene su propia capa protectora */
-.hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 40px; /* Espacio interno para que se vea estético */
-    border-radius: 20px; /* Esquinas redondeadas */
-    
-    /* Esta es la capa que va "detrás del texto" */
-    background: rgba(0, 0, 0, 0.5); /* Oscuro semitransparente solo aquí */
-    backdrop-filter: blur(8px);    /* Efecto cristal (Glassmorphism) para que se vea moderno */
-    
-    color: white;
-    text-align: center;
-    max-width: 600px; /* Para que el texto no se extienda demasiado */
 }
 
 /* ==========================================================================
@@ -524,7 +569,7 @@ header {
    ========================================================================== */
 .booking-page-wrapper {
     width: 100%;
-    min-height: calc(100vh - 75px); /* Ocupa todo el alto libre de la pantalla */
+    min-height: calc(100vh - 75px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -536,7 +581,7 @@ header {
 .booking-card-body {
     background-color: var(--white);
     width: 100%;
-    max-width: 420px; /* Tamaño rectangular perfecto de las capturas */
+    max-width: 420px;
     padding: 32px 32px 28px 32px;
     border-radius: 16px;
     box-shadow: 0 12px 30px rgba(10, 37, 64, 0.06);
@@ -625,6 +670,15 @@ header {
     box-shadow: 0 0 0 3px rgba(15, 76, 129, 0.06);
 }
 
+.input-row {
+    display: flex;
+    gap: 12px;
+}
+
+.input-row .input-group {
+    flex: 1;
+}
+
 .input-wrapper {
     position: relative;
     width: 100%;
@@ -633,45 +687,25 @@ header {
 .input-wrapper input {
     width: 100%;
     height: 52px;
-    padding: 0 16px 0 45px; /* espacio para el icono */
+    padding: 0 16px 0 46px;
     border: 1.5px solid #dbe4ee;
     border-radius: 14px;
     background: #f8fafc;
 }
 
+.input-wrapper i,
 .input-wrapper .fa-envelope,
 .input-wrapper .fa-user,
-.input-wrapper .fa-phone {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-    font-size: 16px;
-    pointer-events: none;
-}
-
+.input-wrapper .fa-phone,
 .input-wrapper .fa-lock {
     position: absolute;
     left: 16px;
     top: 50%;
     transform: translateY(-50%);
     color: #94a3b8;
-    font-size: 14px;
-    z-index: 2;
-}
-
-.input-wrapper i {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
     font-size: 15px;
-}
-
-.input-wrapper input {
-    padding-left: 46px;
+    pointer-events: none;
+    z-index: 2;
 }
 
 .password-toggle {
@@ -688,19 +722,19 @@ header {
     height: 54px;
     border: none;
     border-radius: 14px;
-    background: linear-gradient(
-        135deg,
-        #0f4c81,
-        #1d5f9c
-    );
+    background: linear-gradient(135deg, #0f4c81, #1d5f9c);
     color: white;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: .25s;
+    margin-top: 6px;
+    box-shadow: 0 4px 12px rgba(19, 64, 116, 0.12);
 }
 
-
+.btn-auth-submit:hover {
+    background-color: #0b2c52;
+}
 
 /* Cuadrícula de Horarios */
 .time-slots-grid {
@@ -727,7 +761,6 @@ header {
     background-color: #e2e8f0;
 }
 
-/* Botón horario activo seleccionado */
 .time-slot-btn.selected {
     background-color: #134074;
     color: var(--white);
@@ -801,7 +834,7 @@ header {
     font-weight: 700;
 }
 
-/* Step 3: Add-ons */
+/* Add-ons */
 .addons-grid {
     display: grid;
     gap: 15px;
@@ -811,10 +844,33 @@ header {
 .addon-option {
     display: flex;
     align-items: center;
-    padding: 15px;
+    gap: 12px;
+    margin-bottom: 15px;
+    padding: 12px;
     border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* Métodos de pago */
+.payment-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.payment-left {
+    flex: 2;
+}
+
+.payment-summary {
+    flex: 1;
+    min-width: 280px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    height: fit-content;
 }
 
 .payment-btn {
@@ -842,24 +898,103 @@ header {
     box-shadow: 0 4px 14px rgba(15, 76, 129, 0.25);
 }
 
-.wizard-step-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 25px; 
+.payment-option {
+    display: block;
+    margin-bottom: 15px;
+    cursor: pointer;
 }
 
-.addon-option {
+.payment-option input {
+    display: none;
+}
+
+.payment-card {
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: .3s;
+}
+
+.payment-option input:checked + .payment-card {
+    border-color: #0d5ea6;
+    box-shadow: 0 0 0 4px rgba(13,94,166,.12);
+}
+
+.payment-card:hover {
+    transform: translateY(-3px);
+}
+
+.payment-info {
     display: flex;
     align-items: center;
-    gap: 12px; 
-    margin-bottom: 15px; 
-    padding: 12px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    gap: 15px;
 }
 
-.step-title-block {
-    margin-bottom: 10px; 
+.payment-info i {
+    font-size: 28px;
+    color: #0d5ea6;
+}
+
+.payment-info strong {
+    display: block;
+    font-size: 16px;
+}
+
+.payment-info span {
+    font-size: 13px;
+    color: #777;
+}
+
+.payment-logos {
+    display: flex;
+    gap: 10px;
+    font-size: 32px;
+}
+
+.payment-big-icon {
+    font-size: 36px;
+    color: #0070ba;
+}
+
+.payment-img {
+    width: 70px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.btn-pay {
+    width: 100%;
+    margin-top: 25px;
+    border: none;
+    background: #0d5ea6;
+    color: white;
+    padding: 15px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-pay:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(13,94,166,.3);
 }
 
 /* ==========================================================================
@@ -956,134 +1091,6 @@ header {
     display: block;
 }
 
-.input-row {
-    display: flex;
-    gap: 12px;
-}
-
-.input-row .input-group {
-    flex: 1;
-}
-
-.btn-auth-submit {
-    width: 100%;
-    background-color: #134074;
-    color: var(--white);
-    border: none;
-    padding: 12px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 6px;
-    box-shadow: 0 4px 12px rgba(19, 64, 116, 0.12);
-    transition: all 0.2s;
-}
-
-.btn-auth-submit:hover {
-    background-color: #0b2c52;
-}
-
-/* Ocultar botón hamburguesa en escritorio */
-.menu-toggle {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--primary-dark);
-}
-
-/* ==========================================================================
-   8. ADAPTACIÓN RESPONSIVA
-   ========================================================================== */
-@media (max-width: 992px) {
-    .features-grid { flex-direction: column; gap: 20px; }
-    .plans-grid { grid-template-columns: 1fr; gap: 25px; }
-    .plan-card.popular { transform: scale(1); }
-}
-
-@media (max-width: 768px) {
-    .hero h1 { font-size: 32px; }
-    .hero p { font-size: 15px; }
-    .hero-buttons { flex-direction: column; align-items: center; }
-    .btn-primary, .btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
-    .cta-section h2 { font-size: 26px; }
-}
-
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block; /* Aparece en móviles */
-    }
-
-    .nav-links {
-        display: none; /* Se oculta por defecto */
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: white;
-        flex-direction: column;
-        padding: 20px;
-        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    }
-
-    .nav-links.active {
-        display: flex; /* Se muestra al abrir */
-    }
-}
-
-/* Ocultar el botón original en móviles si es necesario */
-@media (max-width: 768px) {
-    .btn-auth {
-        display: none; /* Oculta el que estaba afuera */
-    }
-
-    /* Estilo del botón dentro de la hamburguesa */
-    .mobile-auth-item {
-        margin-top: 20px;
-        list-style: none;
-    }
-
-    .btn-auth-menu {
-        width: 100%;
-        padding: 12px;
-        background-color: #0f4c81;
-        color: white;
-        border-radius: 8px;
-        border: none;
-        text-align: center;
-        font-weight: 600;
-        cursor: pointer;
-    }
-}
-
-/* En escritorio, ocultar el elemento del menú y mostrar el botón original */
-@media (min-width: 769px) {
-    .mobile-auth-item {
-        display: none;
-    }
-}
-
-@media (max-width: 600px) {
-    /* Ajuste para los botones de pago */
-    .payment-method {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    /* Asegurar que el contenedor principal no se salga de la pantalla */
-    .wizard-step-panel {
-        padding: 15px;
-    }
-
-    /* Ajuste para que los inputs no queden muy pequeños */
-    .addon-option {
-        flex-direction: row;
-        width: 100%;
-    }
-}
-
-
 /* ==========================================================================
    WIZARD DE RESERVAS ESTILO MULTI-PASO
    ========================================================================== */
@@ -1132,7 +1139,7 @@ header {
 }
 
 .progress-line-fill {
-    width: 0%; /* Se expande mediante JS (0% -> 50% -> 100%) */
+    width: 0%;
     height: 100%;
     background-color: #0f4c81;
     border-radius: 2px;
@@ -1197,6 +1204,8 @@ header {
 /* Control de visibilidad de paneles del formulario */
 .wizard-step-panel {
     display: none;
+    flex-direction: column;
+    gap: 25px;
 }
 
 .wizard-step-panel.active {
@@ -1226,7 +1235,7 @@ header {
     color: #627d98;
 }
 
-/* Rejilla horizontal de planes del video */
+/* Rejilla horizontal de planes del wizard */
 .wizard-plans-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1319,7 +1328,7 @@ header {
     transition: all 0.2s;
 }
 
-/* Estado Activo / Seleccionado del Plan (Azul idéntico al video) */
+/* Estado Activo / Seleccionado del Plan */
 .wizard-plan-card.selected {
     background-color: #103154;
     border-color: #103154;
@@ -1361,7 +1370,6 @@ header {
     margin-bottom: 12px;
 }
 
-/* Input de fecha limpio */
 #wizard-date-picker {
     width: 100%;
     max-width: 350px;
@@ -1374,7 +1382,7 @@ header {
     outline: none;
 }
 
-/* Cuadrícula de horas extendida (11 botones en el video) */
+/* Cuadrícula de horas del wizard */
 .wizard-hours-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -1408,13 +1416,15 @@ header {
 }
 
 .hour-grid-btn.disabled {
-    background-color: #f1f5f9 !important;
-    color: #cbd5e1 !important;
-    cursor: not-allowed !important;
-    border-color: #e2e8f0 !important;
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    pointer-events: none;
+    border-color: #d1d5db;
+    opacity: .7;
 }
 
-/* Caja de contador lineal de invitados */
+/* Caja de contador lineal de invitados (wizard) */
 .wizard-counter-container {
     display: flex;
     align-items: center;
@@ -1455,7 +1465,6 @@ header {
     background: transparent;
 }
 
-/* Eliminar flechas nativas del input numérico */
 #wizard-guests-input::-webkit-outer-spin-button,
 #wizard-guests-input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -1469,7 +1478,7 @@ header {
     margin-top: 8px;
 }
 
-/* Botonera de navegación inferior a los extremos */
+/* Botonera de navegación inferior */
 .wizard-actions-footer {
     display: flex;
     justify-content: space-between;
@@ -1504,7 +1513,7 @@ header {
 .btn-wizard-nav.next-btn {
     background-color: #0f4c81;
     color: #ffffff;
-    margin-left: auto; /* Empuja a la derecha si "Previous" está oculto */
+    margin-left: auto;
 }
 
 .btn-wizard-nav.next-btn:hover:not(:disabled) {
@@ -1521,161 +1530,6 @@ header {
     display: none;
 }
 
-
-/* 1. Ocultar el item móvil en escritorio (pantallas grandes) */
-@media (min-width: 769px) {
-    .mobile-auth-item {
-        display: none !important;
-    }
-}
-
-/* 2. Asegurar visibilidad en móvil */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* Oculto por defecto */
-        flex-direction: column;
-    }
-
-    .nav-links.active {
-        display: flex !important; /* Aparece al hacer clic */
-    }
-
-    .mobile-auth-item {
-        display: block !important; /* Asegura que el botón exista */
-        padding: 10px;
-    }
-
-    .btn-auth-menu {
-        display: block;
-        width: 100%;
-        background-color: #0f4c81;
-        color: white;
-        padding: 12px;
-        border-radius: 8px;
-        border: none;
-    }
-}
-
-/* --- AJUSTES PARA PANTALLA GRANDE (ESCRITORIO) --- */
-@media (min-width: 769px) {
-    /* Aseguramos que el contenedor del menú sea visible */
-    .nav-links {
-        display: flex !important;
-        flex-direction: row; /* En línea horizontal */
-        align-items: center;
-        gap: 20px;
-    }
-
-    /* Mostramos el botón de auth dentro del nav en escritorio */
-    .mobile-auth-item {
-        display: none !important;
-        list-style: none;
-    }
-
-    .btn-auth-menu {
-        /* Estilo para que parezca un botón de header tradicional */
-        background-color: var(--primary-blue);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 6px;
-        border: none;
-        cursor: pointer;
-    }
-}
-
-/* --- AJUSTES PARA PANTALLA PEQUEÑA (MÓVIL) --- */
-@media (max-width: 768px) {
-    /* La lógica que ya tienes para el menú hamburguesa */
-    .nav-links {
-        display: none; 
-        flex-direction: column;
-    }
-    
-    .nav-links.active {
-        display: flex !important;
-    }
-}
-
-/* Media Query para pantallas pequeñas (móviles y tablets) */
-@media (max-width: 992px) {
-    .wizard-plans-grid {
-        /* Cambiamos a 1 sola columna para que sea vertical */
-        grid-template-columns: 1fr; 
-        /* Opcional: reducimos el gap si es necesario */
-        gap: 15px;
-    }
-}
-
-.user-menu {
-    position: relative;
-}
-
-.user-menu-trigger {
-    background: transparent;
-    border: 2px solid #0f4c81;
-    color: #0f4c81;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    font-family: 'Poppins', sans-serif;
-}
-
-.user-menu-trigger:hover {
-    background: rgba(15, 76, 129, 0.1);
-}
-
-.user-dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    margin-top: 8px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    min-width: 180px;
-    overflow: hidden;
-    z-index: 9999;
-}
-
-.user-dropdown a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    color: #333;
-    text-decoration: none;
-    font-size: 14px;
-    transition: background 0.2s;
-}
-
-.user-dropdown a:hover {
-    background: #f0f4ff;
-    color: #2563eb;
-}
-
-.user-dropdown.show {
-    display: block;
-}
-
-.navbar-auth {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.logo-container {
-    flex: 1;
-}
-
-.navbar-auth {
-    justify-content: flex-end;
-    gap: 32px;  /* espacio entre los links y el botón */
-}
 /* ==========================================================================
    MIS RESERVAS
    ========================================================================== */
@@ -1962,11 +1816,159 @@ header {
     margin-bottom: 16px;
 }
 
+/* ==========================================================================
+   8. ADAPTACIÓN RESPONSIVA
+   ========================================================================== */
+
+/* Escritorio */
+@media (min-width: 769px) {
+    .mobile-auth-item {
+        display: none !important;
+    }
+
+    .nav-links {
+        display: flex !important;
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .btn-auth-menu {
+        background-color: var(--primary-blue);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+    .features-grid { flex-direction: column; gap: 20px; }
+    .plans-grid { grid-template-columns: 1fr; gap: 25px; }
+    .plan-card.popular { transform: scale(1); }
+    .wizard-plans-grid { grid-template-columns: 1fr; gap: 15px; }
+}
+
+
+/* Móvil */
+@media (max-width: 768px) {
+    .hero h1 { font-size: 32px; }
+    .hero p { font-size: 15px; }
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
+    .cta-section h2 { font-size: 26px; }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    /* Ocultar por completo toda la sección de auth de escritorio */
+    .navbar-auth {
+        display: none !important;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        z-index: 999; /* Evita que se quede detrás de otros elementos */
+    }
+
+    .nav-links.active {
+        display: flex !important;
+    }
+
+    /* Estilos para los contenedores de Auth en Móvil */
+    .mobile-auth-item {
+        display: block !important;   /* Siempre visible en móvil cuando no hay sesión */
+        margin-top: 20px;
+        list-style: none;
+        width: 100%;
+    }
+
+    /* El JS controla display de mobile-user-item, aquí solo estilos visuales */
+    .mobile-user-item {
+        margin-top: 20px;
+        list-style: none;
+        width: 100%;
+    }
+
+    /* Botón de Login móvil */
+    .btn-auth-menu {
+        display: block;
+        width: 100%;
+        background-color: #0f4c81;
+        color: white;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        text-align: center;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    /* Menú desplegable de usuario en Móvil (Estilo lista abierta para comodidad) */
+    .user-menu-mobile {
+        border-top: 1px solid #e2e8f0;
+        padding-top: 15px;
+    }
+
+    .user-menu-mobile .user-menu-trigger {
+        font-weight: bold;
+        color: #334155;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .user-dropdown-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-left: 10px;
+    }
+
+    .user-dropdown-mobile a {
+        text-decoration: none;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 15px;
+    }
+}
+
+/* Pantallas muy pequeñas */
 @media (max-width: 600px) {
+    .payment-method {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .wizard-step-panel {
+        padding: 15px;
+    }
+
+    .addon-option {
+        flex-direction: row;
+        width: 100%;
+    }
+
     .reserva-card {
         grid-template-columns: 44px 1fr;
         grid-template-rows: auto auto;
     }
+
     .reserva-actions-col {
         grid-column: 1 / -1;
         flex-direction: row;

@@ -6,62 +6,83 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     // 1. DECLARACIONES DE ELEMENTOS DOM
     // ==========================================
-    const tabHome = document.getElementById("tab-home");
-    const tabBook = document.getElementById("tab-book");
-    const viewHome = document.getElementById("view-home");
-    const viewBook = document.getElementById("view-book");
-    const viewReservas = document.getElementById("view-reservas");
-    const logoTrigger = document.getElementById("nav-logo");
-    const heroStartBtn = document.getElementById("hero-start-booking");
-    const openBookingTriggers = document.querySelectorAll(".open-booking-trigger");
-    const heroViewPlans = document.getElementById("hero-view-plans");
-    const plansSection = document.getElementById("plans-section-target");
+
+    // Pestañas y vistas principales
+    const tabHome               = document.getElementById("tab-home");
+    const tabBook               = document.getElementById("tab-book");
+    const viewHome              = document.getElementById("view-home");
+    const viewBook              = document.getElementById("view-book");
+    const viewReservas          = document.getElementById("view-reservas");
+    const logoTrigger           = document.getElementById("nav-logo");
+    const heroStartBtn          = document.getElementById("hero-start-booking");
+    const openBookingTriggers   = document.querySelectorAll(".open-booking-trigger");
+    const heroViewPlans         = document.getElementById("hero-view-plans");
+    const plansSection          = document.getElementById("plans-section-target");
 
     // Elementos Auth
-    const openAuthBtn = document.getElementById("open-auth-btn");
-    const openAuthBtnDesktop = document.getElementById("open-auth-btn-desktop");
-    const closeAuthBtn = document.getElementById("close-auth-btn");
-    const authModal = document.getElementById("auth-modal");
-    const tabLoginBtn = document.getElementById("tab-login-btn");
-    const tabSignupBtn = document.getElementById("tab-signup-btn");
-    const formLogin = document.getElementById("form-login");
-    const formSignup = document.getElementById("form-signup");
+    const openAuthBtn           = document.getElementById("open-auth-btn");
+    const openAuthBtnDesktop    = document.getElementById("open-auth-btn-desktop");
+    const closeAuthBtn          = document.getElementById("close-auth-btn");
+    const authModal             = document.getElementById("auth-modal");
+    const tabLoginBtn           = document.getElementById("tab-login-btn");
+    const tabSignupBtn          = document.getElementById("tab-signup-btn");
+    const formLogin             = document.getElementById("form-login");
+    const formSignup            = document.getElementById("form-signup");
 
     // Elementos User Menu
-    const btnDesktop = document.getElementById('open-auth-btn-desktop');
-    const userMenu = document.getElementById('user-menu');
-    const userMenuName = document.getElementById('user-menu-name');
-    const userDropdown = document.getElementById('user-dropdown');
-    const userMenuTrigger = document.getElementById('user-menu-trigger');
-    const dropdownLogout = document.getElementById('dropdown-logout');
-    const dropdownReservas = document.getElementById('dropdown-reservas');
+    const btnDesktop            = document.getElementById('open-auth-btn-desktop');
+    const userMenu              = document.getElementById('user-menu');
+    const userMenuName          = document.getElementById('user-menu-name');
+    const userDropdown          = document.getElementById('user-dropdown');
+    const userMenuTrigger       = document.getElementById('user-menu-trigger');
+    const dropdownLogout        = document.getElementById('dropdown-logout');
+    const dropdownReservas      = document.getElementById('dropdown-reservas');
 
-    // Wizard elements
-    const stepPanels = document.querySelectorAll(".wizard-step-panel");
-    const prevBtn = document.getElementById("wizard-prev-btn");
-    const nextBtn = document.getElementById("wizard-next-btn");
-    const progressLine = document.getElementById("wizard-progress-line");
-    const planCards = document.querySelectorAll(".wizard-plan-card");
-    const hourButtons = document.querySelectorAll(".hour-grid-btn");
-    const minusBtn = document.getElementById("wizard-minus-btn");
-    const plusBtn = document.getElementById("wizard-plus-btn");
-    const guestsInput = document.getElementById("wizard-guests-input");
-    const datePicker = document.getElementById("wizard-date-picker");
+    // Elementos Menú Sándwich (móvil)
+    const menuToggle            = document.getElementById('menu-toggle');
+    const navLinks              = document.getElementById('nav-links');
+    const mobileUserItem        = document.querySelector('.mobile-user-item');
+    const userMenuNameMobile    = document.getElementById('user-menu-name-mobile');
+    const dropdownReservasMobile = document.getElementById('dropdown-reservas-mobile');
+    const dropdownLogoutMobile  = document.getElementById('dropdown-logout-mobile');
+
+    // Elementos Wizard
+    const stepPanels    = document.querySelectorAll(".wizard-step-panel");
+    const prevBtn       = document.getElementById("wizard-prev-btn");
+    const nextBtn       = document.getElementById("wizard-next-btn");
+    const progressLine  = document.getElementById("wizard-progress-line");
+    const planCards     = document.querySelectorAll(".wizard-plan-card");
+    const hourButtons   = document.querySelectorAll(".hour-grid-btn");
+    const minusBtn      = document.getElementById("wizard-minus-btn");
+    const plusBtn       = document.getElementById("wizard-plus-btn");
+    const guestsInput   = document.getElementById("wizard-guests-input");
+    const datePicker    = document.getElementById("wizard-date-picker");
 
     // Estados del wizard
-    let currentStep = 1;
+    let currentStep  = 1;
     let selectedPlan = null;
     let selectedHour = null;
 
+    // Estados del resumen de pago
+    let selectedPlanPrice = 0;
+    let selectedPlanName  = "";
+
     // ==========================================
-    // 2. FUNCIONES DE NAVEGACIÓN (UNA SOLA VEZ)
+    // 2. FUNCIONES DE NAVEGACIÓN
     // ==========================================
+
+    function closeMenu() {
+        if (navLinks) navLinks.classList.remove('active');
+        if (menuToggle) menuToggle.querySelector('i').className = 'fa-solid fa-bars';
+    }
+
     function showHomeTab() {
         tabHome.classList.add("active");
         tabBook.classList.remove("active");
         viewHome.classList.add("active");
         viewBook.classList.remove("active");
         if (viewReservas) viewReservas.classList.remove("active");
+        closeMenu();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -71,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         viewBook.classList.add("active");
         viewHome.classList.remove("active");
         if (viewReservas) viewReservas.classList.remove("active");
+        closeMenu();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -82,17 +104,93 @@ document.addEventListener("DOMContentLoaded", () => {
         viewBook.classList.remove("active");
         viewReservas.classList.add("active");
         if (userDropdown) userDropdown.classList.remove('show');
+        closeMenu();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         cargarReservas();
     }
 
     // ==========================================
-    // PLAN HELPERS
+    // 3. FUNCIONES DE UI DE AUTENTICACIÓN
     // ==========================================
+
+    function updateAuthUI() {
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        if (usuario && usuario.id_usuario) {
+            // Desktop
+            if (btnDesktop)   btnDesktop.style.display  = 'none';
+            if (userMenu)     userMenu.style.display    = 'block';
+            if (userMenuName) userMenuName.textContent  = usuario.nombre || usuario.correo;
+            // Móvil: ocultar botón login, mostrar usuario
+            document.querySelector('.mobile-auth-item') &&
+                (document.querySelector('.mobile-auth-item').style.display = 'none');
+            if (mobileUserItem)     mobileUserItem.style.display     = 'block';
+            if (userMenuNameMobile) userMenuNameMobile.textContent   = usuario.nombre || usuario.correo;
+        } else {
+            // Desktop
+            if (btnDesktop)   btnDesktop.style.display  = 'block';
+            if (userMenu)     userMenu.style.display    = 'none';
+            if (userDropdown) userDropdown.classList.remove('show');
+            // Móvil
+            document.querySelector('.mobile-auth-item') &&
+                (document.querySelector('.mobile-auth-item').style.display = '');
+            if (mobileUserItem) mobileUserItem.style.display = 'none';
+        }
+    }
+
+    // ==========================================
+    // 4. FUNCIONES DEL WIZARD
+    // ==========================================
+
+    function validateCurrentStepForm() {
+        if (currentStep === 1) {
+            nextBtn.disabled = !selectedPlan;
+        } else {
+            nextBtn.disabled = false;
+        }
+    }
+
+    function updateWizardUI() {
+        stepPanels.forEach((panel, idx) => {
+            panel.classList.toggle("active", idx + 1 === currentStep);
+        });
+
+        for (let i = 1; i <= 4; i++) {
+            const dot = document.getElementById(`step-dot-${i}`);
+            if (dot) {
+                if (i < currentStep) {
+                    dot.classList.add("completed");
+                    dot.classList.remove("active");
+                } else if (i === currentStep) {
+                    dot.classList.remove("completed");
+                    dot.classList.add("active");
+                } else {
+                    dot.classList.remove("completed", "active");
+                }
+            }
+        }
+
+        const progressPercentages = { 1: 0, 2: 33, 3: 66, 4: 100 };
+        if (progressLine) progressLine.style.width = `${progressPercentages[currentStep]}%`;
+
+        if (prevBtn) prevBtn.classList.toggle("hidden", currentStep === 1);
+
+        if (nextBtn) {
+            nextBtn.innerHTML = currentStep === 4
+                ? `Complete Payment <i class="fa-solid fa-credit-card"></i>`
+                : `Next <i class="fa-solid fa-arrow-right"></i>`;
+        }
+
+        validateCurrentStepForm();
+    }
+
+    // ==========================================
+    // 5. FUNCIONES DE RESERVAS
+    // ==========================================
+
     const PLANES = {
-        'plan-1': { nombre: 'Hourly Pass',    precio: '$45.000', horas: 3 },
-        'plan-2': { nombre: 'Half Day Pass',  precio: '$75.000', horas: 5 },
-        'plan-3': { nombre: 'Full Day Pass',  precio: '$120.000', horas: 8 },
+        'plan-1': { nombre: 'Hourly Pass',   precio: '$45.000',  horas: 3 },
+        'plan-2': { nombre: 'Half Day Pass', precio: '$75.000',  horas: 5 },
+        'plan-3': { nombre: 'Full Day Pass', precio: '$120.000', horas: 8 },
     };
 
     function getPlanFromObservaciones(obs) {
@@ -108,9 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return d.toLocaleDateString('es-CO', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
     }
 
-    // ==========================================
-    // CARGAR RESERVAS
-    // ==========================================
     async function cargarReservas() {
         const loadingEl = document.getElementById('reservas-loading');
         const emptyEl   = document.getElementById('reservas-empty');
@@ -132,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`http://localhost:3000/reservas/usuario/${usuario.id_usuario}`, {
+            const res   = await fetch(`http://localhost:3000/reservas/usuario/${usuario.id_usuario}`, {
                 headers: token ? { 'Authorization': `Bearer ${token}` } : {}
             });
             const data = await res.json();
@@ -150,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (err) {
             loadingEl.style.display = 'none';
-            listEl.style.display = 'block';
+            listEl.style.display    = 'block';
             listEl.innerHTML = `
                 <div class="reservas-error">
                     <i class="fa-solid fa-triangle-exclamation"></i>
@@ -161,10 +256,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderReservas(reservas, listEl, filtro = 'todas') {
         listEl.innerHTML = '';
-        const filtradas = filtro === 'todas' ? reservas : reservas.filter(r => {
-            const estado = (r.estado || 'confirmada').toLowerCase();
-            return estado === filtro;
-        });
+        const filtradas = filtro === 'todas'
+            ? reservas
+            : reservas.filter(r => (r.estado || 'confirmada').toLowerCase() === filtro);
 
         if (!filtradas.length) {
             listEl.innerHTML = `<div class="reservas-error"><i class="fa-regular fa-calendar-xmark"></i><p>No hay reservas con ese filtro.</p></div>`;
@@ -172,13 +266,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         filtradas.forEach(r => {
-            const plan   = getPlanFromObservaciones(r.observaciones);
+            const plan  = getPlanFromObservaciones(r.observaciones);
             const estado = (r.estado || 'pendiente').toLowerCase();
-            // precio_total viene directo de la BD si existe, si no usamos el del plan
             const precioMostrar = r.precio_total
                 ? `$${Number(r.precio_total).toLocaleString('es-CO')}`
                 : plan.precio;
-            const card   = document.createElement('div');
+
+            const card = document.createElement('div');
             card.className = 'reserva-card';
             card.innerHTML = `
                 <div class="reserva-icon-col">
@@ -217,7 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
             listEl.appendChild(card);
         });
 
-        // Store current reservas on list for filter re-renders
+        // Guardar reservas en el elemento para re-renderizado por filtro
         listEl._reservas = reservas;
     }
 
@@ -243,83 +337,96 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 3. FUNCIONES DE UI DE AUTENTICACIÓN
+    // 6. FUNCIONES DE RESUMEN DE PAGO
     // ==========================================
-    function updateAuthUI() {
-        const usuario = JSON.parse(localStorage.getItem('usuario'));
-        if (usuario && usuario.id_usuario) {
-            if (btnDesktop) btnDesktop.style.display = 'none';
-            if (userMenu) userMenu.style.display = 'block';
-            if (userMenuName) userMenuName.textContent = usuario.nombre || usuario.correo;
+
+    function actualizarResumen() {
+        // Plan
+        document.getElementById("summary-plan").textContent =
+            selectedPlanName || "No seleccionado";
+        document.getElementById("summary-plan-price").textContent =
+            "$" + selectedPlanPrice.toLocaleString("es-CO");
+
+        // Fecha
+        const fecha = document.getElementById("wizard-date-picker").value;
+        document.getElementById("summary-date").textContent = fecha || "--/--/----";
+
+        // Invitados
+        document.getElementById("summary-guests").textContent =
+            document.getElementById("wizard-guests-input").value;
+
+        // Hora
+        const horaActiva = document.querySelector(".hour-grid-btn.active");
+        document.getElementById("summary-hour").textContent =
+            horaActiva ? horaActiva.textContent : "--:--";
+
+        // Complementos
+        let totalAddons = 0;
+        const addonsSeleccionados = document.querySelectorAll('input[name="addon"]:checked');
+        const lista = document.getElementById("summary-addons-list");
+        lista.innerHTML = "";
+
+        if (addonsSeleccionados.length === 0) {
+            lista.innerHTML = "<li>No seleccionados</li>";
         } else {
-            if (btnDesktop) btnDesktop.style.display = 'block';
-            if (userMenu) userMenu.style.display = 'none';
-            if (userDropdown) userDropdown.classList.remove('show');
+            addonsSeleccionados.forEach(addon => {
+                const precio = parseInt(addon.dataset.price);
+                totalAddons += precio;
+                const item = document.createElement("li");
+                item.textContent = addon.value + " ($" + precio.toLocaleString("es-CO") + ")";
+                lista.appendChild(item);
+            });
         }
+
+        document.getElementById("summary-addon-price").textContent =
+            "$" + totalAddons.toLocaleString("es-CO");
+
+        // Total
+        const total = selectedPlanPrice + totalAddons;
+        document.getElementById("summary-total").textContent =
+            "$" + total.toLocaleString("es-CO") + " COP";
     }
 
     // ==========================================
-    // 4. FUNCIONES DEL WIZARD
+    // 7. FUNCIONES DE HORARIOS
     // ==========================================
-    function validateCurrentStepForm() {
-        if (currentStep === 1) {
-            nextBtn.disabled = !selectedPlan;
-        } else {
-            nextBtn.disabled = false;
-        }
+
+    function getTodayString() {
+        const hoy = new Date();
+        const yyyy = hoy.getFullYear();
+        const mm   = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dd   = String(hoy.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
     }
 
-    function updateWizardUI() {
-        stepPanels.forEach((panel, idx) => {
-            panel.classList.toggle("active", idx + 1 === currentStep);
+    function actualizarHorasDisponibles() {
+        const fechaSeleccionada = document.getElementById("wizard-date-picker").value;
+        const hoyString  = getTodayString();
+        const horaActual = new Date().getHours();
+
+        document.querySelectorAll(".hour-grid-btn").forEach(btn => {
+            const horaBtn = parseInt(btn.dataset.hour);
+            btn.classList.remove("disabled");
+            if (fechaSeleccionada === hoyString && horaBtn <= horaActual) {
+                btn.classList.add("disabled");
+                btn.classList.remove("active");
+            }
         });
-
-        for (let i = 1; i <= 4; i++) {
-            const dot = document.getElementById(`step-dot-${i}`);
-            if (dot) {
-                if (i < currentStep) {
-                    dot.classList.add("completed");
-                    dot.classList.remove("active");
-                } else if (i === currentStep) {
-                    dot.classList.remove("completed");
-                    dot.classList.add("active");
-                } else {
-                    dot.classList.remove("completed", "active");
-                }
-            }
-        }
-
-        const progressPercentages = { 1: 0, 2: 33, 3: 66, 4: 100 };
-        if (progressLine) progressLine.style.width = `${progressPercentages[currentStep]}%`;
-
-        if (prevBtn) {
-            prevBtn.classList.toggle("hidden", currentStep === 1);
-        }
-
-        if (nextBtn) {
-            if (currentStep === 4) {
-                nextBtn.innerHTML = `Complete Payment <i class="fa-solid fa-credit-card"></i>`;
-            } else {
-                nextBtn.innerHTML = `Next <i class="fa-solid fa-arrow-right"></i>`;
-            }
-        }
-
-        validateCurrentStepForm();
     }
 
     // ==========================================
-    // 5. EVENT LISTENERS
+    // 8. EVENT LISTENERS
     // ==========================================
-    
-    // Navegación
-    if (tabHome) tabHome.addEventListener("click", (e) => { e.preventDefault(); showHomeTab(); });
-    if (tabBook) tabBook.addEventListener("click", (e) => { e.preventDefault(); showBookTab(); });
+
+    // --- Navegación entre pestañas ---
+    if (tabHome)     tabHome.addEventListener("click", (e) => { e.preventDefault(); showHomeTab(); });
+    if (tabBook)     tabBook.addEventListener("click", (e) => { e.preventDefault(); showBookTab(); });
     if (logoTrigger) logoTrigger.addEventListener("click", showHomeTab);
     if (heroStartBtn) heroStartBtn.addEventListener("click", showBookTab);
     if (heroViewPlans && plansSection) {
         heroViewPlans.addEventListener("click", () => plansSection.scrollIntoView({ behavior: "smooth" }));
     }
-    
+
     openBookingTriggers.forEach(trigger => {
         trigger.addEventListener("click", (e) => {
             e.preventDefault();
@@ -343,7 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Modal Auth - Botones
+    // --- Modal de autenticación ---
     if (openAuthBtn) {
         openAuthBtn.addEventListener("click", (e) => { e.preventDefault(); authModal.classList.add("show"); });
     }
@@ -357,7 +464,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.target === authModal) authModal.classList.remove("show");
     });
 
-    // Tabs login/signup
+    // --- Tabs Login / Signup ---
     if (tabLoginBtn) {
         tabLoginBtn.addEventListener("click", () => {
             tabLoginBtn.classList.add("active");
@@ -375,7 +482,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // User dropdown
+    // --- User dropdown ---
     if (userMenuTrigger) {
         userMenuTrigger.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -388,7 +495,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Logout
+    // --- Logout ---
     if (dropdownLogout) {
         dropdownLogout.addEventListener('click', (e) => {
             e.preventDefault();
@@ -399,19 +506,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Mis Reservas desde dropdown
+    // --- Mis Reservas ---
     if (dropdownReservas) {
         dropdownReservas.addEventListener('click', (e) => {
             e.preventDefault();
             showReservasTab();
         });
     }
-
-    // Botones "Nueva Reserva" dentro de la vista reservas
     document.getElementById('reservas-nueva-btn')?.addEventListener('click', showBookTab);
     document.getElementById('reservas-empty-btn')?.addEventListener('click', showBookTab);
 
-    // Filtros de reservas
     document.querySelectorAll('.filtro-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
@@ -423,63 +527,57 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Login
+    // --- Login ---
     if (formLogin) {
         formLogin.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const correo = formLogin.querySelector('input[type="email"]').value;
+            const correo   = formLogin.querySelector('input[type="email"]').value;
             const password = formLogin.querySelector('input[type="password"]').value;
             try {
-                const res = await fetch('http://localhost:3000/auth/login', {
+                const res  = await fetch('http://localhost:3000/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ correo, password })
                 });
                 const data = await res.json();
-                if (!res.ok) {
-                    alert('❌ ' + data.error);
-                    return;
-                }
+                if (!res.ok) { alert('❌ ' + data.error); return; }
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('usuario', JSON.stringify(data.usuario));
                 alert(`✅ Bienvenido, ${data.usuario.nombre}!`);
                 authModal.classList.remove('show');
                 updateAuthUI();
-            } catch (error) {
+            } catch {
                 alert('❌ Error conectando con el servidor');
             }
         });
     }
 
-    // Register
+    // --- Register ---
     if (formSignup) {
         formSignup.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const nombre = document.getElementById('signup-firstname')?.value;
+            const nombre   = document.getElementById('signup-firstname')?.value;
             const apellido = document.getElementById('signup-lastname')?.value;
-            const correo = document.getElementById('signup-email')?.value;
+            const correo   = document.getElementById('signup-email')?.value;
             const telefono = document.getElementById('signup-phone')?.value;
             const password = document.getElementById('signup-password')?.value;
             try {
-                const res = await fetch('http://localhost:3000/auth/register', {
+                const res  = await fetch('http://localhost:3000/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ documento: correo, nombre, apellido, correo, telefono, password })
                 });
                 const data = await res.json();
-                if (!res.ok) {
-                    alert('❌ ' + data.error);
-                    return;
-                }
+                if (!res.ok) { alert('❌ ' + data.error); return; }
                 alert('✅ Cuenta creada! Ya puedes iniciar sesión.');
                 tabLoginBtn?.click();
-            } catch (error) {
+            } catch {
                 alert('❌ Error conectando con el servidor');
             }
         });
     }
 
-    // Wizard Step 1: Select Plan
+    // --- Wizard: Selección de plan ---
     planCards.forEach(card => {
         card.addEventListener("click", () => {
             planCards.forEach(c => {
@@ -488,65 +586,84 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             card.classList.add("selected");
             card.querySelector(".select-plan-action-btn").textContent = "Selected";
-            selectedPlan = card.getAttribute("data-plan");
+            selectedPlan      = card.getAttribute("data-plan");
+            selectedPlanName  = card.querySelector("h4").textContent;
+            selectedPlanPrice = parseInt(card.dataset.price);
             validateCurrentStepForm();
+            actualizarResumen();
         });
     });
 
-    // Wizard Step 2: Select Hour
+    // --- Wizard: Selección de hora ---
     hourButtons.forEach(btn => {
         btn.addEventListener("click", () => {
-            hourButtons.forEach(b => b.classList.remove("selected"));
-            btn.classList.add("selected");
+            hourButtons.forEach(b => b.classList.remove("selected", "active"));
+            btn.classList.add("selected", "active");
             selectedHour = btn.textContent;
+            actualizarResumen();
         });
     });
 
-    // Guests counter
+    // --- Wizard: Contador de invitados ---
     if (minusBtn && plusBtn && guestsInput) {
         minusBtn.addEventListener("click", () => {
-            let val = parseInt(guestsInput.value);
+            const val = parseInt(guestsInput.value);
             if (val > 1) guestsInput.value = val - 1;
+            actualizarResumen();
         });
         plusBtn.addEventListener("click", () => {
-            let val = parseInt(guestsInput.value);
+            const val = parseInt(guestsInput.value);
             if (val < 50) guestsInput.value = val + 1;
+            actualizarResumen();
         });
     }
 
-    // Wizard navigation
+    // --- Wizard: Selector de fecha ---
+    if (datePicker) {
+        datePicker.min = getTodayString();
+        datePicker.addEventListener("change", () => {
+            actualizarHorasDisponibles();
+            actualizarResumen();
+        });
+    }
+
+    // --- Wizard: Addons ---
+    document.querySelectorAll('input[name="addon"]').forEach(addon => {
+        addon.addEventListener("change", actualizarResumen);
+    });
+
+    // --- Wizard: Input de invitados (cambio manual) ---
+    if (guestsInput) {
+        guestsInput.addEventListener("change", actualizarResumen);
+        guestsInput.addEventListener("input",  actualizarResumen);
+    }
+
+    // --- Wizard: Navegación (Siguiente / Anterior) ---
     if (nextBtn) {
         nextBtn.addEventListener("click", () => {
             if (currentStep < 4) {
                 currentStep++;
                 updateWizardUI();
             } else {
-                const fecha = datePicker?.value;
-                // selectedHour ya viene como "08:00" desde el texto del botón
-                const hora_inicio = selectedHour || null;
+                const fecha         = datePicker?.value;
+                const hora_inicio   = selectedHour || null;
                 const num_invitados = parseInt(guestsInput?.value || "1");
-                const duraciones = { 'plan-1': 3, 'plan-2': 5, 'plan-3': 8 };
-                const duracion = duraciones[selectedPlan] || 3;
-                
+                const duraciones    = { 'plan-1': 3, 'plan-2': 5, 'plan-3': 8 };
+                const duracion      = duraciones[selectedPlan] || 3;
+
                 const usuario = JSON.parse(localStorage.getItem('usuario'));
                 if (!usuario) {
                     alert('❌ Debes iniciar sesión para hacer una reserva');
                     authModal.classList.add('show');
                     return;
                 }
-                if (!fecha) {
-                    alert('❌ Selecciona una fecha');
-                    return;
-                }
-                if (!hora_inicio) {
-                    alert('❌ Selecciona una hora de inicio');
-                    return;
-                }
+                if (!fecha)       { alert('❌ Selecciona una fecha');          return; }
+                if (!hora_inicio) { alert('❌ Selecciona una hora de inicio'); return; }
 
                 const reservaData = {
-                    id_usuario: usuario.id_usuario,
+                    id_usuario:    usuario.id_usuario,
                     fecha_reserva: fecha,
-                    hora_inicio: hora_inicio,
+                    hora_inicio:   hora_inicio,
                     num_invitados: num_invitados,
                     observaciones: `Plan: ${selectedPlan}`
                 };
@@ -559,7 +676,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(res => res.json())
                 .then(data => {
                     alert(`✅ Reservation confirmed! ID: ${data.id_reserva}`);
-                    currentStep = 1;
+                    currentStep  = 1;
                     selectedPlan = null;
                     selectedHour = null;
                     planCards.forEach(c => {
@@ -589,7 +706,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Payment method selection
+    // --- Selección de método de pago ---
     document.querySelectorAll('.payment-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('selected'));
@@ -597,7 +714,51 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Inicializar UI
+    // --- Menú sándwich (móvil) ---
+    if (menuToggle) {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = navLinks.classList.toggle('active');
+            menuToggle.querySelector('i').className = isOpen
+                ? 'fa-solid fa-xmark'
+                : 'fa-solid fa-bars';
+        });
+    }
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', (e) => {
+        if (navLinks && navLinks.classList.contains('active')) {
+            if (!navLinks.contains(e.target) && e.target !== menuToggle && !menuToggle?.contains(e.target)) {
+                closeMenu();
+            }
+        }
+    });
+
+    // Mis Reservas (móvil)
+    if (dropdownReservasMobile) {
+        dropdownReservasMobile.addEventListener('click', (e) => {
+            e.preventDefault();
+            showReservasTab();
+        });
+    }
+
+    // Logout (móvil)
+    if (dropdownLogoutMobile) {
+        dropdownLogoutMobile.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.clear();
+            updateAuthUI();
+            showHomeTab();
+            alert('👋 Sesión cerrada');
+        });
+    }
+
+    // ==========================================
+    // 9. INICIALIZACIÓN
+    // ==========================================
     updateAuthUI();
     updateWizardUI();
+    if (datePicker) datePicker.min = getTodayString();
+    actualizarHorasDisponibles();
+
 });

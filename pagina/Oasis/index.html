@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oasis Pool Booking</title>
-    
+    <title>Reservas Oasis Piscina</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+
     <link rel="stylesheet" href="styles.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -16,20 +17,38 @@
         <div class="navbar">
             <div class="logo-container" id="nav-logo">
                 <img src="images/logo.png" alt="Oasis Logo" class="logo-img-nav">
-                <span class="logo-text">Oasis Pool Booking</span>
+                <span class="logo-text">Reservas Oasis Piscina</span>
             </div>
+            
             <div class="menu-toggle" id="menu-toggle">
                 <i class="fa-solid fa-bars"></i>
             </div>
+
             <ul class="nav-links" id="nav-links">
-                <li><a href="#" id="tab-home" class="nav-item active">Home</a></li>
-                <li><a href="#" id="tab-book" class="nav-item">Book Now</a></li>
-                <li class="mobile-auth-item" style="display:none;">
-                    <button class="btn-auth-menu" id="open-auth-btn">Sign Up / Log In</button>
+                <li><a href="#" id="tab-home" class="nav-item active">Inicio</a></li>
+                <li><a href="#" id="tab-book" class="nav-item">Reservar Ahora</a></li>
+                
+                <li class="mobile-auth-item">
+                    <button class="btn-auth-menu" id="open-auth-btn">Registrarse / Iniciar Sesión</button>
+                </li>
+                
+                <li class="mobile-user-item" style="display:none;">
+                    <div class="user-menu-mobile">
+                        <div class="user-menu-trigger">
+                            <i class="fa-solid fa-circle-user"></i>
+                            <span id="user-menu-name-mobile">Usuario</span>
+                        </div>
+                        <div class="user-dropdown-mobile">
+                            <a href="#" id="dropdown-reservas-mobile"><i class="fa-regular fa-calendar-days"></i> Mis Reservas</a>
+                            <a href="#" id="dropdown-logout-mobile"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
+
             <div class="navbar-auth">
-                <button class="btn-auth" id="open-auth-btn-desktop">Sign Up / Log In</button>
+                <button class="btn-auth" id="open-auth-btn-desktop">Registrarse / Iniciar Sesión</button>
+                
                 <div class="user-menu" id="user-menu" style="display:none;">
                     <button class="user-menu-trigger" id="user-menu-trigger">
                         <i class="fa-solid fa-circle-user"></i>
@@ -53,13 +72,13 @@
                 <div class="hero-logo-box">
                     <img src="images/logo.png" alt="Oasis Big Logo" class="logo-img-hero">
                 </div>
-                <h1>Dive Into Your Perfect Day</h1>
-                <p>Book your private pool experience with Oasis. Flexible plans, premium facilities, unforgettable moments.</p>
+                <h1>Sumérgete en Tu Día Perfecto</h1>
+                <p>Reserva tu experiencia privada en piscina con Oasis. Planes flexibles, instalaciones premium y momentos inolvidables.</p>
                 <div class="hero-buttons">
                     <button class="btn-primary" id="hero-start-booking">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Start Booking
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Comenzar Reserva
                     </button>
-                    <button class="btn-secondary" id="hero-view-plans">View Plans</button>
+                    <button class="btn-secondary" id="hero-view-plans">Ver Planes</button>
                 </div>
                 <div class="wave-container">
                     <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
@@ -69,54 +88,54 @@
             </div>
 
             <div class="features">
-                <h2 class="section-title">Why Choose Oasis?</h2>
-                <p class="section-subtitle">Experience premium pool booking with features designed for your convenience</p>
+                <h2 class="section-title">¿Por Qué Elegir Oasis?</h2>
+                <p class="section-subtitle">Experimenta una reserva de piscina premium con funciones diseñadas para tu comodidad</p>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon-wrapper"><i class="fa-regular fa-calendar-days"></i></div>
-                        <h3>Easy Booking</h3>
-                        <p>Select your date and time with our intuitive calendar interface</p>
+                        <h3>Reserva Fácil</h3>
+                        <p>Selecciona tu fecha y hora mediante nuestra interfaz intuitiva de calendario</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon-wrapper"><i class="fa-regular fa-clock"></i></div>
-                        <h3>Flexible Plans</h3>
-                        <p>Choose from hourly plans that fit your schedule perfectly</p>
+                        <h3>Planes Flexibles</h3>
+                        <p>Elige entre planes por horas que se adaptan perfectamente a tu horario</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon-wrapper"><i class="fa-solid fa-users"></i></div>
-                        <h3>Group Ready</h3>
-                        <p>Accommodate any group size with our spacious pool facilities</p>
+                        <h3>Ideal para Grupos</h3>
+                        <p>Recibe grupos de cualquier tamaño gracias a nuestras amplias instalaciones</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon-wrapper"><i class="fa-solid fa-shield-halved"></i></div>
-                        <h3>Secure Payment</h3>
-                        <p>Safe and reliable payment processing for peace of mind</p>
+                        <h3>Pago Seguro</h3>
+                        <p>Procesamiento de pagos seguro y confiable para tu tranquilidad</p>
                     </div>
                 </div>
             </div>
 
             <div class="plans-section" id="plans-section-target">
-                <h2>Our Pricing Plans</h2>
-                <p class="subtitle">Choose the perfect plan for your pool experience</p>
+                <h2>Nuestros Planes de Precios</h2>
+                <p class="subtitle">Elige el plan perfecto para tu experiencia en piscina</p>
                 <div class="plans-grid">
                     <div class="plan-card">
-                        <h3>Hourly Pass</h3>
+                        <h3>Pase por Horas</h3>
                         <div class="price">$45.000</div>
-                        <span class="period">3 hours experience</span>
-                        <button class="btn-plan open-booking-trigger" data-plan-id="1">Select Plan</button>
+                        <span class="period">3 horas de experiencia</span>
+                        <button class="btn-plan open-booking-trigger" data-plan-id="1">Seleccionar Plan</button>
                     </div>
                     <div class="plan-card popular">
-                        <div class="popular-badge">Most Popular</div>
-                        <h3>Half Day Pass</h3>
+                        <div class="popular-badge">Más Popular</div>
+                        <h3>Pase de Medio Día</h3>
                         <div class="price">$75.000</div>
-                        <span class="period">5 hours experience</span>
-                        <button class="btn-plan open-booking-trigger" data-plan-id="2">Select Plan</button>
+                        <span class="period">5 horas de experiencia</span>
+                        <button class="btn-plan open-booking-trigger" data-plan-id="2">Seleccionar Plan</button>
                     </div>
                     <div class="plan-card">
-                        <h3>Full Day Pass</h3>
+                        <h3>Pase de Día Completo</h3>
                         <div class="price">$120.000</div>
-                        <span class="period">8 hours experience</span>
-                        <button class="btn-plan open-booking-trigger" data-plan-id="3">Select Plan</button>
+                        <span class="period">8 horas de experiencia</span>
+                        <button class="btn-plan open-booking-trigger" data-plan-id="3">Seleccionar Plan</button>
                     </div>
                 </div>
             </div>
@@ -129,9 +148,9 @@
                         </svg>
                     </div>
                     <div class="cta-content">
-                        <h2>Ready to Make a Splash?</h2>
-                        <p>Book your pool experience today and create unforgettable memories</p>
-                        <button class="btn-cta open-booking-trigger">Book Your Pool Now</button>
+                        <h2>¿Listo para Darte un Chapuzón?</h2>
+                        <p>Reserva tu experiencia hoy y crea recuerdos inolvidables</p>
+                        <button class="btn-cta open-booking-trigger">Reserva Tu Piscina Ahora</button>
                     </div>
                 </div>
             </div>
@@ -141,8 +160,8 @@
             <div class="booking-wizard-container">
                 
                 <div class="wizard-header">
-                    <h2>Book Your Pool Experience</h2>
-                    <p>Complete your booking in just a few simple steps</p>
+                    <h2>Reserva Tu Experiencia en Piscina</h2>
+                    <p>Completa tu reserva en solo unos pocos pasos</p>
                     
                     <div class="progress-bar-wrapper">
                         <div class="progress-line-bg">
@@ -155,15 +174,15 @@
                             </div>
                             <div class="step-item" id="step-dot-2">
                                 <div class="step-circle">2</div>
-                                <span class="step-label">Details</span>
+                                <span class="step-label">Detalles</span>
                             </div>
                             <div class="step-item" id="step-dot-3">
                                 <div class="step-circle">3</div>
-                                <span class="step-label">Add-ons</span>
+                                <span class="step-label">Complementos</span>
                             </div>
                             <div class="step-item" id="step-dot-4">
                                 <div class="step-circle">4</div>
-                                <span class="step-label">Payment</span>
+                                <span class="step-label">Pago</span>
                             </div>
                         </div>
                     </div>
@@ -173,62 +192,62 @@
                     
                     <div class="wizard-step-panel active" id="wizard-step-1">
                         <div class="step-title-block">
-                            <h3>Step 1: Select Plan</h3>
-                            <p>Choose the perfect plan for your pool day</p>
+                            <h3>Step 1: Seleccionar Plan</h3>
+                            <p>Elige el plan perfecto para tu día en la piscina</p>
                         </div>
                         
                         <div class="wizard-plans-grid">
-                            <div class="wizard-plan-card" data-plan="cobro-normal">
+                            <div class="wizard-plan-card" data-plan="cobro-normal" data-price="15000">
                                 <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
                                 <h4>Cobro Normal</h4>
                                 <span class="plan-duration"><i class="fa-regular fa-clock"></i> 1 hour</span>
                                 <div class="plan-price-tag">$15.000 <span class="currency">COP</span></div>
-                                <p class="plan-desc">Perfect for a quick refreshing swim</p>
-                                <button type="button" class="select-plan-action-btn">Select Plan</button>
+                                <p class="plan-desc">Perfecto para un baño rápido y refrescante</p>
+                                <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
                             </div>
-                            <div class="wizard-plan-card" data-plan="plan-1" data-plan-id="1">
+                            <div class="wizard-plan-card" data-plan="plan-1" data-plan-id="1" data-price="45000">
                                 <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
-                                <div class="popular-badge-wizard">Most Popular</div>
+                                <div class="popular-badge-wizard">Más Popular</div>
                                 <h4>Plan 1</h4>
                                 <span class="plan-duration"><i class="fa-regular fa-clock"></i> 3 hours</span>
                                 <div class="plan-price-tag">$45.000 <span class="currency">COP</span></div>
-                                <p class="plan-desc">Ideal for family fun and relaxation</p>
-                                <button type="button" class="select-plan-action-btn">Select Plan</button>
+                                <p class="plan-desc">Ideal para diversión familiar y relajación</p>
+                                <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
                             </div>
-                            <div class="wizard-plan-card" data-plan="plan-2" data-plan-id="2">
+                            <div class="wizard-plan-card" data-plan="plan-2" data-plan-id="2" data-price="75000">
                                 <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
                                 <h4>Plan 2</h4>
                                 <span class="plan-duration"><i class="fa-regular fa-clock"></i> 5 hours</span>
                                 <div class="plan-price-tag">$75.000 <span class="currency">COP</span></div>
-                                <p class="plan-desc">Great for parties and celebrations</p>
-                                <button type="button" class="select-plan-action-btn">Select Plan</button>
+                                <p class="plan-desc">Excelente para fiestas y celebraciones</p>
+                                <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
                             </div>
-                            <div class="wizard-plan-card" data-plan="plan-3" data-plan-id="3">
+                            <div class="wizard-plan-card" data-plan="plan-3" data-plan-id="3" data-price="120000">
                                 <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
                                 <h4>Plan 3</h4>
                                 <span class="plan-duration"><i class="fa-regular fa-clock"></i> 8 hours</span>
                                 <div class="plan-price-tag">$120.000 <span class="currency">COP</span></div>
-                                <p class="plan-desc">Full day of unlimited pool enjoyment</p>
-                                <button type="button" class="select-plan-action-btn">Select Plan</button>
+                                <p class="plan-desc">Día completo de disfrute ilimitado de la piscina</p>
+                                <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="wizard-step-panel" id="wizard-step-2">
                         <div class="step-title-block">
-                            <h3>Step 2: Details</h3>
-                            <p>Select your preferred date, time, and guest count</p>
+                            <h3>Step 2: Detalles</h3>
+                            <p>Selecciona tu fecha, hora y número de invitados</p>
                         </div>
                         
                         <div class="wizard-input-block">
-                            <label class="wizard-block-label">Reservation Date</label>
+                            <label class="wizard-block-label">Fecha de Reserva</label>
                             <div class="date-input-wrapper">
                                 <input type="date" id="wizard-date-picker" required>
                             </div>
                         </div>
 
                         <div class="wizard-input-block">
-                            <label class="wizard-block-label">Start Time</label>
+                            <label class="wizard-block-label">Hora de Inicio</label>
                             <div class="wizard-hours-grid">
                                 <button type="button" class="hour-grid-btn" data-hour="8">08:00</button>
                                 <button type="button" class="hour-grid-btn" data-hour="9">09:00</button>
@@ -240,54 +259,217 @@
                                 <button type="button" class="hour-grid-btn" data-hour="15">15:00</button>
                                 <button type="button" class="hour-grid-btn" data-hour="16">16:00</button>
                                 <button type="button" class="hour-grid-btn" data-hour="17">17:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="189">18:00</button>
+                                <button type="button" class="hour-grid-btn" data-hour="18">18:00</button>
                             </div>
                         </div>
 
                         <div class="wizard-input-block">
-                            <label class="wizard-block-label">Approximate Number of Guests</label>
+                            <label class="wizard-block-label">Número Aproximado de Invitados</label>
                             <div class="wizard-counter-container">
                                 <button type="button" class="counter-control-btn" id="wizard-minus-btn">—</button>
                                 <input type="number" id="wizard-guests-input" value="1" min="1" max="50" readonly>
                                 <button type="button" class="counter-control-btn" id="wizard-plus-btn">+</button>
                             </div>
-                            <span class="counter-hint-text">Enter the expected number of guests for your reservation (1-50)</span>
+                            <span class="counter-hint-text">Introduce el número estimado de invitados para tu reserva (1-50)</span>
                         </div>
                     </div>
 
                     <div class="wizard-step-panel" id="wizard-step-3">
                         <div class="step-title-block">
-                            <h3>Step 3: Add-ons</h3>
-                            <p>Enhance your experience with additional options</p>
+                            <h3>Step 3: Complementos (Complementos para Piscina)</h3>
+                            <p>Mejora tu experiencia con opciones adicionales</p>
                         </div>
                         <div class="addons-grid">
+                            <!-- 1. Juegos de toallas premium -->
                             <label class="addon-option">
-                                <input type="checkbox" name="addon" value="towel">
-                                <span>Premium Towel Set</span>
+                                <input type="checkbox" name="addon" value="Premium Towel Set" data-price="40000">
+                                <span>Juego Premium de Toallas - $40.000</span>
                             </label>
+
+                            <!-- 2. Aperitivos junto a la piscina -->
                             <label class="addon-option">
-                                <input type="checkbox" name="addon" value="snacks">
-                                <span>Poolside Snacks</span>
+                                <input type="checkbox" name="addon" value="Poolside Snacks" data-price="30000">
+                                <span>Snacks junto a la Piscina - $30.000</span>
+                            </label>
+
+                            <!-- 3. Cama techada -->
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon" value="Covered Daybed" data-price="8000">
+                                <span>Covered Daybed (Cama techada) - $8.000</span>
+                            </label>
+
+                            <!-- 4. Servicios alimenticios -->
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon" value="Food Services" data-price="80000">
+                                <span>Servicio de Alimentación - $80.000</span>
+                            </label>
+
+                            <!-- 5. Servicios de bar -->
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon" value="Bar Services" data-price="90000">
+                                <span>Servicio de Bar - $90.000</span>
+                            </label>
+
+                            <!-- 6. Entretenimiento musical -->
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon" value="Music Entertainment" data-price="8000">
+                                <span>Entretenimiento Musical - $8.000</span>
+                            </label>
+
+                            <!-- 7. Cremas y lociones -->
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon" value="Creams & Lotions" data-price="25000">
+                                <span>Cremas y Lociones - $25.000</span>
+                            </label>
+
+                            <!-- 8. Servicios de masajes -->
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon" value="Massage Services" data-price="115000">
+                                <span>Servicio de Masajes - $115.000</span>
+                            </label>
+
+                            <!-- 9. Sauna -->
+                            <label class="addon-option">
+                                <input type="checkbox" name="addon" value="Sauna" data-price="12000">
+                                <span>Sauna - $12.000</span>
                             </label>
                         </div>
                     </div>
                     
                     <div class="wizard-step-panel" id="wizard-step-4">
-                        <div class="step-title-block"><h3>Step 4: Payment</h3></div>
-                        <div class="payment-method">
-                            <p>Select your payment method</p>
-                            <button class="payment-btn">Credit Card</button>
-                            <button class="payment-btn">PSE / Debit</button>
+                        <div class="step-title-block">
+                            <h3>Paso 4: Pago</h3>
+                        </div>
+
+                        <div class="payment-container">
+
+                            <div class="payment-left">
+
+                                <h4>Selecciona tu método de pago</h4>
+
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="card">
+
+                                    <div class="payment-card">
+                                        <div class="payment-info">
+                                            <i class="fa-regular fa-credit-card"></i>
+
+                                            <div>
+                                                <strong>Tarjeta de Crédito / Débito</strong>
+                                                <span>Visa, Mastercard, American Express</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="payment-logos">
+                                            <i class="fa-brands fa-cc-visa"></i>
+                                            <i class="fa-brands fa-cc-mastercard"></i>
+                                            <i class="fa-brands fa-cc-amex"></i>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="pse">
+
+                                    <div class="payment-card">
+                                        <div class="payment-info">
+                                            <i class="fa-solid fa-building-columns"></i>
+
+                                            <div>
+                                                <strong>PSE</strong>
+                                                <span>Pago seguro desde tu banco</span>
+                                            </div>
+                                        </div>
+
+                                        <img src="images/pse.png" class="payment-img">
+                                    </div>
+                                </label>
+
+                                <label class="payment-option">
+                                    <input type="radio" name="payment" value="paypal">
+
+                                    <div class="payment-card">
+                                        <div class="payment-info">
+                                            <i class="fa-brands fa-paypal"></i>
+
+                                            <div>
+                                                <strong>PayPal</strong>
+                                                <span>Paga con tu cuenta PayPal</span>
+                                            </div>
+                                        </div>
+
+                                        <i class="fa-brands fa-paypal payment-big-icon"></i>
+                                    </div>
+                                </label>
+
+                            </div>
+
+                            <div class="payment-summary">
+
+                                <h4>Resumen de Reserva</h4>
+
+                                <div class="summary-item">
+                                    <span>Plan</span>
+                                    <strong id="summary-plan">No seleccionado</strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Fecha</span>
+                                    <strong id="summary-date">--/--/----</strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Hora</span>
+                                    <strong id="summary-hour">--:--</strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Invitados</span>
+                                    <strong id="summary-guests">0</strong>
+                                </div>
+
+                                <div class="summary-extras">
+                                    <h5>Complementos</h5>
+
+                                    <ul id="summary-addons-list">
+                                        <li>No seleccionados</li>
+                                    </ul>
+                                </div>
+
+                                <hr>
+
+                                <div class="summary-item">
+                                    <span>Subtotal Plan</span>
+                                    <strong id="summary-plan-price">$0</strong>
+                                </div>
+
+                                <div class="summary-item">
+                                    <span>Complementos</span>
+                                    <strong id="summary-addon-price">$0</strong>
+                                </div>
+
+                                <div class="summary-total">
+                                    <span>Total</span>
+                                    <strong id="summary-total">$0 COP</strong>
+                                </div>
+
+                                <button class="btn-pay">
+                                    <i class="fa-solid fa-lock"></i>
+                                    Completar Pago
+                                </button>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
 
                 <div class="wizard-actions-footer">
                     <button type="button" class="btn-wizard-nav prev-btn hidden" id="wizard-prev-btn">
-                        <i class="fa-solid fa-arrow-left"></i> Previous
+                        <i class="fa-solid fa-arrow-left"></i> Anterior
                     </button>
                     <button type="button" class="btn-wizard-nav next-btn" id="wizard-next-btn" disabled>
-                        Next <i class="fa-solid fa-arrow-right"></i>
+                        Siguiente <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
 
@@ -343,13 +525,13 @@
             <button class="modal-close" id="close-auth-btn">&times;</button>
             
             <div class="modal-header">
-                <h2>Welcome to Oasis Pool Booking</h2>
-                <p>Sign in to your account or create a new one to start booking</p>
+                <h2>Bienvenidos a Reservas Oasis Piscina</h2>
+                <p>Inicia sesión en tu cuenta o crea una nueva para comenzar a reservar</p>
             </div>
             
             <div class="auth-tabs-container">
-                <button class="auth-tab-btn active" id="tab-login-btn">Log In</button>
-                <button class="auth-tab-btn" id="tab-signup-btn">Sign Up</button>
+                <button class="auth-tab-btn active" id="tab-login-btn">Iniciar Sesión</button>
+                <button class="auth-tab-btn" id="tab-signup-btn">Registrarse</button>
             </div>
 
             <form id="form-login" class="auth-form active">
@@ -366,7 +548,7 @@
                     </div>
                 </div>
                 <div class="input-group">
-                    <label>Password</label>
+                    <label>Contraseña</label>
 
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock"></i>
@@ -380,17 +562,17 @@
                         <i class="fa-regular fa-eye password-toggle"></i>
                     </div>
                 </div>
-                <button type="submit" class="btn-auth-submit">Log In</button>
+                <button type="submit" class="btn-auth-submit">Iniciar Sesión</button>
             </form>
 
             <form id="form-signup" class="auth-form">
                 <div class="input-row">
                     <div class="input-group">
-                        <label>First Name</label>
+                        <label>Nombre</label>
                         <input type="text" id="signup-firstname" placeholder="John" required>
                     </div>
                     <div class="input-group">
-                        <label>Last Name</label>
+                        <label>Apellido</label>
                         <input type="text" id="signup-lastname" placeholder="Doe" required>
                     </div>
                 </div>
@@ -399,18 +581,18 @@
                     <input type="email" id="signup-email" placeholder="your.email@example.com" required>
                 </div>
                 <div class="input-group">
-                    <label>Phone Number</label>
+                    <label>Número de Teléfono</label>
                     <input type="tel" id="signup-phone" placeholder="+57 300 123 4567" required>
                 </div>
                 <div class="input-group">
-                    <label>Document Number</label>
+                    <label>Número de Documento</label>
                     <input type="text" id="signup-document" placeholder="1234567890" required inputmode="numeric" pattern="[0-9]+">
                 </div>
                 <div class="input-group">
-                    <label>Password</label>
+                    <label>Contraseña</label>
                     <input type="password" id="signup-password" placeholder="........" required>
                 </div>
-                <button type="submit" class="btn-auth-submit">Create Account</button>
+                <button type="submit" class="btn-auth-submit">Crear Cuenta</button>
             </form>
         </div>
     </div>
