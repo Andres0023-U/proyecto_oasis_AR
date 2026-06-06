@@ -188,8 +188,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
 
     const PLANES = {
-        'plan-1': { nombre: 'Hourly Pass',   precio: '$45.000',  horas: 3 },
-        'plan-2': { nombre: 'Half Day Pass', precio: '$75.000',  horas: 5 },
+        'cobro-normal': { nombre: 'Hourly Pass',   precio: '$15.000',  horas: 1 },
+        'plan-1': { nombre: 'Fresh Day pass', precio: '$45.000',  horas: 3 },
+        'plan-2': { nombre: 'Half Day Pass', precio: '$75.000', horas: 5 },
         'plan-3': { nombre: 'Full Day Pass', precio: '$120.000', horas: 8 },
     };
 
@@ -201,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function formatFecha(fechaStr) {
+        console.log('fecha_reserva:', fechaStr); // ← agregar esta línea
         if (!fechaStr) return '—';
         const d = new Date(fechaStr + 'T12:00:00');
         return d.toLocaleDateString('es-CO', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
@@ -648,7 +650,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const fecha         = datePicker?.value;
                 const hora_inicio   = selectedHour || null;
                 const num_invitados = parseInt(guestsInput?.value || "1");
-                const duraciones    = { 'plan-1': 1, 'plan-2': 3, 'plan-3': 5, 'plan-4': 8};
+                const duraciones    = { 'cobro-normal': 1, 'plan-1': 3, 'plan-2': 5, 'plan-3': 8};
                 const duracion      = duraciones[selectedPlan] || 3;
 
                 const usuario = JSON.parse(localStorage.getItem('usuario'));
