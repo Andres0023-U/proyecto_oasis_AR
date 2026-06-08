@@ -30,3 +30,6 @@ pool.query('SELECT NOW()', (err, res) => {
     console.log('🟢 DB conectada:', res.rows);
   }
 });
+
+const paymentRoutes = require('./src/routes/paymentRoutes');
+app.use('/pagos', paymentRoutes);

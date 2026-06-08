@@ -2,7 +2,30 @@
 // CONTROL INTERACTIVO DE PESTAÑAS (HOME/BOOK NOW) Y ACCIONES - OASIS
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
+    
+    // Manejar retorno de MercadoPago
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment_status') || urlParams.get('status');
 
+    if (paymentStatus === 'approved') {
+        const reservaPendiente = JSON.parse(localStorage.getItem('reserva_pendiente'));
+        if (reservaPendiente) {
+            fetch('https://proyecto-oasis-ar.onrender.com/reservas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(reservaPendiente)
+            })
+            .then(res => res.json())
+            .then(data => {
+                localStorage.removeItem('reserva_pendiente');
+                alert(`✅ Pago exitoso! Reserva creada ID: ${data.id_reserva}`);
+            })
+            .catch(err => console.error(err));
+        }
+    } else if (paymentStatus === 'failure') {
+        alert('❌ El pago fue rechazado. Intenta de nuevo.');
+        localStorage.removeItem('reserva_pendiente');
+    }
     // ==========================================
     // 1. DECLARACIONES DE ELEMENTOS DOM
     // ==========================================
@@ -646,7 +669,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Wizard: Navegación (Siguiente / Anterior) ---
     if (nextBtn) {
-        nextBtn.addEventListener("click", () => {
+        nextBtn.addEventListener("click", async () => {
             if (currentStep < 4) {
                 currentStep++;
                 updateWizardUI();
@@ -680,31 +703,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     observaciones:  `Plan: ${selectedPlan}`
                 };
 
-                fetch('https://proyecto-oasis-ar.onrender.com/reservas', {
+                const prefRes = await fetch('https://proyecto-oasis-ar.onrender.com/pagos/crear-preferencia', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(reservaData)
-                })
-                .then(res => res.json())
-                .then(data => {
-                    alert(`✅ Reservation confirmed! ID: ${data.id_reserva}`);
-                    currentStep  = 1;
-                    selectedPlan = null;
-                    selectedHour = null;
-                    planCards.forEach(c => {
-                        c.classList.remove("selected");
-                        const btn = c.querySelector(".select-plan-action-btn");
-                        if (btn) btn.textContent = "Select Plan";
-                    });
-                    hourButtons.forEach(b => b.classList.remove("selected"));
-                    if (guestsInput) guestsInput.value = 1;
-                    updateWizardUI();
-                    showHomeTab();
-                })
-                .catch(err => {
-                    alert('❌ Error creating reservation. Try again.');
-                    console.error(err);
+                    body: JSON.stringify({
+                        plan: selectedPlan,
+                        precio: { 'cobro-normal': 15000, 'plan-1': 45000, 'plan-2': 75000, 'plan-3': 120000 }[selectedPlan] || 45000,
+                        id_reserva: 0
+                    })
                 });
+                const prefData = await prefRes.json();
+
+                if (prefData.init_point) {
+                    localStorage.setItem('reserva_pendiente', JSON.stringify(reservaData));
+                    window.location.href = prefData.init_point;
+                } else {
+                    alert('❌ Error iniciando el pago');
+                }               
             }
         });
     }
