@@ -202,10 +202,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function formatFecha(fechaStr) {
-        console.log('fecha_reserva:', fechaStr); // ← agregar esta línea
         if (!fechaStr) return '—';
-        const d = new Date(fechaStr + 'T12:00:00');
-        return d.toLocaleDateString('es-CO', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+        const d = new Date(fechaStr);
+        return d.toLocaleDateString('es-CO', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
     async function cargarReservas() {
