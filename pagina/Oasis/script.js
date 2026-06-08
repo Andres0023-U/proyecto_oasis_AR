@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
 
     function updateAuthUI() {
+        document.dispatchEvent(new Event('authChanged'));
         const usuario = JSON.parse(localStorage.getItem('usuario'));
         if (usuario && usuario.id_usuario) {
             // Desktop
@@ -188,9 +189,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
 
     const PLANES = {
-        'cobro-normal': { nombre: 'Hourly Pass',   precio: '$15.000',  horas: 1 },
-        'plan-1': { nombre: 'Fresh Day pass', precio: '$45.000',  horas: 3 },
-        'plan-2': { nombre: 'Half Day Pass', precio: '$75.000', horas: 5 },
+        'plan-1': { nombre: 'Hourly Pass',   precio: '$45.000',  horas: 3 },
+        'plan-2': { nombre: 'Half Day Pass', precio: '$75.000',  horas: 5 },
         'plan-3': { nombre: 'Full Day Pass', precio: '$120.000', horas: 8 },
     };
 
@@ -202,7 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function formatFecha(fechaStr) {
-        console.log('fecha_reserva:', fechaStr); // ← agregar esta línea
         if (!fechaStr) return '—';
         const d = new Date(fechaStr + 'T12:00:00');
         return d.toLocaleDateString('es-CO', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
@@ -229,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const token = localStorage.getItem('token');
-            const res   = await fetch(`https://proyecto-oasis-ar.onrender.com/reservas/usuario/${usuario.id_usuario}`, {
+            const res   = await fetch(`http://localhost:3000/reservas/usuario/${usuario.id_usuario}`, {
                 headers: token ? { 'Authorization': `Bearer ${token}` } : {}
             });
             const data = await res.json();
@@ -321,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!confirm(`¿Confirmas cancelar la reserva #${id}?`)) return;
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`https://proyecto-oasis-ar.onrender.com/reservas/${id}`, {
+            const res = await fetch(`http://localhost:3000/reservas/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -536,7 +535,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const correo   = formLogin.querySelector('input[type="email"]').value;
             const password = formLogin.querySelector('input[type="password"]').value;
             try {
-                const res  = await fetch('https://proyecto-oasis-ar.onrender.com/auth/login', {
+                const res  = await fetch('http://localhost:3000/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ correo, password })
@@ -564,7 +563,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const telefono = document.getElementById('signup-phone')?.value;
             const password = document.getElementById('signup-password')?.value;
             try {
-                const res  = await fetch('https://proyecto-oasis-ar.onrender.com/auth/register', {
+                const res  = await fetch('http://localhost:3000/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ documento: correo, nombre, apellido, correo, telefono, password })
@@ -650,7 +649,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const fecha         = datePicker?.value;
                 const hora_inicio   = selectedHour || null;
                 const num_invitados = parseInt(guestsInput?.value || "1");
-                const duraciones    = { 'cobro-normal': 1, 'plan-1': 3, 'plan-2': 5, 'plan-3': 8};
+                const duraciones    = { 'plan-1': 3, 'plan-2': 5, 'plan-3': 8 };
                 const duracion      = duraciones[selectedPlan] || 3;
 
                 const usuario = JSON.parse(localStorage.getItem('usuario'));
@@ -662,19 +661,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!fecha)       { alert('❌ Selecciona una fecha');          return; }
                 if (!hora_inicio) { alert('❌ Selecciona una hora de inicio'); return; }
 
-
-                const [hh, mm] = hora_inicio.split(':').map(Number);
-                const hora_fin = `${String(Math.floor((hh * 60 + mm + duracion * 60) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + duracion * 60) % 60).padStart(2, '0')}`
                 const reservaData = {
                     id_usuario:    usuario.id_usuario,
                     fecha_reserva: fecha,
                     hora_inicio:   hora_inicio,
-                    hora_fin:      hora_fin,
                     num_invitados: num_invitados,
                     observaciones: `Plan: ${selectedPlan}`
                 };
 
-                fetch('https://proyecto-oasis-ar.onrender.com/reservas', {
+                fetch('http://localhost:3000/reservas', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(reservaData)
@@ -760,18 +755,165 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 9. INICIALIZACIÓN
+    // 9. RESEÑAS DE USUARIOS
+    // ==========================================
+
+    (function initReviews() {
+        const starInputs      = document.querySelectorAll('.star-input');
+        const reviewTextarea  = document.getElementById('review-textarea');
+        const charNum         = document.getElementById('review-char-num');
+        const btnSubmit       = document.getElementById('btn-submit-review');
+        const reviewsGrid     = document.getElementById('reviews-grid');
+        const loginNotice     = document.getElementById('review-login-notice');
+        const reviewFormContent = document.getElementById('review-form-content');
+        const reviewOpenAuth  = document.getElementById('review-open-auth');
+
+        let selectedStars = 0;
+
+        // Mostrar/ocultar formulario según sesión
+        function updateReviewFormVisibility() {
+            const usuario = JSON.parse(localStorage.getItem('usuario'));
+            if (usuario && usuario.id_usuario) {
+                if (loginNotice)      loginNotice.style.display      = 'none';
+                if (reviewFormContent) reviewFormContent.style.display = 'block';
+            } else {
+                if (loginNotice)      loginNotice.style.display      = 'block';
+                if (reviewFormContent) reviewFormContent.style.display = 'none';
+            }
+        }
+
+        // Abrir modal de auth desde la reseña
+        if (reviewOpenAuth) {
+            reviewOpenAuth.addEventListener('click', () => {
+                if (authModal) authModal.classList.add('show');
+            });
+        }
+
+        // Interacción con estrellas
+        starInputs.forEach(star => {
+            star.addEventListener('mouseover', () => {
+                const val = parseInt(star.dataset.value);
+                starInputs.forEach((s, i) => {
+                    s.className = 'fa-solid fa-star star-input ' + (i < val ? 'hovered' : '');
+                    if (i < selectedStars) s.classList.add('selected');
+                });
+            });
+            star.addEventListener('mouseleave', () => {
+                starInputs.forEach((s, i) => {
+                    s.className = (i < selectedStars)
+                        ? 'fa-solid fa-star star-input selected'
+                        : 'fa-regular fa-star star-input';
+                });
+            });
+            star.addEventListener('click', () => {
+                selectedStars = parseInt(star.dataset.value);
+                starInputs.forEach((s, i) => {
+                    s.className = (i < selectedStars)
+                        ? 'fa-solid fa-star star-input selected'
+                        : 'fa-regular fa-star star-input';
+                });
+            });
+        });
+
+        // Contador de caracteres
+        if (reviewTextarea && charNum) {
+            reviewTextarea.addEventListener('input', () => {
+                charNum.textContent = reviewTextarea.value.length;
+            });
+        }
+
+        // Construir estrellas HTML para la tarjeta
+        function buildStarsHTML(count) {
+            let html = '';
+            for (let i = 1; i <= 5; i++) {
+                html += i <= count
+                    ? '<i class="fa-solid fa-star"></i>'
+                    : '<i class="fa-regular fa-star"></i>';
+            }
+            return html;
+        }
+
+        // Guardar reseñas en localStorage
+        function saveReview(review) {
+            const reviews = JSON.parse(localStorage.getItem('oasis_reviews') || '[]');
+            reviews.unshift(review);
+            localStorage.setItem('oasis_reviews', JSON.stringify(reviews.slice(0, 20)));
+        }
+
+        // Cargar reseñas guardadas y renderizarlas antes de las estáticas
+        function loadSavedReviews() {
+            if (!reviewsGrid) return;
+            const reviews = JSON.parse(localStorage.getItem('oasis_reviews') || '[]');
+            reviews.forEach(r => {
+                const card = buildReviewCard(r, false);
+                reviewsGrid.insertBefore(card, reviewsGrid.firstChild);
+            });
+        }
+
+        function buildReviewCard(r, isNew) {
+            const card = document.createElement('div');
+            card.className = 'review-card' + (isNew ? ' new-review' : '');
+            card.innerHTML = `
+                <div class="review-stars">${buildStarsHTML(r.estrellas)}</div>
+                <p class="review-text">"${r.texto}"</p>
+                <div class="review-author">
+                    <div class="review-avatar-icon"><i class="fa-solid fa-circle-user"></i></div>
+                    <div class="review-author-info">
+                        <span class="review-name">${r.nombre}</span>
+                        <span class="review-date">${r.fecha}</span>
+                    </div>
+                </div>`;
+            return card;
+        }
+
+        // Enviar reseña
+        if (btnSubmit) {
+            btnSubmit.addEventListener('click', () => {
+                const usuario = JSON.parse(localStorage.getItem('usuario'));
+                if (!usuario) { updateReviewFormVisibility(); return; }
+                if (selectedStars === 0) { alert('⭐ Por favor selecciona una calificación.'); return; }
+                const texto = reviewTextarea?.value.trim();
+                if (!texto) { alert('✍️ Escribe tu experiencia antes de publicar.'); return; }
+
+                const ahora = new Date();
+                const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+                const fecha = `${meses[ahora.getMonth()]} ${ahora.getFullYear()}`;
+                const nombre = usuario.nombre
+                    ? `${usuario.nombre}${usuario.apellido ? ' ' + usuario.apellido : ''}`
+                    : usuario.correo;
+
+                const nuevaReseña = { nombre, fecha, estrellas: selectedStars, texto };
+                saveReview(nuevaReseña);
+
+                const card = buildReviewCard(nuevaReseña, true);
+                reviewsGrid.insertBefore(card, reviewsGrid.firstChild);
+
+                // Resetear formulario
+                selectedStars = 0;
+                starInputs.forEach(s => { s.className = 'fa-regular fa-star star-input'; });
+                if (reviewTextarea) reviewTextarea.value = '';
+                if (charNum) charNum.textContent = '0';
+
+                alert('✅ ¡Gracias por tu reseña!');
+            });
+        }
+
+        // Observar cambios de sesión para actualizar el formulario
+        const originalUpdateAuthUI = updateAuthUI;
+        // Llamar al init
+        updateReviewFormVisibility();
+        loadSavedReviews();
+
+        // Re-evaluar visibilidad del form al hacer login/logout
+        document.addEventListener('authChanged', updateReviewFormVisibility);
+    })();
+
+    // ==========================================
+    // 10. INICIALIZACIÓN
     // ==========================================
     updateAuthUI();
     updateWizardUI();
     if (datePicker) datePicker.min = getTodayString();
     actualizarHorasDisponibles();
-
-    fetch('https://proyecto-oasis-ar.onrender.com')
-    .then(res => res.json())
-    .then(data => {
-        console.log('Reservas desde backend:', data);
-    })
-    .catch(err => console.error('Error:', err));
 
 });
