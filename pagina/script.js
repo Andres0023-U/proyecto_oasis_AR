@@ -566,11 +566,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const correo   = document.getElementById('signup-email')?.value;
             const telefono = document.getElementById('signup-phone')?.value;
             const password = document.getElementById('signup-password')?.value;
+            const documento = document.getElementById('signup-document')?.value;
             try {
                 const res  = await fetch('https://proyecto-oasis-ar.onrender.com/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ documento: correo, nombre, apellido, correo, telefono, password })
+                    body: JSON.stringify({ documento, nombre, apellido, correo, telefono, password })
                 });
                 const data = await res.json();
                 if (!res.ok) { alert('❌ ' + data.error); return; }
