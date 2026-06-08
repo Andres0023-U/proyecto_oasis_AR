@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <i class="fa-solid fa-users"></i> ${r.num_invitados || 1} invitado(s)
                         </span>
                         <span class="reserva-detalle-item">
-                            <i class="fa-solid fa-hourglass-half"></i> ${plan.horas} hrs
+                            <i class="fa-solid fa-hourglass-half"></i> ${r.duracion_horas || plan.horas} hrs
                         </span>
                     </div>
                     <div class="reserva-id">ID: #${r.id_reserva || '—'}</div>
@@ -664,14 +664,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 const [hh, mm] = hora_inicio.split(':').map(Number);
-                const hora_fin = `${String(Math.floor((hh * 60 + mm + duracion * 60) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + duracion * 60) % 60).padStart(2, '0')}`
+                const hora_fin = `${String(Math.floor((hh * 60 + mm + duracion * 60) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + duracion * 60) % 60).padStart(2, '0')}`;
+
                 const reservaData = {
-                    id_usuario:    usuario.id_usuario,
-                    fecha_reserva: fecha,
-                    hora_inicio:   hora_inicio,
-                    hora_fin:      hora_fin,
-                    num_invitados: num_invitados,
-                    observaciones: `Plan: ${selectedPlan}`
+                    id_usuario:     usuario.id_usuario,
+                    fecha_reserva:  fecha,
+                    hora_inicio:    hora_inicio,
+                    hora_fin:       hora_fin,
+                    duracion_horas: duracion,
+                    num_invitados:  num_invitados,
+                    observaciones:  `Plan: ${selectedPlan}`
                 };
 
                 fetch('https://proyecto-oasis-ar.onrender.com/reservas', {

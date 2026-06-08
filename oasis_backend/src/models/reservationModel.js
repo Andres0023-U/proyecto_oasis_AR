@@ -22,13 +22,13 @@ const getByUser = async (id_usuario) => {
 
 // POST /reservas — crear reserva
 const create = async (data) => {
-    const { id_usuario, fecha_reserva, hora_inicio, hora_fin, num_invitados, observaciones } = data;
+    const { id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones } = data;
     const result = await pool.query(
         `INSERT INTO oasis.reservations 
-            (id_usuario, fecha_reserva, hora_inicio, hora_fin, num_invitados, observaciones)
-         VALUES ($1, $2, $3, $4, $5, $6)
+            (id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
          RETURNING *`,
-        [id_usuario, fecha_reserva, hora_inicio, hora_fin || null, num_invitados, observaciones]
+        [id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones]
     );
     return result.rows[0];
 };
