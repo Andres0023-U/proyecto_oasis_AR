@@ -143,6 +143,11 @@ header {
     position: relative;
 }
 
+/* línea ~101 donde está .navbar-auth */
+.mobile-user-item {
+    display: none;
+}
+
 .user-menu-trigger {
     background: transparent;
     border: 2px solid #0f4c81;
@@ -2124,10 +2129,6 @@ header {
 
     /* Ocultar por completo toda la sección de auth de escritorio */
     .navbar-auth {
-        display: none !important;
-    }
-
-    #user-menu {
         display: none !important;
     }
 
