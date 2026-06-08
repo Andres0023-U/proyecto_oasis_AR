@@ -123,7 +123,9 @@ document.addEventListener("DOMContentLoaded", () => {
             // Móvil: ocultar botón login, mostrar usuario
             document.querySelector('.mobile-auth-item') &&
                 (document.querySelector('.mobile-auth-item').style.display = 'none');
-            if (mobileUserItem)     mobileUserItem.style.display     = 'block';
+            if (mobileUserItem) {
+                mobileUserItem.style.display = window.innerWidth <= 768 ? 'block' : 'none';
+            }
             if (userMenuNameMobile) userMenuNameMobile.textContent   = usuario.nombre || usuario.correo;
         } else {
             // Desktop
