@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         filtradas.forEach(r => {
-            console.log(r.fecha_reserva)
+            console.log('fecha_reserva:', r.fecha_reserva);
             const plan  = getPlanFromObservaciones(r.observaciones);
             const estado = (r.estado || 'pendiente').toLowerCase();
             const precioMostrar = r.precio_total
