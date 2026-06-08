@@ -22,13 +22,13 @@ const getByUser = async (id_usuario) => {
 
 // POST /reservas — crear reserva
 const create = async (data) => {
-    const { id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones } = data;
+    const { id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones, precio_total } = data;
     const result = await pool.query(
         `INSERT INTO oasis.reservations 
-            (id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones)
-         VALUES ($1, $2, $3, $4, $5, $6, $7)
+            (id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones, precio_total)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
          RETURNING *`,
-        [id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones]
+        [id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones, precio_total || 0]
     );
     return result.rows[0];
 };
@@ -43,18 +43,6 @@ const updateStatus = async (id_reserva, estado) => {
         [estado, id_reserva]
     );
     return result.rows[0] || null;
-};
-
-const create = async (data) => {
-    const { id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones, precio_total } = data;
-    const result = await pool.query(
-        `INSERT INTO oasis.reservations 
-            (id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones, precio_total)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-         RETURNING *`,
-        [id_usuario, fecha_reserva, hora_inicio, hora_fin, duracion_horas, num_invitados, observaciones, precio_total || 0]
-    );
-    return result.rows[0];
 };
 
 module.exports = { getAll, getByUser, create, updateStatus };
