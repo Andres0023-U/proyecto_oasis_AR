@@ -257,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderReservas(reservas, listEl, filtro = 'todas') {
+
         listEl.innerHTML = '';
         const filtradas = filtro === 'todas'
             ? reservas
@@ -312,6 +313,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             listEl.appendChild(card);
         });
+
+        console.log(r.fecha_reserva)
 
         // Guardar reservas en el elemento para re-renderizado por filtro
         listEl._reservas = reservas;
