@@ -269,6 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         filtradas.forEach(r => {
+            console.log(r.fecha_reserva)
             const plan  = getPlanFromObservaciones(r.observaciones);
             const estado = (r.estado || 'pendiente').toLowerCase();
             const precioMostrar = r.precio_total
@@ -313,8 +314,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             listEl.appendChild(card);
         });
-
-        console.log(r.fecha_reserva)
 
         // Guardar reservas en el elemento para re-renderizado por filtro
         listEl._reservas = reservas;
