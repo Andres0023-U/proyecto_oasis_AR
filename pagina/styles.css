@@ -2127,6 +2127,10 @@ header {
         display: none !important;
     }
 
+    #user-menu {
+        display: none !important;
+    }
+
     .nav-links {
         display: none;
         position: absolute;
