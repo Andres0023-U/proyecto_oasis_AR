@@ -385,49 +385,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function actualizarResumen() {
         // Plan
-        document.getElementById("summary-plan").textContent =
-            selectedPlanName || "No seleccionado";
-        document.getElementById("summary-plan-price").textContent =
-            "$" + selectedPlanPrice.toLocaleString("es-CO");
+        const summaryPlan = document.getElementById("summary-plan");
+        if (summaryPlan) summaryPlan.textContent = selectedPlanName || "No seleccionado";
+
+        const summaryPlanPrice = document.getElementById("summary-plan-price");
+        if (summaryPlanPrice) summaryPlanPrice.textContent = "$" + selectedPlanPrice.toLocaleString("es-CO");
 
         // Fecha
-        const fecha = document.getElementById("wizard-date-picker").value;
-        document.getElementById("summary-date").textContent = fecha || "--/--/----";
+        const fecha = document.getElementById("wizard-date-picker")?.value;
+        const summaryDate = document.getElementById("summary-date");
+        if (summaryDate) summaryDate.textContent = fecha || "--/--/----";
 
         // Invitados
-        document.getElementById("summary-guests").textContent =
-            document.getElementById("wizard-guests-input").value;
+        const summaryGuests = document.getElementById("summary-guests");
+        if (summaryGuests) summaryGuests.textContent = document.getElementById("wizard-guests-input")?.value || 1;
 
         // Hora
         const horaActiva = document.querySelector(".hour-grid-btn.active");
-        document.getElementById("summary-hour").textContent =
-            horaActiva ? horaActiva.textContent : "--:--";
+        const summaryHour = document.getElementById("summary-hour");
+        if (summaryHour) summaryHour.textContent = horaActiva ? horaActiva.textContent : "--:--";
 
         // Complementos
         let totalAddons = 0;
         const addonsSeleccionados = document.querySelectorAll('input[name="addon"]:checked');
         const lista = document.getElementById("summary-addons-list");
-        lista.innerHTML = "";
-
-        if (addonsSeleccionados.length === 0) {
-            lista.innerHTML = "<li>No seleccionados</li>";
-        } else {
-            addonsSeleccionados.forEach(addon => {
-                const precio = parseInt(addon.dataset.price);
-                totalAddons += precio;
-                const item = document.createElement("li");
-                item.textContent = addon.value + " ($" + precio.toLocaleString("es-CO") + ")";
-                lista.appendChild(item);
-            });
+        if (lista) {
+            lista.innerHTML = "";
+            if (addonsSeleccionados.length === 0) {
+                lista.innerHTML = "<li>No seleccionados</li>";
+            } else {
+                addonsSeleccionados.forEach(addon => {
+                    const precio = parseInt(addon.dataset.price);
+                    totalAddons += precio;
+                    const item = document.createElement("li");
+                    item.textContent = addon.value + " ($" + precio.toLocaleString("es-CO") + ")";
+                    lista.appendChild(item);
+                });
+            }
         }
 
-        document.getElementById("summary-addon-price").textContent =
-            "$" + totalAddons.toLocaleString("es-CO");
+        const summaryAddonPrice = document.getElementById("summary-addon-price");
+        if (summaryAddonPrice) summaryAddonPrice.textContent = "$" + totalAddons.toLocaleString("es-CO");
 
         // Total
         const total = selectedPlanPrice + totalAddons;
-        document.getElementById("summary-total").textContent =
-            "$" + total.toLocaleString("es-CO") + " COP";
+        const summaryTotal = document.getElementById("summary-total");
+        if (summaryTotal) summaryTotal.textContent = "$" + total.toLocaleString("es-CO") + " COP";
     }
 
     // ==========================================
