@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (reservaPendiente) {
             const precios = { 'cobro-normal': 15000, 'plan-1': 45000, 'plan-2': 75000, 'plan-3': 120000 };
             const planId = reservaPendiente.observaciones.replace('Plan: ', '');
+            console.log('planId:', planId); // ← aquí
+            console.log('precio:', precios[planId]); // ← y aquí
             reservaPendiente.precio_total = precios[planId] || 0;
             reservaPendiente.payment_id = paymentId;
 
