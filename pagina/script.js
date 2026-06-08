@@ -2,14 +2,20 @@
 // CONTROL INTERACTIVO DE PESTAÑAS (HOME/BOOK NOW) Y ACCIONES - OASIS
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // Manejar retorno de MercadoPago
     const urlParams = new URLSearchParams(window.location.search);
     const paymentStatus = urlParams.get('payment_status') || urlParams.get('status');
 
     if (paymentStatus === 'approved') {
         const reservaPendiente = JSON.parse(localStorage.getItem('reserva_pendiente'));
+        const paymentId = urlParams.get('payment_id');
         if (reservaPendiente) {
+            const precios = { 'cobro-normal': 15000, 'plan-1': 45000, 'plan-2': 75000, 'plan-3': 120000 };
+            const planId = reservaPendiente.observaciones.replace('Plan: ', '');
+            reservaPendiente.precio_total = precios[planId] || 0;
+            reservaPendiente.payment_id = paymentId;
+
             fetch('https://proyecto-oasis-ar.onrender.com/reservas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
