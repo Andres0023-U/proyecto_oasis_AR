@@ -214,6 +214,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         validateCurrentStepForm();
+
+        if (nextBtn) {
+            nextBtn.style.display = currentStep === 4 ? 'none' : 'block';
+        }
+        if (prevBtn) {
+            prevBtn.classList.toggle('hidden', currentStep === 1);
+        }
     }
 
     // ==========================================
@@ -682,52 +689,99 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentStep++;
                 updateWizardUI();
             } else {
-                const fecha         = datePicker?.value;
-                const hora_inicio   = selectedHour || null;
-                const num_invitados = parseInt(guestsInput?.value || "1");
-                const duraciones    = { 'cobro-normal': 1, 'plan-1': 3, 'plan-2': 5, 'plan-3': 8};
-                const duracion      = duraciones[selectedPlan] || 3;
+                // En paso 4 el nextBtn no hace nada, los botones manejan la acción
+                return;
+            }
+        });
+    }
 
-                const usuario = JSON.parse(localStorage.getItem('usuario'));
-                if (!usuario) {
-                    alert('❌ Debes iniciar sesión para hacer una reserva');
-                    authModal.classList.add('show');
-                    return;
-                }
-                if (!fecha)       { alert('❌ Selecciona una fecha');          return; }
-                if (!hora_inicio) { alert('❌ Selecciona una hora de inicio'); return; }
+    // --- Botón Pagar con MercadoPago ---
+    const btnPagarMP = document.getElementById('btn-pagar-mp');
+    if (btnPagarMP) {
+        btnPagarMP.addEventListener('click', async () => {
+            const fecha         = datePicker?.value;
+            const hora_inicio   = selectedHour || null;
+            const num_invitados = parseInt(guestsInput?.value || "1");
+            const duraciones    = { 'cobro-normal': 1, 'plan-1': 3, 'plan-2': 5, 'plan-3': 8 };
+            const duracion      = duraciones[selectedPlan] || 3;
+            const usuario       = JSON.parse(localStorage.getItem('usuario'));
 
+            if (!usuario) { alert('❌ Debes iniciar sesión'); return; }
+            if (!fecha)   { alert('❌ Selecciona una fecha'); return; }
+            if (!hora_inicio) { alert('❌ Selecciona una hora'); return; }
 
-                const [hh, mm] = hora_inicio.split(':').map(Number);
-                const hora_fin = `${String(Math.floor((hh * 60 + mm + duracion * 60) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + duracion * 60) % 60).padStart(2, '0')}`;
+            const [hh, mm] = hora_inicio.split(':').map(Number);
+            const hora_fin = `${String(Math.floor((hh * 60 + mm + duracion * 60) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + duracion * 60) % 60).padStart(2, '0')}`;
 
-                const reservaData = {
-                    id_usuario:     usuario.id_usuario,
-                    fecha_reserva:  fecha,
-                    hora_inicio:    hora_inicio,
-                    hora_fin:       hora_fin,
-                    duracion_horas: duracion,
-                    num_invitados:  num_invitados,
-                    observaciones:  `Plan: ${selectedPlan}`
-                };
+            const reservaData = {
+                id_usuario: usuario.id_usuario,
+                fecha_reserva: fecha,
+                hora_inicio, hora_fin,
+                duracion_horas: duracion,
+                num_invitados,
+                observaciones: `Plan: ${selectedPlan}`
+            };
 
-                const prefRes = await fetch('https://proyecto-oasis-ar.onrender.com/pagos/crear-preferencia', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        plan: selectedPlan,
-                        precio: { 'cobro-normal': 15000, 'plan-1': 45000, 'plan-2': 75000, 'plan-3': 120000 }[selectedPlan] || 45000,
-                        id_reserva: 0
-                    })
-                });
-                const prefData = await prefRes.json();
+            const precios = { 'cobro-normal': 15000, 'plan-1': 45000, 'plan-2': 75000, 'plan-3': 120000 };
+            const prefRes = await fetch('https://proyecto-oasis-ar.onrender.com/pagos/crear-preferencia', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ plan: selectedPlan, precio: precios[selectedPlan] || 45000, id_reserva: 0 })
+            });
+            const prefData = await prefRes.json();
+            if (prefData.init_point) {
+                localStorage.setItem('reserva_pendiente', JSON.stringify(reservaData));
+                window.location.href = prefData.init_point;
+            } else {
+                alert('❌ Error iniciando el pago');
+            }
+        });
+    }
 
-                if (prefData.init_point) {
-                    localStorage.setItem('reserva_pendiente', JSON.stringify(reservaData));
-                    window.location.href = prefData.init_point;
-                } else {
-                    alert('❌ Error iniciando el pago');
-                }               
+    // --- Botón Reservar sin pagar ---
+    const btnSinPagar = document.getElementById('btn-sin-pagar');
+    if (btnSinPagar) {
+        btnSinPagar.addEventListener('click', async () => {
+            const fecha         = datePicker?.value;
+            const hora_inicio   = selectedHour || null;
+            const num_invitados = parseInt(guestsInput?.value || "1");
+            const duraciones    = { 'cobro-normal': 1, 'plan-1': 3, 'plan-2': 5, 'plan-3': 8 };
+            const duracion      = duraciones[selectedPlan] || 3;
+            const usuario       = JSON.parse(localStorage.getItem('usuario'));
+
+            if (!usuario) { alert('❌ Debes iniciar sesión'); return; }
+            if (!fecha)   { alert('❌ Selecciona una fecha'); return; }
+            if (!hora_inicio) { alert('❌ Selecciona una hora'); return; }
+
+            const [hh, mm] = hora_inicio.split(':').map(Number);
+            const hora_fin = `${String(Math.floor((hh * 60 + mm + duracion * 60) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + duracion * 60) % 60).padStart(2, '0')}`;
+
+            const reservaData = {
+                id_usuario: usuario.id_usuario,
+                fecha_reserva: fecha,
+                hora_inicio, hora_fin,
+                duracion_horas: duracion,
+                num_invitados,
+                observaciones: `Plan: ${selectedPlan}`,
+                precio_total: 0,
+                estado: 'Pendiente'
+            };
+
+            const res = await fetch('https://proyecto-oasis-ar.onrender.com/reservas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(reservaData)
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert(`✅ Reserva creada! ID: ${data.id_reserva}. Recuerda pagar antes de tu visita.`);
+                currentStep = 1;
+                selectedPlan = null;
+                selectedHour = null;
+                updateWizardUI();
+                showHomeTab();
+            } else {
+                alert('❌ Error creando la reserva');
             }
         });
     }

@@ -391,132 +391,48 @@
                         </div>
                     </div>
                     
-                    <div class="wizard-step-panel" id="wizard-step-4">
-                        <div class="step-title-block">
-                            <h3>Paso 4: Pago</h3>
+                <div class="wizard-step-panel" id="wizard-step-4">
+                    <div class="step-title-block">
+                        <h3>Paso 4: Resumen y Pago</h3>
+                    </div>
+
+                    <div class="payment-summary" style="max-width: 480px; margin: 0 auto;">
+                        <h4>Resumen de Reserva</h4>
+
+                        <div class="summary-item">
+                            <span>Plan</span>
+                            <strong id="summary-plan">No seleccionado</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Fecha</span>
+                            <strong id="summary-date">--/--/----</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Hora</span>
+                            <strong id="summary-hour">--:--</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Invitados</span>
+                            <strong id="summary-guests">0</strong>
                         </div>
 
-                        <div class="payment-container">
+                        <hr>
 
-                            <div class="payment-left">
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <strong id="summary-total">$0 COP</strong>
+                        </div>
 
-                                <h4>Selecciona tu método de pago</h4>
-
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="card">
-
-                                    <div class="payment-card">
-                                        <div class="payment-info">
-                                            <i class="fa-regular fa-credit-card"></i>
-
-                                            <div>
-                                                <strong>Tarjeta de Crédito / Débito</strong>
-                                                <span>Visa, Mastercard, American Express</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="payment-logos">
-                                            <i class="fa-brands fa-cc-visa"></i>
-                                            <i class="fa-brands fa-cc-mastercard"></i>
-                                            <i class="fa-brands fa-cc-amex"></i>
-                                        </div>
-                                    </div>
-                                </label>
-
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="pse">
-
-                                    <div class="payment-card">
-                                        <div class="payment-info">
-                                            <i class="fa-solid fa-building-columns"></i>
-
-                                            <div>
-                                                <strong>PSE</strong>
-                                                <span>Pago seguro desde tu banco</span>
-                                            </div>
-                                        </div>
-
-                                        <img src="images/pse.png" class="payment-img">
-                                    </div>
-                                </label>
-
-                                <label class="payment-option">
-                                    <input type="radio" name="payment" value="paypal">
-
-                                    <div class="payment-card">
-                                        <div class="payment-info">
-                                            <i class="fa-brands fa-paypal"></i>
-
-                                            <div>
-                                                <strong>PayPal</strong>
-                                                <span>Paga con tu cuenta PayPal</span>
-                                            </div>
-                                        </div>
-
-                                        <i class="fa-brands fa-paypal payment-big-icon"></i>
-                                    </div>
-                                </label>
-
-                            </div>
-
-                            <div class="payment-summary">
-
-                                <h4>Resumen de Reserva</h4>
-
-                                <div class="summary-item">
-                                    <span>Plan</span>
-                                    <strong id="summary-plan">No seleccionado</strong>
-                                </div>
-
-                                <div class="summary-item">
-                                    <span>Fecha</span>
-                                    <strong id="summary-date">--/--/----</strong>
-                                </div>
-
-                                <div class="summary-item">
-                                    <span>Hora</span>
-                                    <strong id="summary-hour">--:--</strong>
-                                </div>
-
-                                <div class="summary-item">
-                                    <span>Invitados</span>
-                                    <strong id="summary-guests">0</strong>
-                                </div>
-
-                                <div class="summary-extras">
-                                    <h5>Complementos</h5>
-
-                                    <ul id="summary-addons-list">
-                                        <li>No seleccionados</li>
-                                    </ul>
-                                </div>
-
-                                <hr>
-
-                                <div class="summary-item">
-                                    <span>Subtotal Plan</span>
-                                    <strong id="summary-plan-price">$0</strong>
-                                </div>
-
-                                <div class="summary-item">
-                                    <span>Complementos</span>
-                                    <strong id="summary-addon-price">$0</strong>
-                                </div>
-
-                                <div class="summary-total">
-                                    <span>Total</span>
-                                    <strong id="summary-total">$0 COP</strong>
-                                </div>
-
-                                <button class="btn-pay">
-                                    <i class="fa-solid fa-lock"></i>
-                                    Completar Pago
-                                </button>
-
-                            </div>
-
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+                            <button class="btn-pay" id="btn-pagar-mp">
+                                <i class="fa-solid fa-lock"></i> Pagar con MercadoPago
+                            </button>
+                            <button class="btn-reservar-sin-pagar" id="btn-sin-pagar">
+                                <i class="fa-regular fa-calendar-check"></i> Reservar sin pagar
+                            </button>
                         </div>
                     </div>
+                </div>
                 </div>
 
                 <div class="wizard-actions-footer">
