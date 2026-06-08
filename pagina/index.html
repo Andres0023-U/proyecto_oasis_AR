@@ -27,7 +27,6 @@
             <ul class="nav-links" id="nav-links">
                 <li><a href="#" id="tab-home" class="nav-item active">Inicio</a></li>
                 <li><a href="#" id="tab-book" class="nav-item">Reservar Ahora</a></li>
-                <li><a href="#" id="tab-reviews" class="nav-item">Reseñas</a></li>
                 
                 <li class="mobile-auth-item">
                     <button class="btn-auth-menu" id="open-auth-btn">Registrarse / Iniciar Sesión</button>
@@ -138,60 +137,6 @@
                         <span class="period">8 horas de experiencia</span>
                         <button class="btn-plan open-booking-trigger" data-plan-id="3">Seleccionar Plan</button>
                     </div>
-                </div>
-            </div>
-
-            <!-- ======================== RESEÑAS (vista previa en home) ======================== -->
-            <div class="reviews-section" id="reviews-section">
-                <h2 class="section-title">Lo Que Dicen Nuestros Clientes</h2>
-                <p class="section-subtitle">Experiencias reales de quienes ya disfrutaron Oasis Piscina</p>
-
-                <div class="reviews-grid" id="reviews-grid">
-                    <div class="review-card">
-                        <div class="review-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="review-text">"¡Increíble experiencia! Las instalaciones son impecables y el proceso de reserva fue muy sencillo. Definitivamente volveré con mi familia."</p>
-                        <div class="review-author">
-                            <img src="images/usuario1.webp" alt="Laura Castillo" class="review-avatar-img">
-                            <div class="review-author-info">
-                                <span class="review-name">Laura Castillo</span>
-                                <span class="review-date">15 de Mayo de 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="review-text">"Reservamos el Pase de Día Completo para el cumpleaños de mi hijo y fue perfecto. El espacio es amplio, limpio y muy cómodo para grupos grandes."</p>
-                        <div class="review-author">
-                            <img src="images/usuario2.jpg" alt="Juan Rodríguez" class="review-avatar-img">
-                            <div class="review-author-info">
-                                <span class="review-name">Juan Rodríguez</span>
-                                <span class="review-date">3 de Abril de 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
-                        </div>
-                        <p class="review-text">"Muy buena atención y excelentes instalaciones. El pase por horas es una opción genial para tardes relajantes. ¡100% recomendado!"</p>
-                        <div class="review-author">
-                            <img src="images/usuario3.jpg" alt="Sofía Mejía" class="review-avatar-img">
-                            <div class="review-author-info">
-                                <span class="review-name">Sofía Mejía</span>
-                                <span class="review-date">22 de Marzo de 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="text-align:center; margin-top: 32px;">
-                    <button class="btn-ver-resenas" id="btn-ver-resenas">
-                        <i class="fa-solid fa-star"></i> Ver todas las reseñas
-                    </button>
                 </div>
             </div>
 
@@ -573,125 +518,7 @@
             </div>
         </section>
 
-        <!-- ======================== RESEÑAS (página completa) ======================== -->
-        <section id="view-resenas" class="page-view">
-            <div class="resenas-container">
-                <div class="resenas-header">
-                    <div class="resenas-header-left">
-                        <h2><i class="fa-solid fa-star"></i> Reseñas</h2>
-                        <p>Lee las experiencias de nuestra comunidad y comparte la tuya</p>
-                    </div>
-                    <div class="resenas-promedio" id="resenas-promedio">
-                        <span class="promedio-numero" id="promedio-numero">5.0</span>
-                        <div>
-                            <div class="promedio-stars" id="promedio-stars"></div>
-                            <span class="promedio-label" id="promedio-label">3 reseñas</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="resenas-grid" id="resenas-grid-full"></div>
-
-                <div class="resenas-form-section" id="resenas-form-section">
-                    <div class="resena-notice" id="resena-notice-login" style="display:none;">
-                        <i class="fa-solid fa-circle-user"></i>
-                        <div>
-                            <strong>Inicia sesión para dejar tu reseña</strong>
-                            <p>Necesitas una cuenta para compartir tu experiencia.</p>
-                        </div>
-                        <button class="btn-resena-action" id="resena-open-auth">Iniciar Sesión</button>
-                    </div>
-                    <div class="resena-notice resena-notice--warn" id="resena-notice-noreserva" style="display:none;">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <div>
-                            <strong>Solo puedes reseñar si has realizado una reserva</strong>
-                            <p>¡Reserva ahora y vuelve a contarnos tu experiencia!</p>
-                        </div>
-                        <button class="btn-resena-action" id="resena-open-booking">Reservar Ahora</button>
-                    </div>
-                    <div class="resena-notice resena-notice--success" id="resena-notice-ya" style="display:none;">
-                        <i class="fa-solid fa-circle-check"></i>
-                        <div>
-                            <strong>¡Ya dejaste tu reseña!</strong>
-                            <p>Gracias por compartir tu experiencia en Oasis.</p>
-                        </div>
-                    </div>
-                    <div id="resena-form-real" style="display:none;">
-                        <h3 class="review-form-title"><i class="fa-solid fa-pen-to-square"></i> Deja tu Reseña</h3>
-                        <p class="review-form-subtitle">Comparte cómo fue tu experiencia en Oasis Piscina</p>
-                        <div class="review-stars-input">
-                            <span class="stars-label">Tu calificación:</span>
-                            <div class="star-selector" id="resena-star-selector">
-                                <i class="fa-regular fa-star star-input" data-value="1"></i>
-                                <i class="fa-regular fa-star star-input" data-value="2"></i>
-                                <i class="fa-regular fa-star star-input" data-value="3"></i>
-                                <i class="fa-regular fa-star star-input" data-value="4"></i>
-                                <i class="fa-regular fa-star star-input" data-value="5"></i>
-                            </div>
-                        </div>
-                        <textarea id="resena-textarea" class="review-textarea" placeholder="Cuéntanos cómo fue tu experiencia en Oasis..." maxlength="400" rows="4"></textarea>
-                        <div class="review-form-footer">
-                            <span class="review-char-count"><span id="resena-char-num">0</span>/400</span>
-                            <button class="btn-submit-review" id="btn-submit-resena">
-                                <i class="fa-solid fa-paper-plane"></i> Publicar Reseña
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </main>
-
-    <!-- ======================== FOOTER ======================== -->
-    <footer class="site-footer">
-        <div class="footer-body">
-            <div class="footer-grid">
-                <div class="footer-col footer-brand">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="Oasis Logo">
-                        <span>Oasis Piscina</span>
-                    </div>
-                    <p class="footer-desc">Tu destino de relajación y diversión acuática. Planes flexibles, instalaciones premium y experiencias inolvidables para toda la familia.</p>
-                    <div class="footer-social">
-                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h4 class="footer-heading">Navegación</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" id="footer-link-home"><i class="fa-solid fa-house"></i> Inicio</a></li>
-                        <li><a href="#" id="footer-link-book"><i class="fa-solid fa-wand-magic-sparkles"></i> Reservar Ahora</a></li>
-                        <li><a href="#" id="footer-link-reviews"><i class="fa-solid fa-star"></i> Reseñas</a></li>
-                        <li><a href="#" id="footer-link-reservas"><i class="fa-regular fa-calendar-days"></i> Mis Reservas</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4 class="footer-heading">Nuestros Planes</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" class="open-booking-trigger" data-plan-id="1"><i class="fa-regular fa-clock"></i> Pase por 3 Horas — $45.000</a></li>
-                        <li><a href="#" class="open-booking-trigger" data-plan-id="2"><i class="fa-solid fa-sun"></i> Pase por 5 Horas — $75.000</a></li>
-                        <li><a href="#" class="open-booking-trigger" data-plan-id="3"><i class="fa-solid fa-calendar-day"></i> Pase por 8 Horas — $120.000</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4 class="footer-heading">Contacto</h4>
-                    <ul class="footer-contact">
-                        <li><i class="fa-solid fa-location-dot"></i> <span>Pamplona, N. Santander, Colombia</span></li>
-                        <li><i class="fa-solid fa-phone"></i> <span>+57 300 123 4567</span></li>
-                        <li><i class="fa-regular fa-envelope"></i> <span>contacto@oasispiscina.com</span></li>
-                        <li><i class="fa-regular fa-clock"></i> <span>Lun – Dom: 8:00 AM – 6:00 PM</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; <span id="footer-year"></span> Oasis Piscina. Todos los derechos reservados.</p>
-            <p class="footer-made">Hecho con <i class="fa-solid fa-heart"></i> en Colombia</p>
-        </div>
-    </footer>
 
     <div id="auth-modal" class="modal-overlay">
         <div class="modal-container">
