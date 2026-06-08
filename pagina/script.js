@@ -394,7 +394,12 @@ document.addEventListener("DOMContentLoaded", () => {
         // Fecha
         const fecha = document.getElementById("wizard-date-picker")?.value;
         const summaryDate = document.getElementById("summary-date");
-        if (summaryDate) summaryDate.textContent = fecha || "--/--/----";
+        if (summaryDate && fecha) {
+            const [y, m, d] = fecha.split('-');
+            summaryDate.textContent = `${d}/${m}/${y}`;
+        } else if (summaryDate) {
+            summaryDate.textContent = '--/--/----';
+        }
 
         // Invitados
         const summaryGuests = document.getElementById("summary-guests");
