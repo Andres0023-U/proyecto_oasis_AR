@@ -1,0 +1,82 @@
+erDiagram
+  roles {
+    int id_rol PK
+    varchar nombre_rol
+    varchar descripcion
+  }
+  users {
+    int id_usuario PK
+    int id_rol FK
+    varchar documento
+    varchar nombre
+    varchar apellido
+    varchar correo
+    varchar telefono
+    varchar password_hash
+    boolean activo
+    timestamp created_at
+    timestamp updated_at
+  }
+  services {
+    int id_servicio PK
+    varchar nombre
+    text descripcion
+    numeric precio
+    service_type tipo
+    int capacidad_max
+    boolean activo
+    timestamp created_at
+    timestamp updated_at
+  }
+  reservations {
+    int id_reserva PK
+    int id_usuario FK
+    date fecha_reserva
+    time hora_inicio
+    time hora_fin
+    smallint duracion_horas
+    int num_invitados
+    numeric precio_total
+    reserva_status estado
+    text observaciones
+    timestamp created_at
+    timestamp updated_at
+  }
+  reservation_details {
+    int id_detalle PK
+    int id_reserva FK
+    int id_servicio FK
+    int cantidad
+    numeric precio_unitario_snap
+  }
+  payments {
+    int id_pago PK
+    int id_reserva FK
+    numeric monto
+    payment_method metodo
+    payment_status estado
+    varchar referencia
+    timestamp created_at
+    timestamp updated_at
+  }
+  app_config {
+    int id_config PK
+    varchar clave
+    varchar valor
+    text descripcion
+  }
+  reviews {
+    int id_resena PK
+    int id_usuario FK
+    int id_reserva FK
+    smallint calificacion
+    text comentario
+    timestamp created_at
+  }
+  roles ||--o{ users : "tiene"
+  users ||--o{ reservations : "realiza"
+  reservations ||--o{ reservation_details : "contiene"
+  services ||--o{ reservation_details : "incluido en"
+  reservations ||--o{ payments : "tiene"
+  users ||--o{ reviews : "escribe"
+  reservations ||--o{ reviews : "
