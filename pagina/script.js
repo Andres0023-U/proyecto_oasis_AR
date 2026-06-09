@@ -3,37 +3,131 @@
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Manejar retorno de MercadoPago
+    // ============================================
+    // MANEJADOR DE RETORNO DE MERCADO PAGO
+    // ============================================
+
+    // Obtener parámetros de la URL para verificar el estado del pago
     const urlParams = new URLSearchParams(window.location.search);
     const paymentStatus = urlParams.get('payment_status') || urlParams.get('status');
 
-    if (paymentStatus === 'approved') {
-        const reservaPendiente = JSON.parse(localStorage.getItem('reserva_pendiente'));
-        const paymentId = urlParams.get('payment_id');
-        if (reservaPendiente) {
-            const precios = { 'cobro-normal': 15000, 'plan-1': 45000, 'plan-2': 75000, 'plan-3': 120000 };
-            const planId = reservaPendiente.observaciones.replace('Plan: ', '');
-            console.log('planId:', planId); // ← aquí
-            console.log('precio:', precios[planId]); // ← y aquí
-            reservaPendiente.precio_total = precios[planId] || 0;
-            reservaPendiente.payment_id = paymentId;
-
-            fetch('https://proyecto-oasis-ar.onrender.com/reservas', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(reservaPendiente)
-            })
-            .then(res => res.json())
-            .then(data => {
-                localStorage.removeItem('reserva_pendiente');
-                alert(`✅ Pago exitoso! Reserva creada ID: ${data.id_reserva}`);
-            })
-            .catch(err => console.error(err));
+    // Solo procesar si hay un estado de pago en la URL
+    if (paymentStatus) {
+        
+        // ============================================
+        // CASO 1: PAGO APROBADO
+        // ============================================
+        if (paymentStatus === 'approved') {
+            
+            // --- ESCENARIO A: Nueva reserva desde formulario ---
+            const reservaPendiente = JSON.parse(localStorage.getItem('reserva_pendiente'));
+            const paymentId = urlParams.get('payment_id');
+            
+            if (reservaPendiente) {
+                // Mapeo de precios por tipo de plan
+                const precios = { 
+                    'cobro-normal': 15000, 
+                    'plan-1': 45000, 
+                    'plan-2': 75000, 
+                    'plan-3': 120000 
+                };
+                
+                // Extraer el ID del plan desde las observaciones
+                const planId = reservaPendiente.observaciones.replace('Plan: ', '');
+                
+                // Enriquecer la reserva con datos del pago
+                reservaPendiente.precio_total = precios[planId] || 0;
+                reservaPendiente.payment_id = paymentId;
+                reservaPendiente.estado = 'Confirmada';
+                
+                // Enviar la reserva al servidor
+                fetch('https://proyecto-oasis-ar.onrender.com/reservas', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(reservaPendiente)
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Error al crear la reserva');
+                    return res.json();
+                })
+                .then(data => {
+                    // Limpiar localStorage y mostrar éxito
+                    localStorage.removeItem('reserva_pendiente');
+                    alert(`✅ ¡Pago exitoso! Reserva creada con ID: ${data.id_reserva}`);
+                    
+                    // Recargar la lista de reservas usando la función existente
+                    if (typeof cargarReservas === 'function') {
+                        cargarReservas();
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ Error al guardar la reserva:', err);
+                    alert('❌ Error al guardar la reserva. Por favor, contacta a soporte.');
+                });
+            }
+            
+            // --- ESCENARIO B: Pago de reserva existente (desde lista de reservas) ---
+            const reservaPagoPendiente = JSON.parse(localStorage.getItem('reserva_pago_pendiente'));
+            
+            if (reservaPagoPendiente) {
+                // Actualizar el estado de la reserva existente
+                fetch(`https://proyecto-oasis-ar.onrender.com/reservas/${reservaPagoPendiente.id_reserva}/pagar`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        estado: 'Confirmada', 
+                        precio_total: reservaPagoPendiente.precio 
+                    })
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error('Error al confirmar el pago');
+                    return res.json();
+                })
+                .then(data => {
+                    // Limpiar localStorage y mostrar éxito
+                    localStorage.removeItem('reserva_pago_pendiente');
+                    alert(`✅ ¡Pago exitoso! Reserva #${reservaPagoPendiente.id_reserva} confirmada.`);
+                    
+                    // Recargar la lista de reservas usando la función existente
+                    if (typeof cargarReservas === 'function') {
+                        cargarReservas();
+                    }
+                })
+                .catch(err => {
+                    console.error('❌ Error al actualizar la reserva:', err);
+                    alert('❌ Error al confirmar el pago. Por favor, contacta a soporte.');
+                });
+            }
+            
+            // Si no hay ninguna reserva pendiente, mostrar advertencia
+            if (!reservaPendiente && !reservaPagoPendiente) {
+                console.warn('⚠️ Pago aprobado pero no hay reserva pendiente en localStorage');
+            }
+            
+        } 
+        
+        // ============================================
+        // CASO 2: PAGO RECHAZADO O FALLIDO
+        // ============================================
+        else if (paymentStatus === 'failure') {
+            alert('❌ El pago fue rechazado. Por favor, intenta de nuevo.');
+            
+            // Limpiar datos pendientes para evitar inconsistencias
+            localStorage.removeItem('reserva_pendiente');
+            localStorage.removeItem('reserva_pago_pendiente');
+            
+            // Opcional: redirigir al formulario de reserva
+            // window.location.href = '/reservas';
         }
-    } else if (paymentStatus === 'failure') {
-        alert('❌ El pago fue rechazado. Intenta de nuevo.');
-        localStorage.removeItem('reserva_pendiente');
+        
+        // ============================================
+        // CASO 3: OTROS ESTADOS (pendiente, en_proceso, etc.)
+        // ============================================
+        else {
+            console.log(`ℹ️ Estado de pago: ${paymentStatus} - No se requiere acción inmediata`);
+        }
     }
+
     // ==========================================
     // 1. DECLARACIONES DE ELEMENTOS DOM
     // ==========================================
@@ -296,27 +390,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderReservas(reservas, listEl, filtro = 'todas') {
-
+        // Limpiar el contenedor
         listEl.innerHTML = '';
+        
+        // Filtrar reservas según el estado
         const filtradas = filtro === 'todas'
             ? reservas
             : reservas.filter(r => (r.estado || 'confirmada').toLowerCase() === filtro);
 
+        // Mostrar mensaje si no hay reservas
         if (!filtradas.length) {
             listEl.innerHTML = `<div class="reservas-error"><i class="fa-regular fa-calendar-xmark"></i><p>No hay reservas con ese filtro.</p></div>`;
             return;
         }
 
+        // Renderizar cada reserva
         filtradas.forEach(r => {
             console.log('fecha_reserva:', r.fecha_reserva);
-            const plan  = getPlanFromObservaciones(r.observaciones);
+            
+            const plan = getPlanFromObservaciones(r.observaciones);
             const estado = (r.estado || 'pendiente').toLowerCase();
             const precioMostrar = r.precio_total
                 ? `$${Number(r.precio_total).toLocaleString('es-CO')}`
                 : plan.precio;
 
+            // Crear tarjeta de reserva
             const card = document.createElement('div');
             card.className = 'reserva-card';
+            
+            // Construir el HTML de la tarjeta
             card.innerHTML = `
                 <div class="reserva-icon-col">
                     <i class="fa-solid fa-water-ladder"></i>
@@ -344,18 +446,58 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="reserva-actions-col">
                     <span class="reserva-precio">${precioMostrar}</span>
+                    ${estado === 'pendiente' ? `<button class="btn-pagar-reserva" data-id="${r.id_reserva}" data-plan="${r.observaciones}"><i class="fa-brands fa-mercado-pago"></i> Pagar</button>` : ''}
                     ${estado !== 'cancelada' ? `<button class="btn-cancelar-reserva" data-id="${r.id_reserva}"><i class="fa-solid fa-xmark"></i> Cancelar</button>` : ''}
-                </div>`;
+                </div>
+            `;
 
+            // Evento para cancelar reserva
             const cancelBtn = card.querySelector('.btn-cancelar-reserva');
             if (cancelBtn) {
                 cancelBtn.addEventListener('click', () => cancelarReserva(r.id_reserva, card, r, reservas, listEl));
             }
+
+            // Evento para pagar reserva
+            const pagarBtn = card.querySelector('.btn-pagar-reserva');
+            if (pagarBtn) {
+                pagarBtn.addEventListener('click', async () => {
+                    const precios = { 
+                        'cobro-normal': 15000, 
+                        'plan-1': 45000, 
+                        'plan-2': 75000, 
+                        'plan-3': 120000 
+                    };
+                    const planId = r.observaciones.replace('Plan: ', '');
+                    const precio = precios[planId] || 45000;
+
+                    try {
+                        const prefRes = await fetch('https://proyecto-oasis-ar.onrender.com/pagos/crear-preferencia', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ plan: planId, precio, id_reserva: r.id_reserva })
+                        });
+                        
+                        const prefData = await prefRes.json();
+                        
+                        if (prefData.init_point) {
+                            localStorage.setItem('reserva_pago_pendiente', JSON.stringify({ 
+                                id_reserva: r.id_reserva, 
+                                precio 
+                            }));
+                            window.location.href = prefData.init_point;
+                        } else {
+                            alert('❌ Error iniciando el pago');
+                        }
+                    } catch (error) {
+                        console.error('Error al procesar el pago:', error);
+                        alert('❌ Error de conexión al procesar el pago');
+                    }
+                });
+            }
+
+            // Agregar tarjeta al contenedor
             listEl.appendChild(card);
         });
-
-        // Guardar reservas en el elemento para re-renderizado por filtro
-        listEl._reservas = reservas;
     }
 
     async function cancelarReserva(id, cardEl, reserva, todasReservas, listEl) {

@@ -45,4 +45,15 @@ const updateStatus = async (id_reserva, estado) => {
     return result.rows[0] || null;
 };
 
-module.exports = { getAll, getByUser, create, updateStatus };
+const pagar = async (id_reserva, precio_total) => {
+    const result = await pool.query(
+        `UPDATE oasis.reservations 
+         SET estado = 'Confirmada', precio_total = $1, updated_at = NOW()
+         WHERE id_reserva = $2
+         RETURNING *`,
+        [precio_total, id_reserva]
+    );
+    return result.rows[0] || null;
+};
+
+module.exports = { getAll, getByUser, create, updateStatus, pagar };

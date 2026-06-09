@@ -8,5 +8,6 @@ router.get('/',                         reservationController.getAll);
 router.get('/usuario/:id_usuario',      reservationController.getByUser);
 router.post('/',                        reservationController.create);
 router.patch('/:id',                    reservationController.updateStatus);
+router.patch('/:id/pagar', reservationController.pagar);
 
 module.exports = router;
