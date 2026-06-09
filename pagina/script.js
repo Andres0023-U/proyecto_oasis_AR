@@ -155,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabSignupBtn          = document.getElementById("tab-signup-btn");
     const formLogin             = document.getElementById("form-login");
     const formSignup            = document.getElementById("form-signup");
+    const formProfile = document.getElementById('form-profile');
 
     // Elementos User Menu
     const btnDesktop            = document.getElementById('open-auth-btn-desktop');
@@ -801,6 +802,54 @@ document.addEventListener("DOMContentLoaded", () => {
                 authModal.classList.remove('show');
                 updateAuthUI();
             } catch {
+                alert('❌ Error conectando con el servidor');
+            }
+        });
+    }
+
+        // --- Update Profile ---
+    if (formProfile) {
+        formProfile.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const usuario = JSON.parse(localStorage.getItem('usuario'));
+            const token = localStorage.getItem('token');
+
+            const body = {
+                nombre: document.getElementById('profile-firstname').value,
+                apellido: document.getElementById('profile-lastname').value,
+                documento: document.getElementById('profile-document').value,
+                telefono: document.getElementById('profile-phone').value
+            };
+
+            try {
+                const res = await fetch(`https://proyecto-oasis-ar.onrender.com/usuarios/${usuario.id_usuario}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert('❌ ' + data.error);
+                    return;
+                }
+
+                // actualizar localStorage
+                localStorage.setItem('usuario', JSON.stringify({
+                    ...usuario,
+                    ...data
+                }));
+
+                alert('✅ Perfil actualizado correctamente');
+                profileModal.classList.remove('show');
+
+            } catch (err) {
+                console.error(err);
                 alert('❌ Error conectando con el servidor');
             }
         });
