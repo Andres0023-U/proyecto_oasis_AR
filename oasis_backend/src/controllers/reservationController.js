@@ -62,18 +62,4 @@ const pagar = async (req, res) => {
     }
 };
 
-// PATCH /reservas/:id/pagar — confirmar pago
-const pagar = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { precio_total } = req.body;
-        const updated = await reservationModel.pagar(id, precio_total);
-        if (!updated) return res.status(404).json({ error: 'Reserva no encontrada' });
-        res.json(updated);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error al confirmar el pago' });
-    }
-};
-
 module.exports = { getAll, getByUser, create, updateStatus, pagar };
