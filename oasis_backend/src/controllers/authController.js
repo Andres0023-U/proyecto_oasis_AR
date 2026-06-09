@@ -30,7 +30,9 @@ const login = async (req, res) => {
                 id_usuario: user.id_usuario,
                 nombre: user.nombre,
                 apellido: user.apellido,
-                correo: user.correo
+                correo: user.correo,
+                documento: user.documento,
+                telefono: user.telefono
             }
         });
 
