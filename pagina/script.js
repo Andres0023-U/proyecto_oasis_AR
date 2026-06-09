@@ -1148,54 +1148,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getReviews() { return JSON.parse(localStorage.getItem('oasis_reviews') || '[]'); }
     function saveReviews(arr) { localStorage.setItem('oasis_reviews', JSON.stringify(arr.slice(0, 50))); }
-    function usuarioYaReseñó(id) { return getReviews().some(r => r.id_usuario === id); }
-    function usuarioTieneReservas(id) {
-        const r1 = JSON.parse(localStorage.getItem('reservas') || '[]');
-        if (r1.some(r => r.id_usuario === id || r.usuario_id === id)) return true;
-        return JSON.parse(localStorage.getItem('mis_reservas') || '[]').length > 0;
+
+    async function usuarioYaReseñó(id) {
+        try {
+            const res = await fetch(`https://proyecto-oasis-ar.onrender.com/resenas/check/${id}`);
+            const data = await res.json();
+            return data.yaReseno;
+        } catch { return false; }
     }
 
-    function renderPromedioEstrellas(dynamic) {
-        const staticSum = 14, staticCount = 3;
-        const dynSum = dynamic.reduce((a, r) => a + (r.estrellas || 0), 0);
-        const total  = staticCount + dynamic.length;
-        const avg    = total > 0 ? (staticSum + dynSum) / total : 5;
-        const el = {
-            num:   document.getElementById('promedio-numero'),
-            stars: document.getElementById('promedio-stars'),
-            label: document.getElementById('promedio-label')
-        };
-        if (el.num)   el.num.textContent   = (Math.round(avg * 10) / 10).toFixed(1);
-        if (el.stars) el.stars.innerHTML   = buildStarsHTML(Math.round(avg));
-        if (el.label) el.label.textContent = `${total} reseña${total !== 1 ? 's' : ''}`;
+    async function usuarioTieneReservas(id) {
+        try {
+            const res = await fetch(`https://proyecto-oasis-ar.onrender.com/reservas/usuario/${id}`);
+            const data = await res.json();
+            return Array.isArray(data) && data.length > 0;
+        } catch { return false; }
     }
 
-    function renderResenasPage() {
+    async function renderResenasPage() {
         const grid = document.getElementById('resenas-grid-full');
         if (!grid) return;
         grid.innerHTML = '';
-        const dynamic = getReviews();
 
-        dynamic.forEach(r => {
-            const card = document.createElement('div');
-            card.className = 'review-card new-review';
-            card.innerHTML = `
-                <div class="review-stars">${buildStarsHTML(r.estrellas)}</div>
-                <p class="review-text">"${r.texto}"</p>
-                <div class="review-author">
-                    <div class="review-avatar-icon"><i class="fa-solid fa-circle-user"></i></div>
-                    <div class="review-author-info">
-                        <span class="review-name">${r.nombre}</span>
-                        <span class="review-date">${r.fecha}</span>
-                    </div>
-                </div>`;
-            grid.appendChild(card);
-        });
+        try {
+            const res = await fetch('https://proyecto-oasis-ar.onrender.com/resenas');
+            const dynamic = await res.json();
+
+            dynamic.forEach(r => {
+                const card = document.createElement('div');
+                card.className = 'review-card new-review';
+                card.innerHTML = `
+                    <div class="review-stars">${buildStarsHTML(r.calificacion)}</div>
+                    <p class="review-text">"${r.comentario}"</p>
+                    <div class="review-author">
+                        <div class="review-avatar-icon"><i class="fa-solid fa-circle-user"></i></div>
+                        <div class="review-author-info">
+                            <span class="review-name">${r.nombre} ${r.apellido || ''}</span>
+                            <span class="review-date">${formatFecha(r.created_at)}</span>
+                        </div>
+                    </div>`;
+                grid.appendChild(card);
+            });
+        } catch { console.error('Error cargando reseñas'); }
 
         const estaticas = [
-            { nombre: 'Laura Castillo', estrellas: 5, texto: '¡Increíble experiencia! Las instalaciones son impecables y el proceso de reserva fue muy sencillo. Definitivamente volveré con mi familia.',          fecha: '15 de Mayo de 2025',  img: 'images/usuario1.webp' },
-            { nombre: 'Juan Rodríguez', estrellas: 5, texto: 'Reservamos el Pase de Día Completo para el cumpleaños de mi hijo y fue perfecto. El espacio es amplio, limpio y muy cómodo para grupos grandes.',  fecha: '3 de Abril de 2025',  img: 'images/usuario2.jpg'  },
-            { nombre: 'Sofía Mejía',    estrellas: 4, texto: 'Muy buena atención y excelentes instalaciones. El pase por horas es una opción genial para tardes relajantes. ¡100% recomendado!',                 fecha: '22 de Marzo de 2025', img: 'images/usuario3.jpg'  },
+            { nombre: 'Laura Castillo', estrellas: 5, texto: '¡Increíble experiencia! Las instalaciones son impecables y el proceso de reserva fue muy sencillo. Definitivamente volveré con mi familia.', fecha: '15 de Mayo de 2025', img: 'images/usuario1.webp' },
+            { nombre: 'Juan Rodríguez', estrellas: 5, texto: 'Reservamos el Pase de Día Completo para el cumpleaños de mi hijo y fue perfecto. El espacio es amplio, limpio y muy cómodo para grupos grandes.', fecha: '3 de Abril de 2025', img: 'images/usuario2.jpg' },
+            { nombre: 'Sofía Mejía',    estrellas: 4, texto: 'Muy buena atención y excelentes instalaciones. El pase por horas es una opción genial para tardes relajantes. ¡100% recomendado!', fecha: '22 de Marzo de 2025', img: 'images/usuario3.jpg' },
         ];
         estaticas.forEach(r => {
             const card = document.createElement('div');
@@ -1213,11 +1212,10 @@ document.addEventListener("DOMContentLoaded", () => {
             grid.appendChild(card);
         });
 
-        renderPromedioEstrellas(dynamic);
-        renderFormEstado();
+        await renderFormEstado();
     }
 
-    function renderFormEstado() {
+    async function renderFormEstado() {
         const ids = ['resena-notice-login','resena-notice-noreserva','resena-notice-ya','resena-form-real'];
         ids.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
         const usuario = JSON.parse(localStorage.getItem('usuario'));
@@ -1225,11 +1223,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const el = document.getElementById('resena-notice-login');
             if (el) el.style.display = 'flex'; return;
         }
-        if (usuarioYaReseñó(usuario.id_usuario)) {
+        if (await usuarioYaReseñó(usuario.id_usuario)) {
             const el = document.getElementById('resena-notice-ya');
             if (el) el.style.display = 'flex'; return;
         }
-        if (!usuarioTieneReservas(usuario.id_usuario)) {
+        if (!await usuarioTieneReservas(usuario.id_usuario)) {
             const el = document.getElementById('resena-notice-noreserva');
             if (el) el.style.display = 'flex'; return;
         }
@@ -1260,21 +1258,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (textarea && charNum) textarea.addEventListener('input', () => { charNum.textContent = textarea.value.length; });
 
-        if (btnSub) btnSub.addEventListener('click', () => {
+        if (btnSub) btnSub.addEventListener('click', async () => {
             const usuario = JSON.parse(localStorage.getItem('usuario'));
             if (!usuario) return;
             if (sel === 0) { alert('⭐ Por favor selecciona una calificación.'); return; }
             const texto = textarea?.value.trim();
             if (!texto) { alert('✍️ Escribe tu experiencia antes de publicar.'); return; }
-            const nombre = usuario.nombre ? `${usuario.nombre}${usuario.apellido ? ' ' + usuario.apellido : ''}` : usuario.correo;
-            const nueva = { id_usuario: usuario.id_usuario, nombre, fecha: fechaCompleta(new Date()), estrellas: sel, texto };
-            const all = getReviews(); all.unshift(nueva); saveReviews(all);
-            sel = 0;
-            stars.forEach(s => s.className = 'fa-regular fa-star star-input');
-            if (textarea) textarea.value = '';
-            if (charNum)  charNum.textContent = '0';
-            alert('✅ ¡Gracias por tu reseña!');
-            renderResenasPage();
+
+            // Obtener la primera reserva del usuario
+            const resReservas = await fetch(`https://proyecto-oasis-ar.onrender.com/reservas/usuario/${usuario.id_usuario}`);
+            const reservas = await resReservas.json();
+            if (!reservas.length) { alert('❌ No tienes reservas para reseñar.'); return; }
+
+            const res = await fetch('https://proyecto-oasis-ar.onrender.com/resenas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    id_usuario: usuario.id_usuario,
+                    id_reserva: reservas[0].id_reserva,
+                    calificacion: sel,
+                    comentario: texto
+                })
+            });
+
+            if (res.ok) {
+                sel = 0;
+                stars.forEach(s => s.className = 'fa-regular fa-star star-input');
+                if (textarea) textarea.value = '';
+                if (charNum) charNum.textContent = '0';
+                alert('✅ ¡Gracias por tu reseña!');
+                renderResenasPage();
+            } else {
+                alert('❌ Error al publicar la reseña.');
+            }
         });
     })();
 
