@@ -149,6 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const openAuthBtnDesktop    = document.getElementById("open-auth-btn-desktop");
     const closeAuthBtn          = document.getElementById("close-auth-btn");
     const authModal             = document.getElementById("auth-modal");
+    const profileModal = document.getElementById("profile-modal");
+    const closeProfileBtn = document.getElementById("close-profile-btn");
     const tabLoginBtn           = document.getElementById("tab-login-btn");
     const tabSignupBtn          = document.getElementById("tab-signup-btn");
     const formLogin             = document.getElementById("form-login");
@@ -647,16 +649,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Modal de autenticación ---
     if (openAuthBtn) {
-        openAuthBtn.addEventListener("click", (e) => { e.preventDefault(); authModal.classList.add("show"); });
+        openAuthBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            authModal.classList.add("show");
+        });
     }
+
     if (openAuthBtnDesktop) {
-        openAuthBtnDesktop.addEventListener("click", (e) => { e.preventDefault(); authModal.classList.add("show"); });
+        openAuthBtnDesktop.addEventListener("click", (e) => {
+            e.preventDefault();
+            authModal.classList.add("show");
+        });
     }
+
     if (closeAuthBtn) {
         closeAuthBtn.addEventListener("click", () => authModal.classList.remove("show"));
     }
+
+    if (closeProfileBtn) {
+        closeProfileBtn.addEventListener("click", () => profileModal.classList.remove("show"));
+    }
+
     window.addEventListener("click", (e) => {
-        if (e.target === authModal) authModal.classList.remove("show");
+        if (e.target === authModal) {
+            authModal.classList.remove("show");
+        }
+
+        if (e.target === profileModal) {
+            profileModal.classList.remove("show");
+        }
     });
 
     // --- Tabs Login / Signup ---
@@ -712,7 +733,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dropdownProfile) {
         dropdownProfile.addEventListener('click', (e) => {
             e.preventDefault();
-            alert('Editar perfil');
+            profileModal.classList.add('show');
+        });
+    }
+
+    if (dropdownProfileMobile) {
+        dropdownProfileMobile.addEventListener('click', (e) => {
+            e.preventDefault();
+            profileModal.classList.add('show');
         });
     }
 
