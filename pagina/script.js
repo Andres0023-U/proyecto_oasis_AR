@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ==========================================
     // 6. FUNCIONES DE RESUMEN DE PAGO
-    // ==========================================hglkjlhkhk.
+    // ==========================================
 
     function actualizarResumen() {
         // Plan
