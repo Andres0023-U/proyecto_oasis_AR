@@ -733,6 +733,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dropdownProfile) {
         dropdownProfile.addEventListener('click', (e) => {
             e.preventDefault();
+
+            const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+            document.getElementById('profile-firstname').value = usuario.nombre || '';
+            document.getElementById('profile-lastname').value = usuario.apellido || '';
+            document.getElementById('profile-phone').value = usuario.telefono || '';
+            document.getElementById('profile-document').value = usuario.documento || '';
+
             profileModal.classList.add('show');
         });
     }
@@ -740,6 +748,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dropdownProfileMobile) {
         dropdownProfileMobile.addEventListener('click', (e) => {
             e.preventDefault();
+
+            const usuario = JSON.parse(localStorage.getItem('usuario'));
+
+            document.getElementById('profile-firstname').value = usuario.nombre || '';
+            document.getElementById('profile-lastname').value = usuario.apellido || '';
+            document.getElementById('profile-phone').value = usuario.telefono || '';
+            document.getElementById('profile-document').value = usuario.documento || '';
+
             profileModal.classList.add('show');
         });
     }
