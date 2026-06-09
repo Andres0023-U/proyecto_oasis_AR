@@ -162,6 +162,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const userMenuTrigger       = document.getElementById('user-menu-trigger');
     const dropdownLogout        = document.getElementById('dropdown-logout');
     const dropdownReservas      = document.getElementById('dropdown-reservas');
+    const dropdownProfile       = document.getElementById('dropdown-profile');
+    const dropdownProfileMobile = document.getElementById('dropdown-profile-mobile');
 
     // Elementos Menú Sándwich (móvil)
     const menuToggle            = document.getElementById('menu-toggle');
@@ -706,6 +708,21 @@ document.addEventListener("DOMContentLoaded", () => {
             showReservasTab();
         });
     }
+
+    if (dropdownProfile) {
+        dropdownProfile.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Editar perfil');
+        });
+    }
+
+    if (dropdownProfileMobile) {
+        dropdownProfileMobile.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Editar perfil');
+        });
+    }
+
     document.getElementById('reservas-nueva-btn')?.addEventListener('click', showBookTab);
     document.getElementById('reservas-empty-btn')?.addEventListener('click', showBookTab);
 
