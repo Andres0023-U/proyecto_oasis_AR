@@ -20,14 +20,16 @@ const create = async (data) => {
     return result.rows[0];
 };
 
-const updateUser = async (id, documento, telefono) => {
+const updateUser = async (id, nombre, apellido, documento, telefono) => {
     const result = await pool.query(
         `UPDATE oasis.users
-         SET documento = $1,
-             telefono = $2
-         WHERE id_usuario = $3
-         RETURNING id_usuario, documento, telefono`,
-        [documento, telefono, id]
+         SET nombre = $1,
+             apellido = $2,
+             documento = $3,
+             telefono = $4
+         WHERE id_usuario = $5
+         RETURNING id_usuario, nombre, apellido, documento, telefono`,
+        [nombre, apellido, documento, telefono, id]
     );
 
     return result.rows[0];

@@ -3,10 +3,12 @@ const userModel = require('../models/userModel');
 const updateUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { documento, telefono } = req.body;
+        const { nombre, apellido, documento, telefono } = req.body;
 
         const user = await userModel.updateUser(
             id,
+            nombre,
+            apellido,
             documento,
             telefono
         );
