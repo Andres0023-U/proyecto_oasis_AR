@@ -707,6 +707,47 @@
         </div>
     </div>
 
+    <div id="profile-modal" class="modal-overlay">
+        <div class="modal-container">
+            <button class="modal-close" id="close-profile-btn">&times;</button>
+
+            <div class="modal-header">
+                <h2>Editar Perfil</h2>
+                <p>Actualiza tu información personal</p>
+            </div>
+
+            <form id="form-profile" class="auth-form active">
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Nombre</label>
+                        <input type="text" id="profile-firstname" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Apellido</label>
+                        <input type="text" id="profile-lastname" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Número de Teléfono</label>
+                    <input type="tel" id="profile-phone" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Número de Documento</label>
+                    <input type="text" id="profile-document" required>
+                </div>
+
+                <button type="submit" class="btn-auth-submit">
+                    Guardar Cambios
+                </button>
+
+            </form>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
