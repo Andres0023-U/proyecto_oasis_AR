@@ -510,7 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     'Content-Type': 'application/json',
                     ...(token ? { 'Authorization': `Bearer ${token}` } : {})
                 },
-                body: JSON.stringify({ estado: 'cancelada' })
+                body: JSON.stringify({ estado: 'Cancelada' })
             });
             if (!res.ok) throw new Error();
             reserva.estado = 'cancelada';
