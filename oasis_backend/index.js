@@ -33,3 +33,6 @@ pool.query('SELECT NOW()', (err, res) => {
 
 const paymentRoutes = require('./src/routes/paymentRoutes');
 app.use('/pagos', paymentRoutes);
+
+const userRoutes = require('./src/routes/userRoutes');
+app.use('/usuarios', userRoutes);

@@ -20,4 +20,17 @@ const create = async (data) => {
     return result.rows[0];
 };
 
-module.exports = { findByEmail, create };
+const updateUser = async (id, documento, telefono) => {
+    const result = await pool.query(
+        `UPDATE oasis.users
+         SET documento = $1,
+             telefono = $2
+         WHERE id_usuario = $3
+         RETURNING id_usuario, documento, telefono`,
+        [documento, telefono, id]
+    );
+
+    return result.rows[0];
+};
+
+module.exports = { findByEmail, create, updateUser };
