@@ -2519,3 +2519,145 @@ header {
     .footer-grid { grid-template-columns: 1fr; }
     .footer-bottom { flex-direction: column; text-align: center; gap: 6px; }
 }
+/* ==========================================================================
+   ALERTAS PERSONALIZADAS (reemplazo de alert() nativo)
+   ========================================================================== */
+.oasis-alert-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 37, 64, 0.45);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+}
+
+.oasis-alert-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.oasis-alert-box {
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(10, 37, 64, 0.18);
+    padding: 32px 32px 26px 32px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    transform: translateY(14px) scale(0.97);
+    transition: transform 0.25s ease;
+    position: relative;
+}
+
+.oasis-alert-overlay.show .oasis-alert-box {
+    transform: translateY(0) scale(1);
+}
+
+.oasis-alert-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin: 0 auto 18px auto;
+}
+
+.oasis-alert-icon.success {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.oasis-alert-icon.error {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.oasis-alert-icon.warning {
+    background: #fef9c3;
+    color: #ca8a04;
+}
+
+.oasis-alert-icon.info {
+    background: #dbeafe;
+    color: var(--primary-blue);
+}
+
+.oasis-alert-message {
+    font-size: 15.5px;
+    font-weight: 500;
+    color: var(--primary-dark);
+    line-height: 1.55;
+    margin-bottom: 24px;
+}
+
+.oasis-alert-btn {
+    background: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 12px 36px;
+    border-radius: 30px;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(15, 76, 129, 0.25);
+}
+
+.oasis-alert-btn:hover {
+    background: #0a3d6b;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 76, 129, 0.35);
+}
+
+/* Confirm dialog */
+.oasis-alert-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+.oasis-alert-btn.cancel {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1.5px solid #dde2e5;
+    box-shadow: none;
+}
+
+.oasis-alert-btn.cancel:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: none;
+    box-shadow: none;
+}
+
+.oasis-alert-btn.danger {
+    background: #dc2626;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+}
+
+.oasis-alert-btn.danger:hover {
+    background: #b91c1c;
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35);
+}
+
+@media (max-width: 480px) {
+    .oasis-alert-box {
+        padding: 28px 22px 22px;
+    }
+    .oasis-alert-actions {
+        flex-direction: column;
+    }
+    .oasis-alert-btn {
+        width: 100%;
+    }
+}

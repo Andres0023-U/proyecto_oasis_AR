@@ -1,6 +1,83 @@
 // ==========================================================================
 // CONTROL INTERACTIVO DE PESTAÑAS (HOME/BOOK NOW) Y ACCIONES - OASIS
 // ==========================================================================
+
+// --------------------------------------------------------------------------
+// ALERTAS PERSONALIZADAS (reemplazo de alert() y confirm() del navegador)
+// --------------------------------------------------------------------------
+function showAlert(message) {
+    return new Promise(resolve => {
+        // Detectar tipo por emoji/prefijo
+        let type = 'info';
+        let icon = 'fa-solid fa-circle-info';
+        if (message.startsWith('✅')) { type = 'success'; icon = 'fa-solid fa-circle-check'; }
+        else if (message.startsWith('❌')) { type = 'error';   icon = 'fa-solid fa-circle-xmark'; }
+        else if (message.startsWith('⚠️') || message.startsWith('⭐') || message.startsWith('✍️')) { type = 'warning'; icon = 'fa-solid fa-triangle-exclamation'; }
+        else if (message.startsWith('👋')) { type = 'info';    icon = 'fa-solid fa-right-from-bracket'; }
+
+        // Limpiar emojis del texto visible
+        const cleanMsg = message.replace(/^[✅❌⚠️⭐✍️👋]\s*/, '');
+
+        const overlay = document.createElement('div');
+        overlay.className = 'oasis-alert-overlay';
+        overlay.innerHTML = `
+            <div class="oasis-alert-box" role="dialog" aria-modal="true">
+                <div class="oasis-alert-icon ${type}">
+                    <i class="${icon}"></i>
+                </div>
+                <p class="oasis-alert-message">${cleanMsg}</p>
+                <button class="oasis-alert-btn">Aceptar</button>
+            </div>`;
+
+        document.body.appendChild(overlay);
+        requestAnimationFrame(() => overlay.classList.add('show'));
+
+        const close = () => {
+            overlay.classList.remove('show');
+            overlay.addEventListener('transitionend', () => { overlay.remove(); resolve(); }, { once: true });
+        };
+
+        overlay.querySelector('.oasis-alert-btn').addEventListener('click', close);
+        overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+        overlay.addEventListener('keydown', e => { if (e.key === 'Escape' || e.key === 'Enter') close(); });
+        setTimeout(() => overlay.querySelector('.oasis-alert-btn')?.focus(), 50);
+    });
+}
+
+function showConfirm(message) {
+    return new Promise(resolve => {
+        const cleanMsg = message.replace(/^[✅❌⚠️⭐✍️👋]\s*/, '');
+
+        const overlay = document.createElement('div');
+        overlay.className = 'oasis-alert-overlay';
+        overlay.innerHTML = `
+            <div class="oasis-alert-box" role="dialog" aria-modal="true">
+                <div class="oasis-alert-icon warning">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <p class="oasis-alert-message">${cleanMsg}</p>
+                <div class="oasis-alert-actions">
+                    <button class="oasis-alert-btn cancel" id="oasis-confirm-no">Cancelar</button>
+                    <button class="oasis-alert-btn danger" id="oasis-confirm-yes">Confirmar</button>
+                </div>
+            </div>`;
+
+        document.body.appendChild(overlay);
+        requestAnimationFrame(() => overlay.classList.add('show'));
+
+        const close = (result) => {
+            overlay.classList.remove('show');
+            overlay.addEventListener('transitionend', () => { overlay.remove(); resolve(result); }, { once: true });
+        };
+
+        overlay.querySelector('#oasis-confirm-yes').addEventListener('click', () => close(true));
+        overlay.querySelector('#oasis-confirm-no').addEventListener('click', () => close(false));
+        overlay.addEventListener('click', e => { if (e.target === overlay) close(false); });
+        overlay.addEventListener('keydown', e => { if (e.key === 'Escape') close(false); });
+        setTimeout(() => overlay.querySelector('#oasis-confirm-yes')?.focus(), 50);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
     // ============================================
@@ -53,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(data => {
                     // Limpiar localStorage y mostrar éxito
                     localStorage.removeItem('reserva_pendiente');
-                    alert(`✅ ¡Pago exitoso! Reserva creada con ID: ${data.id_reserva}`);
+                    showAlert(`✅ ¡Pago exitoso! Reserva creada con ID: ${data.id_reserva}`);
                     
                     // Recargar la lista de reservas usando la función existente
                     if (typeof cargarReservas === 'function') {
@@ -62,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .catch(err => {
                     console.error('❌ Error al guardar la reserva:', err);
-                    alert('❌ Error al guardar la reserva. Por favor, contacta a soporte.');
+                    showAlert('❌ Error al guardar la reserva. Por favor, contacta a soporte.');
                 });
             }
             
@@ -86,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(data => {
                     // Limpiar localStorage y mostrar éxito
                     localStorage.removeItem('reserva_pago_pendiente');
-                    alert(`✅ ¡Pago exitoso! Reserva #${reservaPagoPendiente.id_reserva} confirmada.`);
+                    showAlert(`✅ ¡Pago exitoso! Reserva #${reservaPagoPendiente.id_reserva} confirmada.`);
                     
                     // Recargar la lista de reservas usando la función existente
                     if (typeof cargarReservas === 'function') {
@@ -95,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .catch(err => {
                     console.error('❌ Error al actualizar la reserva:', err);
-                    alert('❌ Error al confirmar el pago. Por favor, contacta a soporte.');
+                    showAlert('❌ Error al confirmar el pago. Por favor, contacta a soporte.');
                 });
             }
             
@@ -110,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // CASO 2: PAGO RECHAZADO O FALLIDO
         // ============================================
         else if (paymentStatus === 'failure') {
-            alert('❌ El pago fue rechazado. Por favor, intenta de nuevo.');
+            showAlert('❌ El pago fue rechazado. Por favor, intenta de nuevo.');
             
             // Limpiar datos pendientes para evitar inconsistencias
             localStorage.removeItem('reserva_pendiente');
@@ -491,11 +568,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             }));
                             window.location.href = prefData.init_point;
                         } else {
-                            alert('❌ Error iniciando el pago');
+                            showAlert('❌ Error iniciando el pago');
                         }
                     } catch (error) {
                         console.error('Error al procesar el pago:', error);
-                        alert('❌ Error de conexión al procesar el pago');
+                        showAlert('❌ Error de conexión al procesar el pago');
                     }
                 });
             }
@@ -506,7 +583,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function cancelarReserva(id, cardEl, reserva, todasReservas, listEl) {
-        if (!confirm(`¿Confirmas cancelar la reserva #${id}?`)) return;
+        if (!await showConfirm(`¿Confirmas cancelar la reserva #${id}?`)) return;
         try {
             const token = localStorage.getItem('token');
             const res = await fetch(`https://proyecto-oasis-ar.onrender.com/reservas/${id}`, {
@@ -522,7 +599,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const filtroActivo = document.querySelector('.filtro-btn.active')?.dataset.filtro || 'todas';
             renderReservas(todasReservas, listEl, filtroActivo);
         } catch {
-            alert('❌ No se pudo cancelar. Intenta de nuevo.');
+            showAlert('❌ No se pudo cancelar. Intenta de nuevo.');
         }
     }
 
@@ -719,7 +796,7 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.clear();
             updateAuthUI();
             showHomeTab();
-            alert('👋 Sesión cerrada');
+            showAlert('👋 Sesión cerrada');
         });
     }
 
@@ -764,7 +841,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dropdownProfileMobile) {
         dropdownProfileMobile.addEventListener('click', (e) => {
             e.preventDefault();
-            alert('Editar perfil');
+            showAlert('Editar perfil');
         });
     }
 
@@ -795,14 +872,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     body: JSON.stringify({ correo, password })
                 });
                 const data = await res.json();
-                if (!res.ok) { alert('❌ ' + data.error); return; }
+                if (!res.ok) { showAlert('❌ ' + data.error); return; }
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('usuario', JSON.stringify(data.usuario));
-                alert(`✅ Bienvenido, ${data.usuario.nombre}!`);
+                showAlert(`✅ Bienvenido, ${data.usuario.nombre}!`);
                 authModal.classList.remove('show');
                 updateAuthUI();
             } catch {
-                alert('❌ Error conectando con el servidor');
+                showAlert('❌ Error conectando con el servidor');
             }
         });
     }
@@ -835,7 +912,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await res.json();
 
                 if (!res.ok) {
-                    alert('❌ ' + data.error);
+                    showAlert('❌ ' + data.error);
                     return;
                 }
 
@@ -845,12 +922,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     ...data
                 }));
 
-                alert('✅ Perfil actualizado correctamente');
+                showAlert('✅ Perfil actualizado correctamente');
                 profileModal.classList.remove('show');
 
             } catch (err) {
                 console.error(err);
-                alert('❌ Error conectando con el servidor');
+                showAlert('❌ Error conectando con el servidor');
             }
         });
     }
@@ -872,11 +949,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     body: JSON.stringify({ documento, nombre, apellido, correo, telefono, password })
                 });
                 const data = await res.json();
-                if (!res.ok) { alert('❌ ' + data.error); return; }
-                alert('✅ Cuenta creada! Ya puedes iniciar sesión.');
+                if (!res.ok) { showAlert('❌ ' + data.error); return; }
+                showAlert('✅ Cuenta creada! Ya puedes iniciar sesión.');
                 tabLoginBtn?.click();
             } catch {
-                alert('❌ Error conectando con el servidor');
+                showAlert('❌ Error conectando con el servidor');
             }
         });
     }
@@ -966,9 +1043,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const duracion      = duraciones[selectedPlan] || 3;
             const usuario       = JSON.parse(localStorage.getItem('usuario'));
 
-            if (!usuario) { alert('❌ Debes iniciar sesión'); return; }
-            if (!fecha)   { alert('❌ Selecciona una fecha'); return; }
-            if (!hora_inicio) { alert('❌ Selecciona una hora'); return; }
+            if (!usuario) { showAlert('❌ Debes iniciar sesión'); return; }
+            if (!fecha)   { showAlert('❌ Selecciona una fecha'); return; }
+            if (!hora_inicio) { showAlert('❌ Selecciona una hora'); return; }
 
             const [hh, mm] = hora_inicio.split(':').map(Number);
             const hora_fin = `${String(Math.floor((hh * 60 + mm + duracion * 60) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + duracion * 60) % 60).padStart(2, '0')}`;
@@ -993,7 +1070,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem('reserva_pendiente', JSON.stringify(reservaData));
                 window.location.href = prefData.init_point;
             } else {
-                alert('❌ Error iniciando el pago');
+                showAlert('❌ Error iniciando el pago');
             }
         });
     }
@@ -1009,9 +1086,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const duracion      = duraciones[selectedPlan] || 3;
             const usuario       = JSON.parse(localStorage.getItem('usuario'));
 
-            if (!usuario) { alert('❌ Debes iniciar sesión'); return; }
-            if (!fecha)   { alert('❌ Selecciona una fecha'); return; }
-            if (!hora_inicio) { alert('❌ Selecciona una hora'); return; }
+            if (!usuario) { showAlert('❌ Debes iniciar sesión'); return; }
+            if (!fecha)   { showAlert('❌ Selecciona una fecha'); return; }
+            if (!hora_inicio) { showAlert('❌ Selecciona una hora'); return; }
 
             const [hh, mm] = hora_inicio.split(':').map(Number);
             const hora_fin = `${String(Math.floor((hh * 60 + mm + duracion * 60) / 60) % 24).padStart(2, '0')}:${String((hh * 60 + mm + duracion * 60) % 60).padStart(2, '0')}`;
@@ -1034,14 +1111,14 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             const data = await res.json();
             if (res.ok) {
-                alert(`✅ Reserva creada! ID: ${data.id_reserva}. Recuerda pagar antes de tu visita.`);
+                showAlert(`✅ Reserva creada! ID: ${data.id_reserva}. Recuerda pagar antes de tu visita.`);
                 currentStep = 1;
                 selectedPlan = null;
                 selectedHour = null;
                 updateWizardUI();
                 showHomeTab();
             } else {
-                alert('❌ Error creando la reserva');
+                showAlert('❌ Error creando la reserva');
             }
         });
     }
@@ -1098,7 +1175,7 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.clear();
             updateAuthUI();
             showHomeTab();
-            alert('👋 Sesión cerrada');
+            showAlert('👋 Sesión cerrada');
         });
     }
 
@@ -1261,14 +1338,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (btnSub) btnSub.addEventListener('click', async () => {
             const usuario = JSON.parse(localStorage.getItem('usuario'));
             if (!usuario) return;
-            if (sel === 0) { alert('⭐ Por favor selecciona una calificación.'); return; }
+            if (sel === 0) { showAlert('⭐ Por favor selecciona una calificación.'); return; }
             const texto = textarea?.value.trim();
-            if (!texto) { alert('✍️ Escribe tu experiencia antes de publicar.'); return; }
+            if (!texto) { showAlert('✍️ Escribe tu experiencia antes de publicar.'); return; }
 
             // Obtener la primera reserva del usuario
             const resReservas = await fetch(`https://proyecto-oasis-ar.onrender.com/reservas/usuario/${usuario.id_usuario}`);
             const reservas = await resReservas.json();
-            if (!reservas.length) { alert('❌ No tienes reservas para reseñar.'); return; }
+            if (!reservas.length) { showAlert('❌ No tienes reservas para reseñar.'); return; }
 
             const res = await fetch('https://proyecto-oasis-ar.onrender.com/resenas', {
                 method: 'POST',
@@ -1286,10 +1363,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 stars.forEach(s => s.className = 'fa-regular fa-star star-input');
                 if (textarea) textarea.value = '';
                 if (charNum) charNum.textContent = '0';
-                alert('✅ ¡Gracias por tu reseña!');
+                showAlert('✅ ¡Gracias por tu reseña!');
                 renderResenasPage();
             } else {
-                alert('❌ Error al publicar la reseña.');
+                showAlert('❌ Error al publicar la reseña.');
             }
         });
     })();
