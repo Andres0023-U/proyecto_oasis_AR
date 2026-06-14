@@ -353,6 +353,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function validateCurrentStepForm() {
         if (currentStep === 1) {
             nextBtn.disabled = !selectedPlan;
+        } else if (currentStep === 2) {
+            const fechaSeleccionada = datePicker ? datePicker.value : "";
+            nextBtn.disabled = !(fechaSeleccionada && selectedHour);
         } else {
             nextBtn.disabled = false;
         }
@@ -684,7 +687,10 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.classList.remove("disabled");
             if (fechaSeleccionada === hoyString && horaBtn <= horaActual) {
                 btn.classList.add("disabled");
-                btn.classList.remove("active");
+                if (btn.classList.contains("active") || btn.classList.contains("selected")) {
+                    selectedHour = null;
+                }
+                btn.classList.remove("active", "selected");
             }
         });
     }
@@ -981,6 +987,7 @@ document.addEventListener("DOMContentLoaded", () => {
             hourButtons.forEach(b => b.classList.remove("selected", "active"));
             btn.classList.add("selected", "active");
             selectedHour = btn.textContent;
+            validateCurrentStepForm();
             actualizarResumen();
         });
     });
@@ -1004,6 +1011,7 @@ document.addEventListener("DOMContentLoaded", () => {
         datePicker.min = getTodayString();
         datePicker.addEventListener("change", () => {
             actualizarHorasDisponibles();
+            validateCurrentStepForm();
             actualizarResumen();
         });
     }
