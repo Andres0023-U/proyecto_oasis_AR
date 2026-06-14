@@ -1001,7 +1001,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         plusBtn.addEventListener("click", () => {
             const val = parseInt(guestsInput.value);
-            if (val < 50) guestsInput.value = val + 1;
+            if (val < 40) guestsInput.value = val + 1;
             actualizarResumen();
         });
     }
