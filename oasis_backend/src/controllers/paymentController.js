@@ -6,17 +6,30 @@ const client = new MercadoPagoConfig({
 
 const crearPreferencia = async (req, res) => {
     try {
-        const { plan, precio, id_reserva } = req.body;
+        const { plan, precio, id_reserva, addons = [] } = req.body;
+
+        // Item del plan
+        const items = [{
+            title: plan,
+            quantity: 1,
+            unit_price: precio,
+            currency_id: 'COP'
+        }];
+
+        // Agregar cada addon como ítem separado
+        addons.forEach(addon => {
+            items.push({
+                title: addon.title,
+                quantity: 1,
+                unit_price: addon.precio,
+                currency_id: 'COP'
+            });
+        });
 
         const preference = new Preference(client);
         const result = await preference.create({
             body: {
-                items: [{
-                    title: plan,
-                    quantity: 1,
-                    unit_price: precio,
-                    currency_id: 'COP'
-                }],
+                items,
                 external_reference: String(id_reserva),
                 back_urls: {
                     success: 'https://proyecto-oasis-ar.vercel.app/',
