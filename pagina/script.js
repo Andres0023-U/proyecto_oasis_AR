@@ -1067,11 +1067,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 observaciones: `Plan: ${selectedPlan}`
             };
 
+            // Calcular total con complementos
             const precios = { 'cobro-normal': 15000, 'plan-1': 45000, 'plan-2': 75000, 'plan-3': 120000 };
+            let totalAddons = 0;
+            document.querySelectorAll('input[name="addon"]:checked').forEach(addon => {
+                totalAddons += parseInt(addon.dataset.price);
+            });
+            const precioTotal = (precios[selectedPlan] || 45000) + totalAddons;
+
             const prefRes = await fetch('https://proyecto-oasis-ar.onrender.com/pagos/crear-preferencia', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ plan: selectedPlan, precio: precios[selectedPlan] || 45000, id_reserva: 0 })
+                body: JSON.stringify({ plan: selectedPlan, precio: precioTotal, id_reserva: 0 })
             });
             const prefData = await prefRes.json();
             if (prefData.init_point) {
