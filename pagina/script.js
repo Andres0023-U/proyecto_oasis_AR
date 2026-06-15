@@ -556,18 +556,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     const precio = precios[planId] || 45000;
 
                     try {
-                        const addonItems = [];
-                        document.querySelectorAll('input[name="addon"]:checked').forEach(addon => {
-                            addonItems.push({
-                                title: addon.value,
-                                precio: parseInt(addon.dataset.price)
-                            });
-                        });
-
                         const prefRes = await fetch('https://proyecto-oasis-ar.onrender.com/pagos/crear-preferencia', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ plan: selectedPlan, precio: precios[selectedPlan] || 45000, addons: addonItems, id_reserva: 0 })
+                            body: JSON.stringify({ plan: planId, precio, id_reserva: r.id_reserva })
                         });
                         
                         const prefData = await prefRes.json();
@@ -1083,10 +1075,18 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             const precioTotal = (precios[selectedPlan] || 45000) + totalAddons;
 
+            const addonItems = [];
+            document.querySelectorAll('input[name="addon"]:checked').forEach(addon => {
+                addonItems.push({
+                    title: addon.value,
+                    precio: parseInt(addon.dataset.price)
+                });
+            });
+
             const prefRes = await fetch('https://proyecto-oasis-ar.onrender.com/pagos/crear-preferencia', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ plan: selectedPlan, precio: precioTotal, id_reserva: 0 })
+                body: JSON.stringify({ plan: selectedPlan, precio: precios[selectedPlan] || 45000, addons: addonItems, id_reserva: 0 })
             });
             const prefData = await prefRes.json();
             if (prefData.init_point) {
