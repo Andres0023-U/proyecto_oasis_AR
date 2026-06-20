@@ -570,7 +570,7 @@ header {
 }
 
 /* ==========================================================================
-   6. NUEVA PESTAÑA: SECCIÓN DE RESERVAS (ESTILOS COMPATIBLES CON CAPTURAS)
+   6. SECCIÓN DE RESERVAS — Formulario, inputs, complementos y pago
    ========================================================================== */
 .booking-page-wrapper {
     width: 100%;
@@ -1116,7 +1116,7 @@ header {
 }
 
 /* ==========================================================================
-   WIZARD DE RESERVAS ESTILO MULTI-PASO
+   6b. WIZARD DE RESERVAS (MULTI-PASO)
    ========================================================================== */
 .booking-wizard-container {
     max-width: 1100px;
@@ -1555,7 +1555,7 @@ header {
 }
 
 /* ==========================================================================
-   MIS RESERVAS
+   6c. MIS RESERVAS
    ========================================================================== */
 .reservas-container {
     max-width: 900px;
@@ -1841,7 +1841,7 @@ header {
 }
 
 /* ==========================================================================
-   7B. SECCIÓN DE RESEÑAS DE USUARIOS
+   7. SECCIÓN DE RESEÑAS DE USUARIOS
    ========================================================================== */
 
 .reviews-section {
@@ -2261,9 +2261,7 @@ header {
         margin-top: 4px;
     }
 }
-/* ==========================================================================
-   BOTÓN VER TODAS LAS RESEÑAS
-   ========================================================================== */
+/* --- Botón "Ver todas las reseñas" --- */
 .btn-ver-resenas {
     background: var(--primary-blue);
     color: var(--white);
@@ -2287,7 +2285,7 @@ header {
 }
 
 /* ==========================================================================
-   PÁGINA COMPLETA DE RESEÑAS
+   7b. PÁGINA COMPLETA DE RESEÑAS
    ========================================================================== */
 .resenas-container {
     max-width: 1200px;
@@ -2381,7 +2379,7 @@ header {
 }
 
 /* ==========================================================================
-   FOOTER
+   9. FOOTER
    ========================================================================== */
 .site-footer {
     background: var(--primary-dark);
@@ -2520,7 +2518,7 @@ header {
     .footer-bottom { flex-direction: column; text-align: center; gap: 6px; }
 }
 /* ==========================================================================
-   ALERTAS PERSONALIZADAS (reemplazo de alert() nativo)
+   10. ALERTAS PERSONALIZADAS (reemplazo de alert() nativo)
    ========================================================================== */
 .oasis-alert-overlay {
     position: fixed;

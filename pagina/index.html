@@ -5,413 +5,416 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservas Oasis Piscina</title>
     <link rel="icon" type="image/png" href="images/logo.png">
-
     <link rel="stylesheet" href="styles.css">
-    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <header>
-        <div class="navbar">
-            <div class="logo-container" id="nav-logo">
-                <img src="images/logo.png" alt="Oasis Logo" class="logo-img-nav">
-                <span class="logo-text">Reservas Oasis Piscina</span>
-            </div>
-            
-            <div class="menu-toggle" id="menu-toggle">
-                <i class="fa-solid fa-bars"></i>
-            </div>
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<header>
+    <div class="navbar">
 
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#" id="tab-home" class="nav-item active">Inicio</a></li>
-                <li><a href="#" id="tab-book" class="nav-item">Reservar Ahora</a></li>
-                <li><a href="#" id="tab-reviews" class="nav-item">Reseñas</a></li>
+        <!-- Logo -->
+        <div class="logo-container" id="nav-logo">
+            <img src="images/logo.png" alt="Oasis Logo" class="logo-img-nav">
+            <span class="logo-text">Reservas Oasis Piscina</span>
+        </div>
 
-                <li class="mobile-auth-item">
-                    <button class="btn-auth-menu" id="open-auth-btn">
-                        Registrarse / Iniciar Sesión
-                    </button>
-                </li>
+        <!-- Botón hamburguesa (móvil) -->
+        <div class="menu-toggle" id="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
 
-                <li class="mobile-user-item" style="display:none;">
-                    <div class="user-menu-mobile">
-                        <div class="user-menu-trigger">
-                            <i class="fa-solid fa-circle-user"></i>
-                            <span id="user-menu-name-mobile">Usuario</span>
-                        </div>
+        <!-- Links de navegación -->
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#" id="tab-home" class="nav-item active">Inicio</a></li>
+            <li><a href="#" id="tab-book" class="nav-item">Reservar Ahora</a></li>
+            <li><a href="#" id="tab-reviews" class="nav-item">Reseñas</a></li>
 
-                        <div class="user-dropdown-mobile">
-                            <a href="#" id="dropdown-reservas-mobile">
-                                <i class="fa-regular fa-calendar-days"></i> Mis Reservas
-                            </a>
+            <!-- Auth móvil: sin sesión -->
+            <li class="mobile-auth-item">
+                <button class="btn-auth-menu" id="open-auth-btn">
+                    Registrarse / Iniciar Sesión
+                </button>
+            </li>
 
-                            <a href="#" id="dropdown-profile-mobile">
-                                <i class="fa-solid fa-user-pen"></i> Editar Perfil
-                            </a>
-
-                            <a href="#" id="dropdown-logout-mobile">
-                                <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
-                            </a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-
-            <div class="navbar-auth">
-                <button class="btn-auth" id="open-auth-btn-desktop">Registrarse / Iniciar Sesión</button>
-                
-                <div class="user-menu" id="user-menu" style="display:none;">
-                    <button class="user-menu-trigger" id="user-menu-trigger">
+            <!-- Auth móvil: con sesión -->
+            <li class="mobile-user-item" style="display:none;">
+                <div class="user-menu-mobile">
+                    <div class="user-menu-trigger">
                         <i class="fa-solid fa-circle-user"></i>
-                        <span id="user-menu-name">Usuario</span>
-                        <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="user-dropdown" id="user-dropdown">
-                        <a href="#" id="dropdown-reservas">
+                        <span id="user-menu-name-mobile">Usuario</span>
+                    </div>
+                    <div class="user-dropdown-mobile">
+                        <a href="#" id="dropdown-reservas-mobile">
                             <i class="fa-regular fa-calendar-days"></i> Mis Reservas
                         </a>
-
-                        <a href="#" id="dropdown-profile">
+                        <a href="#" id="dropdown-profile-mobile">
                             <i class="fa-solid fa-user-pen"></i> Editar Perfil
                         </a>
-
-                        <a href="#" id="dropdown-logout">
+                        <a href="#" id="dropdown-logout-mobile">
                             <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
                         </a>
                     </div>
                 </div>
+            </li>
+        </ul>
+
+        <!-- Auth escritorio -->
+        <div class="navbar-auth">
+            <button class="btn-auth" id="open-auth-btn-desktop">Registrarse / Iniciar Sesión</button>
+
+            <div class="user-menu" id="user-menu" style="display:none;">
+                <button class="user-menu-trigger" id="user-menu-trigger">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span id="user-menu-name">Usuario</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div class="user-dropdown" id="user-dropdown">
+                    <a href="#" id="dropdown-reservas">
+                        <i class="fa-regular fa-calendar-days"></i> Mis Reservas
+                    </a>
+                    <a href="#" id="dropdown-profile">
+                        <i class="fa-solid fa-user-pen"></i> Editar Perfil
+                    </a>
+                    <a href="#" id="dropdown-logout">
+                        <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                    </a>
+                </div>
             </div>
         </div>
-    </header>
 
-    <main style="margin-top: 75px;">
-        
-        <section id="view-home" class="page-view active">
-            
-            <div class="hero">
-                <div class="hero-logo-box">
-                    <img src="images/logo.png" alt="Oasis Big Logo" class="logo-img-hero">
+    </div>
+</header>
+
+<!-- ============================================================
+     CONTENIDO PRINCIPAL
+     ============================================================ -->
+<main style="margin-top: 75px;">
+
+    <!-- ==================== VISTA: INICIO ==================== -->
+    <section id="view-home" class="page-view active">
+
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-logo-box">
+                <img src="images/logo.png" alt="Oasis Big Logo" class="logo-img-hero">
+            </div>
+            <h1>Sumérgete en Tu Día Perfecto</h1>
+            <p>Reserva tu experiencia privada en piscina con Oasis. Planes flexibles, instalaciones premium y momentos inolvidables.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" id="hero-start-booking">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Comenzar Reserva
+                </button>
+                <button class="btn-secondary" id="hero-view-plans">Ver Planes</button>
+            </div>
+            <div class="wave-container">
+                <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
+                    <path d="M0,96 C288,160 576,192 864,160 C1152,128 1296,64 1440,32 L1440,200 L0,200 Z" class="wave-fill"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Características -->
+        <div class="features">
+            <h2 class="section-title">¿Por Qué Elegir Oasis?</h2>
+            <p class="section-subtitle">Experimenta una reserva de piscina premium con funciones diseñadas para tu comodidad</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="fa-regular fa-calendar-days"></i></div>
+                    <h3>Reserva Fácil</h3>
+                    <p>Selecciona tu fecha y hora mediante nuestra interfaz intuitiva de calendario</p>
                 </div>
-                <h1>Sumérgete en Tu Día Perfecto</h1>
-                <p>Reserva tu experiencia privada en piscina con Oasis. Planes flexibles, instalaciones premium y momentos inolvidables.</p>
-                <div class="hero-buttons">
-                    <button class="btn-primary" id="hero-start-booking">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Comenzar Reserva
-                    </button>
-                    <button class="btn-secondary" id="hero-view-plans">Ver Planes</button>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="fa-regular fa-clock"></i></div>
+                    <h3>Planes Flexibles</h3>
+                    <p>Elige entre planes por horas que se adaptan perfectamente a tu horario</p>
                 </div>
-                <div class="wave-container">
-                    <svg viewBox="0 0 1440 200" preserveAspectRatio="none">
-                        <path d="M0,96 C288,160 576,192 864,160 C1152,128 1296,64 1440,32 L1440,200 L0,200 Z" class="wave-fill"></path>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-users"></i></div>
+                    <h3>Ideal para Grupos</h3>
+                    <p>Recibe grupos de cualquier tamaño gracias a nuestras amplias instalaciones</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Pago Seguro</h3>
+                    <p>Procesamiento de pagos seguro y confiable para tu tranquilidad</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Planes de precios -->
+        <div class="plans-section" id="plans-section-target">
+            <h2>Nuestros Planes de Precios</h2>
+            <p class="subtitle">Elige el plan perfecto para tu experiencia en piscina</p>
+            <div class="plans-grid">
+                <div class="plan-card popular">
+                    <div class="popular-badge">Más Popular</div>
+                    <h3>Pase por Horas</h3>
+                    <div class="price">$45.000</div>
+                    <span class="period">3 horas de experiencia</span>
+                    <button class="btn-plan open-booking-trigger" data-plan-id="1">Seleccionar Plan</button>
+                </div>
+                <div class="plan-card">
+                    <h3>Pase de Medio Día</h3>
+                    <div class="price">$75.000</div>
+                    <span class="period">5 horas de experiencia</span>
+                    <button class="btn-plan open-booking-trigger" data-plan-id="2">Seleccionar Plan</button>
+                </div>
+                <div class="plan-card">
+                    <h3>Pase de Día Completo</h3>
+                    <div class="price">$120.000</div>
+                    <span class="period">8 horas de experiencia</span>
+                    <button class="btn-plan open-booking-trigger" data-plan-id="3">Seleccionar Plan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reseñas (vista previa) -->
+        <div class="reviews-section" id="reviews-section">
+            <h2 class="section-title">Lo Que Dicen Nuestros Clientes</h2>
+            <p class="section-subtitle">Experiencias reales de quienes ya disfrutaron Oasis Piscina</p>
+
+            <div class="reviews-grid" id="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"¡Increíble experiencia! Las instalaciones son impecables y el proceso de reserva fue muy sencillo. Definitivamente volveré con mi familia."</p>
+                    <div class="review-author">
+                        <img src="images/usuario1.webp" alt="Laura Castillo" class="review-avatar-img">
+                        <div class="review-author-info">
+                            <span class="review-name">Laura Castillo</span>
+                            <span class="review-date">15 de Mayo de 2025</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"Reservamos el Pase de Día Completo para el cumpleaños de mi hijo y fue perfecto. El espacio es amplio, limpio y muy cómodo para grupos grandes."</p>
+                    <div class="review-author">
+                        <img src="images/usuario2.jpg" alt="Juan Rodríguez" class="review-avatar-img">
+                        <div class="review-author-info">
+                            <span class="review-name">Juan Rodríguez</span>
+                            <span class="review-date">3 de Abril de 2025</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                    </div>
+                    <p class="review-text">"Muy buena atención y excelentes instalaciones. El pase por horas es una opción genial para tardes relajantes. ¡100% recomendado!"</p>
+                    <div class="review-author">
+                        <img src="images/usuario3.jpg" alt="Sofía Mejía" class="review-avatar-img">
+                        <div class="review-author-info">
+                            <span class="review-name">Sofía Mejía</span>
+                            <span class="review-date">22 de Marzo de 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top: 32px;">
+                <button class="btn-ver-resenas" id="btn-ver-resenas">
+                    <i class="fa-solid fa-star"></i> Ver todas las reseñas
+                </button>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section-container">
+            <div class="cta-section">
+                <div class="cta-wave-top">
+                    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                        <path d="M0,32 C288,85.3 576,112 864,112 C1152,112 1296,85.3 1440,32 L1440,0 L0,0 Z" fill="#ffffff"></path>
                     </svg>
                 </div>
-            </div>
-
-            <div class="features">
-                <h2 class="section-title">¿Por Qué Elegir Oasis?</h2>
-                <p class="section-subtitle">Experimenta una reserva de piscina premium con funciones diseñadas para tu comodidad</p>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon-wrapper"><i class="fa-regular fa-calendar-days"></i></div>
-                        <h3>Reserva Fácil</h3>
-                        <p>Selecciona tu fecha y hora mediante nuestra interfaz intuitiva de calendario</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon-wrapper"><i class="fa-regular fa-clock"></i></div>
-                        <h3>Planes Flexibles</h3>
-                        <p>Elige entre planes por horas que se adaptan perfectamente a tu horario</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon-wrapper"><i class="fa-solid fa-users"></i></div>
-                        <h3>Ideal para Grupos</h3>
-                        <p>Recibe grupos de cualquier tamaño gracias a nuestras amplias instalaciones</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon-wrapper"><i class="fa-solid fa-shield-halved"></i></div>
-                        <h3>Pago Seguro</h3>
-                        <p>Procesamiento de pagos seguro y confiable para tu tranquilidad</p>
-                    </div>
+                <div class="cta-content">
+                    <h2>¿Listo para Darte un Chapuzón?</h2>
+                    <p>Reserva tu experiencia hoy y crea recuerdos inolvidables</p>
+                    <button class="btn-cta open-booking-trigger">Reserva Tu Piscina Ahora</button>
                 </div>
             </div>
+        </div>
 
-            <div class="plans-section" id="plans-section-target">
-                <h2>Nuestros Planes de Precios</h2>
-                <p class="subtitle">Elige el plan perfecto para tu experiencia en piscina</p>
-                <div class="plans-grid">
-                    <div class="plan-card popular">
-                        <div class="popular-badge">Más Popular</div>
-                        <h3>Pase por Horas</h3>
-                        <div class="price">$45.000</div>
-                        <span class="period">3 horas de experiencia</span>
-                        <button class="btn-plan open-booking-trigger" data-plan-id="1">Seleccionar Plan</button>
+    </section>
+
+    <!-- ==================== VISTA: RESERVAR (WIZARD) ==================== -->
+    <section id="view-book" class="page-view">
+        <div class="booking-wizard-container">
+
+            <!-- Encabezado y barra de progreso -->
+            <div class="wizard-header">
+                <h2>Reserva Tu Experiencia en Piscina</h2>
+                <p>Completa tu reserva en solo unos pocos pasos</p>
+
+                <div class="progress-bar-wrapper">
+                    <div class="progress-line-bg">
+                        <div class="progress-line-fill" id="wizard-progress-line"></div>
                     </div>
-                    <div class="plan-card">
-                        <h3>Pase de Medio Día</h3>
-                        <div class="price">$75.000</div>
-                        <span class="period">5 horas de experiencia</span>
-                        <button class="btn-plan open-booking-trigger" data-plan-id="2">Seleccionar Plan</button>
-                    </div>
-                    <div class="plan-card">
-                        <h3>Pase de Día Completo</h3>
-                        <div class="price">$120.000</div>
-                        <span class="period">8 horas de experiencia</span>
-                        <button class="btn-plan open-booking-trigger" data-plan-id="3">Seleccionar Plan</button>
+                    <div class="progress-steps">
+                        <div class="step-item active" id="step-dot-1">
+                            <div class="step-circle">1</div>
+                            <span class="step-label">Plan</span>
+                        </div>
+                        <div class="step-item" id="step-dot-2">
+                            <div class="step-circle">2</div>
+                            <span class="step-label">Detalles</span>
+                        </div>
+                        <div class="step-item" id="step-dot-3">
+                            <div class="step-circle">3</div>
+                            <span class="step-label">Complementos</span>
+                        </div>
+                        <div class="step-item" id="step-dot-4">
+                            <div class="step-circle">4</div>
+                            <span class="step-label">Pago</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ======================== RESEÑAS (vista previa en home) ======================== -->
-            <div class="reviews-section" id="reviews-section">
-                <h2 class="section-title">Lo Que Dicen Nuestros Clientes</h2>
-                <p class="section-subtitle">Experiencias reales de quienes ya disfrutaron Oasis Piscina</p>
+            <!-- Paneles del wizard -->
+            <div class="wizard-content-box">
 
-                <div class="reviews-grid" id="reviews-grid">
-                    <div class="review-card">
-                        <div class="review-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="review-text">"¡Increíble experiencia! Las instalaciones son impecables y el proceso de reserva fue muy sencillo. Definitivamente volveré con mi familia."</p>
-                        <div class="review-author">
-                            <img src="images/usuario1.webp" alt="Laura Castillo" class="review-avatar-img">
-                            <div class="review-author-info">
-                                <span class="review-name">Laura Castillo</span>
-                                <span class="review-date">15 de Mayo de 2025</span>
-                            </div>
-                        </div>
+                <!-- Paso 1: Selección de plan -->
+                <div class="wizard-step-panel active" id="wizard-step-1">
+                    <div class="step-title-block">
+                        <h3>Step 1: Seleccionar Plan</h3>
+                        <p>Elige el plan perfecto para tu día en la piscina</p>
                     </div>
-                    <div class="review-card">
-                        <div class="review-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                        </div>
-                        <p class="review-text">"Reservamos el Pase de Día Completo para el cumpleaños de mi hijo y fue perfecto. El espacio es amplio, limpio y muy cómodo para grupos grandes."</p>
-                        <div class="review-author">
-                            <img src="images/usuario2.jpg" alt="Juan Rodríguez" class="review-avatar-img">
-                            <div class="review-author-info">
-                                <span class="review-name">Juan Rodríguez</span>
-                                <span class="review-date">3 de Abril de 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="review-card">
-                        <div class="review-stars">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
-                        </div>
-                        <p class="review-text">"Muy buena atención y excelentes instalaciones. El pase por horas es una opción genial para tardes relajantes. ¡100% recomendado!"</p>
-                        <div class="review-author">
-                            <img src="images/usuario3.jpg" alt="Sofía Mejía" class="review-avatar-img">
-                            <div class="review-author-info">
-                                <span class="review-name">Sofía Mejía</span>
-                                <span class="review-date">22 de Marzo de 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div style="text-align:center; margin-top: 32px;">
-                    <button class="btn-ver-resenas" id="btn-ver-resenas">
-                        <i class="fa-solid fa-star"></i> Ver todas las reseñas
-                    </button>
-                </div>
-            </div>
-
-            <div class="cta-section-container">
-                <div class="cta-section">
-                    <div class="cta-wave-top">
-                        <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
-                            <path d="M0,32 C288,85.3 576,112 864,112 C1152,112 1296,85.3 1440,32 L1440,0 L0,0 Z" fill="#ffffff"></path>
-                        </svg>
-                    </div>
-                    <div class="cta-content">
-                        <h2>¿Listo para Darte un Chapuzón?</h2>
-                        <p>Reserva tu experiencia hoy y crea recuerdos inolvidables</p>
-                        <button class="btn-cta open-booking-trigger">Reserva Tu Piscina Ahora</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="view-book" class="page-view">
-            <div class="booking-wizard-container">
-                
-                <div class="wizard-header">
-                    <h2>Reserva Tu Experiencia en Piscina</h2>
-                    <p>Completa tu reserva en solo unos pocos pasos</p>
-                    
-                    <div class="progress-bar-wrapper">
-                        <div class="progress-line-bg">
-                            <div class="progress-line-fill" id="wizard-progress-line"></div>
+                    <div class="wizard-plans-grid">
+                        <div class="wizard-plan-card" data-plan="cobro-normal" data-price="15000">
+                            <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
+                            <h4>Cobro Normal</h4>
+                            <span class="plan-duration"><i class="fa-regular fa-clock"></i> 1 hour</span>
+                            <div class="plan-price-tag">$15.000 <span class="currency">COP</span></div>
+                            <p class="plan-desc">Perfecto para un baño rápido y refrescante</p>
+                            <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
                         </div>
-                        <div class="progress-steps">
-                            <div class="step-item active" id="step-dot-1">
-                                <div class="step-circle">1</div>
-                                <span class="step-label">Plan</span>
-                            </div>
-                            <div class="step-item" id="step-dot-2">
-                                <div class="step-circle">2</div>
-                                <span class="step-label">Detalles</span>
-                            </div>
-                            <div class="step-item" id="step-dot-3">
-                                <div class="step-circle">3</div>
-                                <span class="step-label">Complementos</span>
-                            </div>
-                            <div class="step-item" id="step-dot-4">
-                                <div class="step-circle">4</div>
-                                <span class="step-label">Pago</span>
-                            </div>
+                        <div class="wizard-plan-card" data-plan="plan-1" data-plan-id="1" data-price="45000">
+                            <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
+                            <div class="popular-badge-wizard">Más Popular</div>
+                            <h4>Plan 1</h4>
+                            <span class="plan-duration"><i class="fa-regular fa-clock"></i> 3 hours</span>
+                            <div class="plan-price-tag">$45.000 <span class="currency">COP</span></div>
+                            <p class="plan-desc">Ideal para diversión familiar y relajación</p>
+                            <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
+                        </div>
+                        <div class="wizard-plan-card" data-plan="plan-2" data-plan-id="2" data-price="75000">
+                            <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
+                            <h4>Plan 2</h4>
+                            <span class="plan-duration"><i class="fa-regular fa-clock"></i> 5 hours</span>
+                            <div class="plan-price-tag">$75.000 <span class="currency">COP</span></div>
+                            <p class="plan-desc">Excelente para fiestas y celebraciones</p>
+                            <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
+                        </div>
+                        <div class="wizard-plan-card" data-plan="plan-3" data-plan-id="3" data-price="120000">
+                            <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
+                            <h4>Plan 3</h4>
+                            <span class="plan-duration"><i class="fa-regular fa-clock"></i> 8 hours</span>
+                            <div class="plan-price-tag">$120.000 <span class="currency">COP</span></div>
+                            <p class="plan-desc">Día completo de disfrute ilimitado de la piscina</p>
+                            <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="wizard-content-box">
-                    
-                    <div class="wizard-step-panel active" id="wizard-step-1">
-                        <div class="step-title-block">
-                            <h3>Step 1: Seleccionar Plan</h3>
-                            <p>Elige el plan perfecto para tu día en la piscina</p>
-                        </div>
-                        
-                        <div class="wizard-plans-grid">
-                            <div class="wizard-plan-card" data-plan="cobro-normal" data-price="15000">
-                                <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
-                                <h4>Cobro Normal</h4>
-                                <span class="plan-duration"><i class="fa-regular fa-clock"></i> 1 hour</span>
-                                <div class="plan-price-tag">$15.000 <span class="currency">COP</span></div>
-                                <p class="plan-desc">Perfecto para un baño rápido y refrescante</p>
-                                <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
-                            </div>
-                            <div class="wizard-plan-card" data-plan="plan-1" data-plan-id="1" data-price="45000">
-                                <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
-                                <div class="popular-badge-wizard">Más Popular</div>
-                                <h4>Plan 1</h4>
-                                <span class="plan-duration"><i class="fa-regular fa-clock"></i> 3 hours</span>
-                                <div class="plan-price-tag">$45.000 <span class="currency">COP</span></div>
-                                <p class="plan-desc">Ideal para diversión familiar y relajación</p>
-                                <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
-                            </div>
-                            <div class="wizard-plan-card" data-plan="plan-2" data-plan-id="2" data-price="75000">
-                                <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
-                                <h4>Plan 2</h4>
-                                <span class="plan-duration"><i class="fa-regular fa-clock"></i> 5 hours</span>
-                                <div class="plan-price-tag">$75.000 <span class="currency">COP</span></div>
-                                <p class="plan-desc">Excelente para fiestas y celebraciones</p>
-                                <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
-                            </div>
-                            <div class="wizard-plan-card" data-plan="plan-3" data-plan-id="3" data-price="120000">
-                                <div class="card-select-check"><i class="fa-solid fa-circle-check"></i></div>
-                                <h4>Plan 3</h4>
-                                <span class="plan-duration"><i class="fa-regular fa-clock"></i> 8 hours</span>
-                                <div class="plan-price-tag">$120.000 <span class="currency">COP</span></div>
-                                <p class="plan-desc">Día completo de disfrute ilimitado de la piscina</p>
-                                <button type="button" class="select-plan-action-btn">Seleccionar Plan</button>
-                            </div>
+                <!-- Paso 2: Fecha, hora e invitados -->
+                <div class="wizard-step-panel" id="wizard-step-2">
+                    <div class="step-title-block">
+                        <h3>Step 2: Detalles</h3>
+                        <p>Selecciona tu fecha, hora y número de invitados</p>
+                    </div>
+
+                    <div class="wizard-input-block">
+                        <label class="wizard-block-label">Fecha de Reserva</label>
+                        <div class="date-input-wrapper">
+                            <input type="date" id="wizard-date-picker" required>
                         </div>
                     </div>
 
-                    <div class="wizard-step-panel" id="wizard-step-2">
-                        <div class="step-title-block">
-                            <h3>Step 2: Detalles</h3>
-                            <p>Selecciona tu fecha, hora y número de invitados</p>
-                        </div>
-                        
-                        <div class="wizard-input-block">
-                            <label class="wizard-block-label">Fecha de Reserva</label>
-                            <div class="date-input-wrapper">
-                                <input type="date" id="wizard-date-picker" required>
-                            </div>
-                        </div>
-
-                        <div class="wizard-input-block">
-                            <label class="wizard-block-label">Hora de Inicio</label>
-                            <div class="wizard-hours-grid">
-                                <button type="button" class="hour-grid-btn" data-hour="8">08:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="9">09:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="10">10:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="11">11:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="12">12:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="13">13:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="14">14:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="15">15:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="16">16:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="17">17:00</button>
-                                <button type="button" class="hour-grid-btn" data-hour="18">18:00</button>
-                            </div>
-                        </div>
-
-                        <div class="wizard-input-block">
-                            <label class="wizard-block-label">Número Aproximado de Invitados</label>
-                            <div class="wizard-counter-container">
-                                <button type="button" class="counter-control-btn" id="wizard-minus-btn">—</button>
-                                <input type="number" id="wizard-guests-input" value="1" min="1" max="40" readonly>
-                                <button type="button" class="counter-control-btn" id="wizard-plus-btn">+</button>
-                            </div>
-                            <span class="counter-hint-text">Introduce el número estimado de invitados para tu reserva (1-40)</span>
+                    <div class="wizard-input-block">
+                        <label class="wizard-block-label">Hora de Inicio</label>
+                        <div class="wizard-hours-grid">
+                            <button type="button" class="hour-grid-btn" data-hour="8">08:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="9">09:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="10">10:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="11">11:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="12">12:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="13">13:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="14">14:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="15">15:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="16">16:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="17">17:00</button>
+                            <button type="button" class="hour-grid-btn" data-hour="18">18:00</button>
                         </div>
                     </div>
 
-                    <div class="wizard-step-panel" id="wizard-step-3">
-                        <div class="step-title-block">
-                            <h3>Step 3: Complementos (Complementos para Piscina)</h3>
-                            <p>Mejora tu experiencia con opciones adicionales</p>
+                    <div class="wizard-input-block">
+                        <label class="wizard-block-label">Número Aproximado de Invitados</label>
+                        <div class="wizard-counter-container">
+                            <button type="button" class="counter-control-btn" id="wizard-minus-btn">—</button>
+                            <input type="number" id="wizard-guests-input" value="1" min="1" max="40" readonly>
+                            <button type="button" class="counter-control-btn" id="wizard-plus-btn">+</button>
                         </div>
-                        <div class="addons-grid">
-                            <!-- 1. Juegos de toallas premium -->
-                            <label class="addon-option">
-                                <input type="checkbox" name="addon" value="Premium Towel Set" data-price="40000">
-                                <span>Juego Premium de Toallas - $40.000</span>
-                            </label>
-
-                            <!-- 2. Aperitivos junto a la piscina -->
-                            <label class="addon-option">
-                                <input type="checkbox" name="addon" value="Poolside Snacks" data-price="30000">
-                                <span>Snacks junto a la Piscina - $30.000</span>
-                            </label>
-
-                            <!-- 3. Cama techada -->
-                            <label class="addon-option">
-                                <input type="checkbox" name="addon" value="Covered Daybed" data-price="8000">
-                                <span>Cama techada - $8.000</span>
-                            </label>
-
-                            <!-- 4. Servicios alimenticios -->
-                            <label class="addon-option">
-                                <input type="checkbox" name="addon" value="Food Services" data-price="80000">
-                                <span>Servicio de Alimentación - $80.000</span>
-                            </label>
-
-                            <!-- 5. Servicios de bar -->
-                            <label class="addon-option">
-                                <input type="checkbox" name="addon" value="Bar Services" data-price="90000">
-                                <span>Servicio de Bar - $90.000</span>
-                            </label>
-
-                            <!-- 6. Entretenimiento musical -->
-                            <label class="addon-option">
-                                <input type="checkbox" name="addon" value="Music Entertainment" data-price="8000">
-                                <span>Entretenimiento Musical - $8.000</span>
-                            </label>
-
-                            <!-- 7. Cremas y lociones -->
-                            <label class="addon-option">
-                                <input type="checkbox" name="addon" value="Creams & Lotions" data-price="25000">
-                                <span>Cremas y Lociones - $25.000</span>
-                            </label>
-
-                            <!-- 8. Servicios de masajes -->
-                            <label class="addon-option">
-                                <input type="checkbox" name="addon" value="Massage Services" data-price="115000">
-                                <span>Servicio de Masajes - $115.000</span>
-                            </label>
-
-                            <!-- 9. Sauna -->
-                            <label class="addon-option">
-                                <input type="checkbox" name="addon" value="Sauna" data-price="12000">
-                                <span>Sauna - $12.000</span>
-                            </label>
-                        </div>
+                        <span class="counter-hint-text">Introduce el número estimado de invitados para tu reserva (1-40)</span>
                     </div>
-                    
+                </div>
+
+                <!-- Paso 3: Complementos -->
+                <div class="wizard-step-panel" id="wizard-step-3">
+                    <div class="step-title-block">
+                        <h3>Step 3: Complementos (Complementos para Piscina)</h3>
+                        <p>Mejora tu experiencia con opciones adicionales</p>
+                    </div>
+                    <div class="addons-grid">
+                        <label class="addon-option">
+                            <input type="checkbox" name="addon" value="Premium Towel Set" data-price="40000">
+                            <span>Juego Premium de Toallas - $40.000</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" name="addon" value="Poolside Snacks" data-price="30000">
+                            <span>Snacks junto a la Piscina - $30.000</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" name="addon" value="Covered Daybed" data-price="8000">
+                            <span>Cama techada - $8.000</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" name="addon" value="Food Services" data-price="80000">
+                            <span>Servicio de Alimentación - $80.000</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" name="addon" value="Bar Services" data-price="90000">
+                            <span>Servicio de Bar - $90.000</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" name="addon" value="Music Entertainment" data-price="8000">
+                            <span>Entretenimiento Musical - $8.000</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" name="addon" value="Creams & Lotions" data-price="25000">
+                            <span>Cremas y Lociones - $25.000</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" name="addon" value="Massage Services" data-price="115000">
+                            <span>Servicio de Masajes - $115.000</span>
+                        </label>
+                        <label class="addon-option">
+                            <input type="checkbox" name="addon" value="Sauna" data-price="12000">
+                            <span>Sauna - $12.000</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Paso 4: Resumen y pago -->
                 <div class="wizard-step-panel" id="wizard-step-4">
                     <div class="step-title-block">
                         <h3>Paso 4: Resumen y Pago</h3>
@@ -438,7 +441,7 @@
                         </div>
 
                         <hr>
-                        <!-- Complementos -->
+
                         <div class="summary-item">
                             <span>Precio del plan</span>
                             <strong id="summary-plan-price">$0</strong>
@@ -464,299 +467,318 @@
                         </div>
                     </div>
                 </div>
-                </div>
-
-                <div class="wizard-actions-footer">
-                    <button type="button" class="btn-wizard-nav prev-btn hidden" id="wizard-prev-btn">
-                        <i class="fa-solid fa-arrow-left"></i> Anterior
-                    </button>
-                    <button type="button" class="btn-wizard-nav next-btn" id="wizard-next-btn" disabled>
-                        Siguiente <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
 
             </div>
-        </section>
 
-        <!-- ======================== MIS RESERVAS ======================== -->
-        <section id="view-reservas" class="page-view">
-            <div class="reservas-container">
-                <div class="reservas-header">
-                    <div class="reservas-header-left">
-                        <h2><i class="fa-regular fa-calendar-days"></i> Mis Reservas</h2>
-                        <p>Consulta y gestiona todas tus reservas en Oasis</p>
-                    </div>
-                    <button class="btn-nueva-reserva" id="reservas-nueva-btn">
-                        <i class="fa-solid fa-plus"></i> Nueva Reserva
-                    </button>
-                </div>
-
-                <!-- Filtros de estado -->
-                <div class="reservas-filtros">
-                    <button class="filtro-btn active" data-filtro="todas">Todas</button>
-                    <button class="filtro-btn" data-filtro="confirmada">Confirmadas</button>
-                    <button class="filtro-btn" data-filtro="pendiente">Pendientes</button>
-                    <button class="filtro-btn" data-filtro="cancelada">Canceladas</button>
-                </div>
-
-                <!-- Estado: Cargando -->
-                <div class="reservas-loading" id="reservas-loading">
-                    <div class="loading-spinner"></div>
-                    <p>Cargando tus reservas...</p>
-                </div>
-
-                <!-- Estado: Sin reservas -->
-                <div class="reservas-empty" id="reservas-empty" style="display:none;">
-                    <div class="empty-icon"><i class="fa-regular fa-calendar-xmark"></i></div>
-                    <h3>No tienes reservas aún</h3>
-                    <p>¡Haz tu primera reserva y disfruta de la experiencia Oasis!</p>
-                    <button class="btn-nueva-reserva" id="reservas-empty-btn">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Reservar Ahora
-                    </button>
-                </div>
-
-                <!-- Lista de reservas -->
-                <div class="reservas-list" id="reservas-list" style="display:none;"></div>
-            </div>
-        </section>
-
-        <!-- ======================== RESEÑAS (página completa) ======================== -->
-        <section id="view-resenas" class="page-view">
-            <div class="resenas-container">
-                <div class="resenas-header">
-                    <div class="resenas-header-left">
-                        <h2><i class="fa-solid fa-star"></i> Reseñas</h2>
-                        <p>Lee las experiencias de nuestra comunidad y comparte la tuya</p>
-                    </div>
-                    <div class="resenas-promedio" id="resenas-promedio">
-                        <span class="promedio-numero" id="promedio-numero">5.0</span>
-                        <div>
-                            <div class="promedio-stars" id="promedio-stars"></div>
-                            <span class="promedio-label" id="promedio-label">3 reseñas</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="resenas-grid" id="resenas-grid-full"></div>
-
-                <div class="resenas-form-section" id="resenas-form-section">
-                    <div class="resena-notice" id="resena-notice-login" style="display:none;">
-                        <i class="fa-solid fa-circle-user"></i>
-                        <div>
-                            <strong>Inicia sesión para dejar tu reseña</strong>
-                            <p>Necesitas una cuenta para compartir tu experiencia.</p>
-                        </div>
-                        <button class="btn-resena-action" id="resena-open-auth">Iniciar Sesión</button>
-                    </div>
-                    <div class="resena-notice resena-notice--warn" id="resena-notice-noreserva" style="display:none;">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        <div>
-                            <strong>Solo puedes reseñar si has realizado una reserva</strong>
-                            <p>¡Reserva ahora y vuelve a contarnos tu experiencia!</p>
-                        </div>
-                        <button class="btn-resena-action" id="resena-open-booking">Reservar Ahora</button>
-                    </div>
-                    <div class="resena-notice resena-notice--success" id="resena-notice-ya" style="display:none;">
-                        <i class="fa-solid fa-circle-check"></i>
-                        <div>
-                            <strong>¡Ya dejaste tu reseña!</strong>
-                            <p>Gracias por compartir tu experiencia en Oasis.</p>
-                        </div>
-                    </div>
-                    <div id="resena-form-real" style="display:none;">
-                        <h3 class="review-form-title"><i class="fa-solid fa-pen-to-square"></i> Deja tu Reseña</h3>
-                        <p class="review-form-subtitle">Comparte cómo fue tu experiencia en Oasis Piscina</p>
-                        <div class="review-stars-input">
-                            <span class="stars-label">Tu calificación:</span>
-                            <div class="star-selector" id="resena-star-selector">
-                                <i class="fa-regular fa-star star-input" data-value="1"></i>
-                                <i class="fa-regular fa-star star-input" data-value="2"></i>
-                                <i class="fa-regular fa-star star-input" data-value="3"></i>
-                                <i class="fa-regular fa-star star-input" data-value="4"></i>
-                                <i class="fa-regular fa-star star-input" data-value="5"></i>
-                            </div>
-                        </div>
-                        <textarea id="resena-textarea" class="review-textarea" placeholder="Cuéntanos cómo fue tu experiencia en Oasis..." maxlength="400" rows="4"></textarea>
-                        <div class="review-form-footer">
-                            <span class="review-char-count"><span id="resena-char-num">0</span>/400</span>
-                            <button class="btn-submit-review" id="btn-submit-resena">
-                                <i class="fa-solid fa-paper-plane"></i> Publicar Reseña
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ======================== FOOTER ======================== -->
-    <footer class="site-footer">
-        <div class="footer-body">
-            <div class="footer-grid">
-                <div class="footer-col footer-brand">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="Oasis Logo">
-                        <span>Oasis Piscina</span>
-                    </div>
-                    <p class="footer-desc">Tu destino de relajación y diversión acuática. Planes flexibles, instalaciones premium y experiencias inolvidables para toda la familia.</p>
-                    <div class="footer-social">
-                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h4 class="footer-heading">Navegación</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" id="footer-link-home"><i class="fa-solid fa-house"></i> Inicio</a></li>
-                        <li><a href="#" id="footer-link-book"><i class="fa-solid fa-wand-magic-sparkles"></i> Reservar Ahora</a></li>
-                        <li><a href="#" id="footer-link-reviews"><i class="fa-solid fa-star"></i> Reseñas</a></li>
-                        <li><a href="#" id="footer-link-reservas"><i class="fa-regular fa-calendar-days"></i> Mis Reservas</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4 class="footer-heading">Nuestros Planes</h4>
-                    <ul class="footer-links">
-                        <li><a href="#" class="open-booking-trigger" data-plan-id="1"><i class="fa-regular fa-clock"></i> Pase por 3 Horas — $45.000</a></li>
-                        <li><a href="#" class="open-booking-trigger" data-plan-id="2"><i class="fa-solid fa-sun"></i> Pase por 5 Horas — $75.000</a></li>
-                        <li><a href="#" class="open-booking-trigger" data-plan-id="3"><i class="fa-solid fa-calendar-day"></i> Pase por 8 Horas — $120.000</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4 class="footer-heading">Contacto</h4>
-                    <ul class="footer-contact">
-                        <li><i class="fa-solid fa-location-dot"></i> <span>Pamplona, N. Santander, Colombia</span></li>
-                        <li><i class="fa-solid fa-phone"></i> <span>+57 300 123 4567</span></li>
-                        <li><i class="fa-regular fa-envelope"></i> <span>contacto@oasispiscina.com</span></li>
-                        <li><i class="fa-regular fa-clock"></i> <span>Lun – Dom: 8:00 AM – 6:00 PM</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; <span id="footer-year"></span> Oasis Piscina. Todos los derechos reservados.</p>
-            <p class="footer-made">Hecho con <i class="fa-solid fa-heart"></i> en Colombia</p>
-        </div>
-    </footer>
-
-    <div id="auth-modal" class="modal-overlay">
-        <div class="modal-container">
-            <button class="modal-close" id="close-auth-btn">&times;</button>
-            
-            <div class="modal-header">
-                <h2>Bienvenidos a Reservas Oasis Piscina</h2>
-                <p>Inicia sesión en tu cuenta o crea una nueva para comenzar a reservar</p>
-            </div>
-            
-            <div class="auth-tabs-container">
-                <button class="auth-tab-btn active" id="tab-login-btn">Iniciar Sesión</button>
-                <button class="auth-tab-btn" id="tab-signup-btn">Registrarse</button>
-            </div>
-
-            <form id="form-login" class="auth-form active">
-                <div class="input-group">
-                    <label>Email</label>
-
-                    <div class="input-wrapper">
-                        <i class="fa-regular fa-envelope"></i>
-
-                        <input
-                            type="email"
-                            placeholder="your.email@example.com"
-                        >
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label>Contraseña</label>
-
-                    <div class="input-wrapper">
-
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder="••••••••"
-                        >
-
-                        <i class="fa-regular fa-eye password-toggle"></i>
-                    </div>
-                </div>
-                <button type="submit" class="btn-auth-submit">Iniciar Sesión</button>
-            </form>
-
-            <form id="form-signup" class="auth-form">
-                <div class="input-row">
-                    <div class="input-group">
-                        <label>Nombre</label>
-                        <input type="text" id="signup-firstname" placeholder="John" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Apellido</label>
-                        <input type="text" id="signup-lastname" placeholder="Doe" required>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" id="signup-email" placeholder="your.email@example.com" required>
-                </div>
-                <div class="input-group">
-                    <label>Número de Teléfono</label>
-                    <input type="tel" id="signup-phone" placeholder="+57 300 123 4567" required>
-                </div>
-                <div class="input-group">
-                    <label>Número de Documento</label>
-                    <input type="text" id="signup-document" placeholder="1234567890" required inputmode="numeric" pattern="[0-9]+">
-                </div>
-                <div class="input-group">
-                    <label>Contraseña</label>
-                    <input type="password" id="signup-password" placeholder="........" required>
-                </div>
-                <button type="submit" class="btn-auth-submit">Crear Cuenta</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="profile-modal" class="modal-overlay">
-        <div class="modal-container">
-            <button class="modal-close" id="close-profile-btn">&times;</button>
-
-            <div class="modal-header">
-                <h2>Editar Perfil</h2>
-                <p>Actualiza tu información personal</p>
-            </div>
-
-            <form id="form-profile" class="auth-form active">
-
-                <div class="input-row">
-                    <div class="input-group">
-                        <label>Nombre</label>
-                        <input type="text" id="profile-firstname" required>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Apellido</label>
-                        <input type="text" id="profile-lastname" required>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label>Número de Teléfono</label>
-                    <input type="tel" id="profile-phone" required>
-                </div>
-
-                <div class="input-group">
-                    <label>Número de Documento</label>
-                    <input type="text" id="profile-document" required>
-                </div>
-
-                <button type="submit" class="btn-auth-submit">
-                    Guardar Cambios
+            <!-- Navegación inferior del wizard -->
+            <div class="wizard-actions-footer">
+                <button type="button" class="btn-wizard-nav prev-btn hidden" id="wizard-prev-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Anterior
                 </button>
+                <button type="button" class="btn-wizard-nav next-btn" id="wizard-next-btn" disabled>
+                    Siguiente <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
 
-            </form>
+        </div>
+    </section>
+
+    <!-- ==================== VISTA: MIS RESERVAS ==================== -->
+    <section id="view-reservas" class="page-view">
+        <div class="reservas-container">
+
+            <!-- Encabezado -->
+            <div class="reservas-header">
+                <div class="reservas-header-left">
+                    <h2><i class="fa-regular fa-calendar-days"></i> Mis Reservas</h2>
+                    <p>Consulta y gestiona todas tus reservas en Oasis</p>
+                </div>
+                <button class="btn-nueva-reserva" id="reservas-nueva-btn">
+                    <i class="fa-solid fa-plus"></i> Nueva Reserva
+                </button>
+            </div>
+
+            <!-- Filtros de estado -->
+            <div class="reservas-filtros">
+                <button class="filtro-btn active" data-filtro="todas">Todas</button>
+                <button class="filtro-btn" data-filtro="confirmada">Confirmadas</button>
+                <button class="filtro-btn" data-filtro="pendiente">Pendientes</button>
+                <button class="filtro-btn" data-filtro="cancelada">Canceladas</button>
+            </div>
+
+            <!-- Estado: Cargando -->
+            <div class="reservas-loading" id="reservas-loading">
+                <div class="loading-spinner"></div>
+                <p>Cargando tus reservas...</p>
+            </div>
+
+            <!-- Estado: Sin reservas -->
+            <div class="reservas-empty" id="reservas-empty" style="display:none;">
+                <div class="empty-icon"><i class="fa-regular fa-calendar-xmark"></i></div>
+                <h3>No tienes reservas aún</h3>
+                <p>¡Haz tu primera reserva y disfruta de la experiencia Oasis!</p>
+                <button class="btn-nueva-reserva" id="reservas-empty-btn">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Reservar Ahora
+                </button>
+            </div>
+
+            <!-- Lista de reservas (generada por JS) -->
+            <div class="reservas-list" id="reservas-list" style="display:none;"></div>
+
+        </div>
+    </section>
+
+    <!-- ==================== VISTA: RESEÑAS (página completa) ==================== -->
+    <section id="view-resenas" class="page-view">
+        <div class="resenas-container">
+
+            <!-- Encabezado con promedio -->
+            <div class="resenas-header">
+                <div class="resenas-header-left">
+                    <h2><i class="fa-solid fa-star"></i> Reseñas</h2>
+                    <p>Lee las experiencias de nuestra comunidad y comparte la tuya</p>
+                </div>
+                <div class="resenas-promedio" id="resenas-promedio">
+                    <span class="promedio-numero" id="promedio-numero">5.0</span>
+                    <div>
+                        <div class="promedio-stars" id="promedio-stars"></div>
+                        <span class="promedio-label" id="promedio-label">3 reseñas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid de reseñas (generado por JS) -->
+            <div class="resenas-grid" id="resenas-grid-full"></div>
+
+            <!-- Formulario / avisos de reseña -->
+            <div class="resenas-form-section" id="resenas-form-section">
+
+                <!-- Aviso: debe iniciar sesión -->
+                <div class="resena-notice" id="resena-notice-login" style="display:none;">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <div>
+                        <strong>Inicia sesión para dejar tu reseña</strong>
+                        <p>Necesitas una cuenta para compartir tu experiencia.</p>
+                    </div>
+                    <button class="btn-resena-action" id="resena-open-auth">Iniciar Sesión</button>
+                </div>
+
+                <!-- Aviso: no tiene reservas -->
+                <div class="resena-notice resena-notice--warn" id="resena-notice-noreserva" style="display:none;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div>
+                        <strong>Solo puedes reseñar si has realizado una reserva</strong>
+                        <p>¡Reserva ahora y vuelve a contarnos tu experiencia!</p>
+                    </div>
+                    <button class="btn-resena-action" id="resena-open-booking">Reservar Ahora</button>
+                </div>
+
+                <!-- Aviso: ya dejó reseña -->
+                <div class="resena-notice resena-notice--success" id="resena-notice-ya" style="display:none;">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div>
+                        <strong>¡Ya dejaste tu reseña!</strong>
+                        <p>Gracias por compartir tu experiencia en Oasis.</p>
+                    </div>
+                </div>
+
+                <!-- Formulario real de reseña -->
+                <div id="resena-form-real" style="display:none;">
+                    <h3 class="review-form-title"><i class="fa-solid fa-pen-to-square"></i> Deja tu Reseña</h3>
+                    <p class="review-form-subtitle">Comparte cómo fue tu experiencia en Oasis Piscina</p>
+                    <div class="review-stars-input">
+                        <span class="stars-label">Tu calificación:</span>
+                        <div class="star-selector" id="resena-star-selector">
+                            <i class="fa-regular fa-star star-input" data-value="1"></i>
+                            <i class="fa-regular fa-star star-input" data-value="2"></i>
+                            <i class="fa-regular fa-star star-input" data-value="3"></i>
+                            <i class="fa-regular fa-star star-input" data-value="4"></i>
+                            <i class="fa-regular fa-star star-input" data-value="5"></i>
+                        </div>
+                    </div>
+                    <textarea id="resena-textarea" class="review-textarea" placeholder="Cuéntanos cómo fue tu experiencia en Oasis..." maxlength="400" rows="4"></textarea>
+                    <div class="review-form-footer">
+                        <span class="review-char-count"><span id="resena-char-num">0</span>/400</span>
+                        <button class="btn-submit-review" id="btn-submit-resena">
+                            <i class="fa-solid fa-paper-plane"></i> Publicar Reseña
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+    <div class="footer-body">
+        <div class="footer-grid">
+
+            <!-- Columna: Marca -->
+            <div class="footer-col footer-brand">
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="Oasis Logo">
+                    <span>Oasis Piscina</span>
+                </div>
+                <p class="footer-desc">Tu destino de relajación y diversión acuática. Planes flexibles, instalaciones premium y experiencias inolvidables para toda la familia.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <!-- Columna: Navegación -->
+            <div class="footer-col">
+                <h4 class="footer-heading">Navegación</h4>
+                <ul class="footer-links">
+                    <li><a href="#" id="footer-link-home"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                    <li><a href="#" id="footer-link-book"><i class="fa-solid fa-wand-magic-sparkles"></i> Reservar Ahora</a></li>
+                    <li><a href="#" id="footer-link-reviews"><i class="fa-solid fa-star"></i> Reseñas</a></li>
+                    <li><a href="#" id="footer-link-reservas"><i class="fa-regular fa-calendar-days"></i> Mis Reservas</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna: Planes -->
+            <div class="footer-col">
+                <h4 class="footer-heading">Nuestros Planes</h4>
+                <ul class="footer-links">
+                    <li><a href="#" class="open-booking-trigger" data-plan-id="1"><i class="fa-regular fa-clock"></i> Pase por 3 Horas — $45.000</a></li>
+                    <li><a href="#" class="open-booking-trigger" data-plan-id="2"><i class="fa-solid fa-sun"></i> Pase por 5 Horas — $75.000</a></li>
+                    <li><a href="#" class="open-booking-trigger" data-plan-id="3"><i class="fa-solid fa-calendar-day"></i> Pase por 8 Horas — $120.000</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna: Contacto -->
+            <div class="footer-col">
+                <h4 class="footer-heading">Contacto</h4>
+                <ul class="footer-contact">
+                    <li><i class="fa-solid fa-location-dot"></i> <span>Pamplona, N. Santander, Colombia</span></li>
+                    <li><i class="fa-solid fa-phone"></i> <span>+57 300 123 4567</span></li>
+                    <li><i class="fa-regular fa-envelope"></i> <span>contacto@oasispiscina.com</span></li>
+                    <li><i class="fa-regular fa-clock"></i> <span>Lun – Dom: 8:00 AM – 6:00 PM</span></li>
+                </ul>
+            </div>
+
         </div>
     </div>
+    <div class="footer-bottom">
+        <p>&copy; <span id="footer-year"></span> Oasis Piscina. Todos los derechos reservados.</p>
+        <p class="footer-made">Hecho con <i class="fa-solid fa-heart"></i> en Colombia</p>
+    </div>
+</footer>
 
-    <script src="script.js"></script>
+<!-- ============================================================
+     MODALES
+     ============================================================ -->
+
+<!-- Modal: Autenticación (Login / Registro) -->
+<div id="auth-modal" class="modal-overlay">
+    <div class="modal-container">
+        <button class="modal-close" id="close-auth-btn">&times;</button>
+
+        <div class="modal-header">
+            <h2>Bienvenidos a Reservas Oasis Piscina</h2>
+            <p>Inicia sesión en tu cuenta o crea una nueva para comenzar a reservar</p>
+        </div>
+
+        <div class="auth-tabs-container">
+            <button class="auth-tab-btn active" id="tab-login-btn">Iniciar Sesión</button>
+            <button class="auth-tab-btn" id="tab-signup-btn">Registrarse</button>
+        </div>
+
+        <!-- Formulario: Login -->
+        <form id="form-login" class="auth-form active">
+            <div class="input-group">
+                <label>Email</label>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" placeholder="your.email@example.com">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Contraseña</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" placeholder="••••••••">
+                    <i class="fa-regular fa-eye password-toggle"></i>
+                </div>
+            </div>
+            <button type="submit" class="btn-auth-submit">Iniciar Sesión</button>
+        </form>
+
+        <!-- Formulario: Registro -->
+        <form id="form-signup" class="auth-form">
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Nombre</label>
+                    <input type="text" id="signup-firstname" placeholder="John" required>
+                </div>
+                <div class="input-group">
+                    <label>Apellido</label>
+                    <input type="text" id="signup-lastname" placeholder="Doe" required>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="signup-email" placeholder="your.email@example.com" required>
+            </div>
+            <div class="input-group">
+                <label>Número de Teléfono</label>
+                <input type="tel" id="signup-phone" placeholder="+57 300 123 4567" required>
+            </div>
+            <div class="input-group">
+                <label>Número de Documento</label>
+                <input type="text" id="signup-document" placeholder="1234567890" required inputmode="numeric" pattern="[0-9]+">
+            </div>
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input type="password" id="signup-password" placeholder="........" required>
+            </div>
+            <button type="submit" class="btn-auth-submit">Crear Cuenta</button>
+        </form>
+
+    </div>
+</div>
+
+<!-- Modal: Editar Perfil -->
+<div id="profile-modal" class="modal-overlay">
+    <div class="modal-container">
+        <button class="modal-close" id="close-profile-btn">&times;</button>
+
+        <div class="modal-header">
+            <h2>Editar Perfil</h2>
+            <p>Actualiza tu información personal</p>
+        </div>
+
+        <form id="form-profile" class="auth-form active">
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Nombre</label>
+                    <input type="text" id="profile-firstname" required>
+                </div>
+                <div class="input-group">
+                    <label>Apellido</label>
+                    <input type="text" id="profile-lastname" required>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Número de Teléfono</label>
+                <input type="tel" id="profile-phone" required>
+            </div>
+            <div class="input-group">
+                <label>Número de Documento</label>
+                <input type="text" id="profile-document" required>
+            </div>
+            <button type="submit" class="btn-auth-submit">Guardar Cambios</button>
+        </form>
+
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
