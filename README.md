@@ -1,4 +1,3 @@
-```markdown
 # Oasis - Sistema de Reservas de Piscina
 
 Aplicación web para la gestión y reserva de piscinas, con autenticación de usuarios, procesamiento de pagos y sistema de reseñas.
@@ -45,18 +44,16 @@ Aplicación web para la gestión y reserva de piscinas, con autenticación de us
 
 ## Estructura del proyecto
 
-```
-Proyecto_Parcial03/
-├── BDD/                    # Scripts o documentación de base de datos
-├── oasis_backend/
-│   ├── src/
-│   │   ├── config/         # Configuración (conexión a la BD)
-│   │   └── routes/         # Rutas de la API
-│   ├── index.js            # Punto de entrada del servidor
-│   ├── package.json
-│   └── .env                # Variables de entorno (no se sube al repo)
-└── pagina/                 # Frontend del proyecto
-```
+    Proyecto_Parcial03/
+    ├── BDD/                    # Scripts o documentación de base de datos
+    ├── oasis_backend/
+    │   ├── src/
+    │   │   ├── config/         # Configuración (conexión a la BD)
+    │   │   └── routes/         # Rutas de la API
+    │   ├── index.js            # Punto de entrada del servidor
+    │   ├── package.json
+    │   └── .env                # Variables de entorno (no se sube al repo)
+    └── pagina/                 # Frontend del proyecto
 
 ---
 
@@ -83,39 +80,29 @@ Proyecto_Parcial03/
 
 **1. Clonar el repositorio**
 
-```bash
-git clone <url-del-repositorio>
-cd Proyecto_Parcial03/oasis_backend
-```
+    git clone <url-del-repositorio>
+    cd Proyecto_Parcial03/oasis_backend
 
 **2. Instalar dependencias**
 
-```bash
-npm install
-```
+    npm install
 
 **3. Configurar variables de entorno**
 
 Crear un archivo `.env` en la raíz de `oasis_backend` con:
 
-```env
-PORT=3000
-DATABASE_URL=
-JWT_SECRET=
-MERCADOPAGO_ACCESS_TOKEN=
-```
+    PORT=3000
+    DATABASE_URL=
+    JWT_SECRET=
+    MERCADOPAGO_ACCESS_TOKEN=
 
 **4. Ejecutar en modo desarrollo**
 
-```bash
-npm run dev
-```
+    npm run dev
 
 **5. Ejecutar en modo producción**
 
-```bash
-npm start
-```
+    npm start
 
 El servidor quedará corriendo en `http://localhost:3000` (o el puerto definido en `.env`).
 
@@ -134,4 +121,3 @@ El servidor quedará corriendo en `http://localhost:3000` (o el puerto definido 
 ## Autores
 
 - [Nombres del equipo]
-```
