@@ -1,3 +1,4 @@
+```markdown
 # Oasis - Sistema de Reservas de Piscina
 
 Aplicación web para la gestión y reserva de piscinas, con autenticación de usuarios, procesamiento de pagos y sistema de reseñas.
@@ -6,16 +7,15 @@ Aplicación web para la gestión y reserva de piscinas, con autenticación de us
 
 ## Tabla de contenidos
 
-- [Tecnologías](#tecnologias-section)
-- [Estructura del proyecto](#estructura-section)
-- [Endpoints principales](#endpoints-section)
-- [Instalación y ejecución local](#instalacion-section)
-- [Despliegue](#despliegue-section)
-- [Autores](#autores-section)
+- [Tecnologías](#tecnologías)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Endpoints principales](#endpoints-principales)
+- [Instalación y ejecución local](#instalación-y-ejecución-local)
+- [Despliegue](#despliegue)
+- [Autores](#autores)
 
 ---
 
-<a id="tecnologias-section"></a>
 ## Tecnologías
 
 ### Frontend
@@ -43,7 +43,6 @@ Aplicación web para la gestión y reserva de piscinas, con autenticación de us
 
 ---
 
-<a id="estructura-section"></a>
 ## Estructura del proyecto
 
 ```
@@ -61,7 +60,6 @@ Proyecto_Parcial03/
 
 ---
 
-<a id="endpoints-section"></a>
 ## Endpoints principales
 
 | Ruta base | Descripción |
@@ -74,7 +72,6 @@ Proyecto_Parcial03/
 
 ---
 
-<a id="instalacion-section"></a>
 ## Instalación y ejecución local
 
 ### Requisitos previos
@@ -124,7 +121,6 @@ El servidor quedará corriendo en `http://localhost:3000` (o el puerto definido 
 
 ---
 
-<a id="despliegue-section"></a>
 ## Despliegue
 
 | Componente | Plataforma |
@@ -135,7 +131,7 @@ El servidor quedará corriendo en `http://localhost:3000` (o el puerto definido 
 
 ---
 
-<a id="autores-section"></a>
 ## Autores
 
 - [Nombres del equipo]
+```
