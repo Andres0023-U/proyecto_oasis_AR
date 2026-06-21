@@ -44,7 +44,7 @@ Aplicación web para la gestión y reserva de piscinas, con autenticación de us
 
 ## Estructura del proyecto
 
-    Proyecto_Parcial03/
+    proyecto_oasis_AR/
     ├── backend/
     │   ├── node_modules/
     │   ├── src/
