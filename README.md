@@ -45,15 +45,25 @@ Aplicación web para la gestión y reserva de piscinas, con autenticación de us
 ## Estructura del proyecto
 
     Proyecto_Parcial03/
-    ├── BDD/                    # Scripts o documentación de base de datos
-    ├── oasis_backend/
+    ├── backend/
+    │   ├── node_modules/
     │   ├── src/
-    │   │   ├── config/         # Configuración (conexión a la BD)
-    │   │   └── routes/         # Rutas de la API
-    │   ├── index.js            # Punto de entrada del servidor
+    │   ├── .env
+    │   ├── .gitignore
+    │   ├── index.js
     │   ├── package.json
-    │   └── .env                # Variables de entorno (no se sube al repo)
-    └── pagina/                 # Frontend del proyecto
+    │   └── package-lock.json
+    ├── database/
+    │   ├── DATABASE/
+    │   ├── DOCS/
+    │   ├── INSERTS/
+    │   ├── dbDiagram.png
+    │   └── Untitled diagram.png
+    └── frontend/
+        ├── images/
+        ├── index.html
+        ├── script.js
+        └── styles.css
 
 ---
 

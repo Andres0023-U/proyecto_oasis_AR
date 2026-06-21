@@ -1,0 +1,71 @@
+Table roles {
+  id_rol      int         [pk, increment]
+  nombre_rol  varchar(30) [not null, unique]
+  descripcion varchar(100)
+}
+
+Table users {
+  id_usuario    int          [pk, increment]
+  id_rol        int          [not null, ref: > roles.id_rol]
+  documento     varchar(20)  [not null, unique]
+  nombre        varchar(100) [not null]
+  apellido      varchar(100) [not null]
+  correo        varchar(150) [not null, unique]
+  telefono      varchar(20)
+  password_hash varchar(255) [not null]
+  activo        boolean      [default: true]
+  created_at    timestamp    [default: `CURRENT_TIMESTAMP`]
+  updated_at    timestamp    [default: `CURRENT_TIMESTAMP`]
+}
+
+Table services {
+  id_servicio   int           [pk, increment]
+  nombre        varchar(100)  [not null]
+  descripcion   text
+  precio        numeric(10,2) [not null, note: 'precio >= 0']
+  tipo          varchar(20)   [not null, note: "'Plan Base' | 'Adicional'"]
+  capacidad_max int           [not null, note: 'capacidad_max >= 0']
+  activo        boolean       [default: true]
+  created_at    timestamp     [default: `CURRENT_TIMESTAMP`]
+  updated_at    timestamp     [default: `CURRENT_TIMESTAMP`]
+}
+
+Table reservations {
+  id_reserva    int           [pk, increment]
+  id_usuario    int           [not null, ref: > users.id_usuario]
+  fecha_reserva date          [not null]
+  hora_inicio   time          [not null]
+  hora_fin      time          [not null, note: 'hora_fin > hora_inicio']
+  num_invitados int           [not null, note: 'num_invitados > 0']
+  precio_total  numeric(10,2) [default: 0.00]
+  estado        varchar(20)   [default: 'Pendiente', note: "'Pendiente'|'Confirmada'|'En Curso'|'Completada'|'Cancelada'|'No Asistió'"]
+  observaciones text
+  created_at    timestamp     [default: `CURRENT_TIMESTAMP`]
+  updated_at    timestamp     [default: `CURRENT_TIMESTAMP`]
+}
+
+Table reservation_details {
+  id_detalle           int           [pk, increment]
+  id_reserva           int           [not null, ref: > reservations.id_reserva]
+  id_servicio          int           [not null, ref: > services.id_servicio]
+  cantidad             int           [not null, default: 1, note: 'cantidad > 0']
+  precio_unitario_snap numeric(10,2) [not null, note: 'Precio al momento de la reserva']
+}
+
+Table payments {
+  id_pago    int           [pk, increment]
+  id_reserva int           [not null, ref: > reservations.id_reserva]
+  monto      numeric(10,2) [not null, note: 'monto > 0']
+  metodo     varchar(20)   [not null, note: "'Nequi'|'Daviplata'|'Transferencia'|'Efectivo'|'Tarjeta'"]
+  estado     varchar(20)   [default: 'Pendiente', note: "'Pendiente'|'Verificado'|'Rechazado'|'Reembolsado'"]
+  referencia varchar(100)
+  created_at timestamp     [default: `CURRENT_TIMESTAMP`]
+  updated_at timestamp     [default: `CURRENT_TIMESTAMP`]
+}
+
+Table app_config {
+  id_config   int          [pk, increment]
+  clave       varchar(50)  [not null, unique]
+  valor       varchar(255) [not null]
+  descripcion text
+}
