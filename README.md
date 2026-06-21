@@ -1,248 +1,141 @@
-# 🌊 Oasis Pool Booking
+# Oasis - Sistema de Reservas de Piscina
 
-Sistema de reservas de piscina privada con frontend estático y backend Node.js + PostgreSQL.
-
----
-
-## 📁 Estructura del proyecto
-
-```
-Oasis/
-├── pagina/                        ← Frontend (abrir en navegador)
-│   ├── index.html
-│   ├── script.js
-│   ├── styles.css
-│   └── images/
-│       ├── logo.png
-│       └── piscina.jpeg
-│
-└── backend/                       ← Servidor Node.js
-    ├── index.js                   ← Punto de entrada
-    ├── .env                       ← Variables de entorno (NO subir a git)
-    ├── package.json
-    └── src/
-        ├── config/
-        │   └── db.js              ← Conexión a PostgreSQL
-        ├── controllers/
-        │   ├── authController.js
-        │   └── reservationController.js
-        ├── models/
-        │   ├── userModel.js
-        │   └── reservationModel.js
-        └── routes/
-            ├── authRoutes.js
-            └── reservationRoutes.js
-```
+Aplicación web para la gestión y reserva de piscinas, con autenticación de usuarios, procesamiento de pagos y sistema de reseñas.
 
 ---
 
-## ✅ Requisitos previos
+## Tabla de contenidos
 
-Antes de correr el proyecto necesitas tener instalado:
-
-- [Node.js](https://nodejs.org/) v18 o superior
-- [PostgreSQL](https://www.postgresql.org/) v14 o superior
-- Un cliente SQL (recomendado: [DBeaver](https://dbeaver.io/) o [pgAdmin](https://www.pgadmin.org/))
+- [Tecnologías](#tecnologias-section)
+- [Estructura del proyecto](#estructura-section)
+- [Endpoints principales](#endpoints-section)
+- [Instalación y ejecución local](#instalacion-section)
+- [Despliegue](#despliegue-section)
+- [Autores](#autores-section)
 
 ---
 
-## 🗄️ 1. Configurar la base de datos
+<a id="tecnologias-section"></a>
+## Tecnologías
 
-### Crear la base de datos y el schema
+### Frontend
+- HTML, CSS, JavaScript
+- **Despliegue:** Vercel
 
-Conéctate a PostgreSQL y ejecuta:
+### Backend
+- **Runtime:** Node.js
+- **Framework:** Express 5
+- **Despliegue:** Render
 
-```sql
-CREATE DATABASE oasis_pool_db;
-\c oasis_pool_db
-CREATE SCHEMA oasis;
+### Base de datos
+- PostgreSQL (vía Supabase)
+- Conexión mediante `pg` (pool de conexiones)
+
+### Otras librerías
+
+| Librería | Uso |
+|---|---|
+| `bcrypt` | Hash de contraseñas |
+| `jsonwebtoken` | Autenticación basada en tokens (JWT) |
+| `cors` | Comunicación entre frontend y backend |
+| `dotenv` | Manejo de variables de entorno |
+| `mercadopago` | Procesamiento de pagos |
+
+---
+
+<a id="estructura-section"></a>
+## Estructura del proyecto
+
 ```
-
-### Crear las tablas
-
-Ejecuta el siguiente script en orden:
-
-```sql
--- Roles
-CREATE TABLE oasis.roles (
-    id_rol      SERIAL PRIMARY KEY,
-    nombre_rol  VARCHAR(50) NOT NULL,
-    descripcion VARCHAR(255)
-);
-
-INSERT INTO oasis.roles (nombre_rol, descripcion) VALUES
-    ('admin',  'Administrador del sistema'),
-    ('cliente','Cliente que realiza reservas');
-
--- Usuarios
-CREATE TABLE oasis.users (
-    id_usuario    SERIAL PRIMARY KEY,
-    id_rol        INT NOT NULL REFERENCES oasis.roles(id_rol),
-    documento     VARCHAR(20) UNIQUE NOT NULL,
-    nombre        VARCHAR(100) NOT NULL,
-    apellido      VARCHAR(100) NOT NULL,
-    correo        VARCHAR(150) UNIQUE NOT NULL,
-    telefono      VARCHAR(20),
-    password_hash VARCHAR(255) NOT NULL,
-    activo        BOOLEAN DEFAULT TRUE,
-    created_at    TIMESTAMP DEFAULT NOW(),
-    updated_at    TIMESTAMP DEFAULT NOW()
-);
-
--- Servicios
-CREATE TABLE oasis.services (
-    id_servicio   SERIAL PRIMARY KEY,
-    nombre        VARCHAR(100) NOT NULL,
-    descripcion   TEXT,
-    precio        NUMERIC(10,2),
-    tipo          VARCHAR(50),
-    capacidad_max INT,
-    activo        BOOLEAN DEFAULT TRUE,
-    created_at    TIMESTAMP DEFAULT NOW(),
-    updated_at    TIMESTAMP DEFAULT NOW()
-);
-
--- Reservas
-CREATE TABLE oasis.reservations (
-    id_reserva    SERIAL PRIMARY KEY,
-    id_usuario    INT NOT NULL REFERENCES oasis.users(id_usuario),
-    fecha_reserva DATE NOT NULL,
-    hora_inicio   TIME NOT NULL,
-    hora_fin      TIME,
-    num_invitados INT DEFAULT 1,
-    precio_total  NUMERIC(10,2),
-    estado        VARCHAR(20) DEFAULT 'pendiente'
-                      CHECK (estado IN ('pendiente','confirmada','cancelada')),
-    observaciones TEXT,
-    created_at    TIMESTAMP DEFAULT NOW(),
-    updated_at    TIMESTAMP DEFAULT NOW()
-);
-
--- Detalles de reserva
-CREATE TABLE oasis.reservation_details (
-    id_detalle          SERIAL PRIMARY KEY,
-    id_reserva          INT NOT NULL REFERENCES oasis.reservations(id_reserva),
-    id_servicio         INT NOT NULL REFERENCES oasis.services(id_servicio),
-    cantidad            INT DEFAULT 1,
-    precio_unitario_snap NUMERIC(10,2)
-);
-
--- Pagos
-CREATE TABLE oasis.payments (
-    id_pago    SERIAL PRIMARY KEY,
-    id_reserva INT NOT NULL REFERENCES oasis.reservations(id_reserva),
-    monto      NUMERIC(10,2),
-    metodo     VARCHAR(50),
-    estado     VARCHAR(20),
-    referencia VARCHAR(100),
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
-
--- Configuración de la app
-CREATE TABLE oasis.app_config (
-    id_config   SERIAL PRIMARY KEY,
-    clave       VARCHAR(100) UNIQUE NOT NULL,
-    valor       VARCHAR(255),
-    descripcion TEXT
-);
+Proyecto_Parcial03/
+├── BDD/                    # Scripts o documentación de base de datos
+├── oasis_backend/
+│   ├── src/
+│   │   ├── config/         # Configuración (conexión a la BD)
+│   │   └── routes/         # Rutas de la API
+│   ├── index.js            # Punto de entrada del servidor
+│   ├── package.json
+│   └── .env                # Variables de entorno (no se sube al repo)
+└── pagina/                 # Frontend del proyecto
 ```
 
 ---
 
-## ⚙️ 2. Configurar variables de entorno
+<a id="endpoints-section"></a>
+## Endpoints principales
 
-En la carpeta `backend/`, crea un archivo llamado `.env` con este contenido (ajusta los valores a tu entorno local):
-
-```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=oasis_pool_db
-DB_USER=oasis_admin
-DB_PASSWORD=tu_contraseña
-PORT=3000
-JWT_SECRET=una_clave_secreta_larga_y_segura
-```
-
-> ⚠️ Si el usuario `oasis_admin` no existe en tu PostgreSQL, puedes crearlo así:
-> ```sql
-> CREATE USER oasis_admin WITH PASSWORD 'tu_contraseña';
-> GRANT ALL PRIVILEGES ON DATABASE oasis_pool_db TO oasis_admin;
-> GRANT ALL ON SCHEMA oasis TO oasis_admin;
-> GRANT ALL ON ALL TABLES IN SCHEMA oasis TO oasis_admin;
-> GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA oasis TO oasis_admin;
-> ```
-> O simplemente usar tu usuario de postgres existente.
+| Ruta base | Descripción |
+|---|---|
+| `/auth` | Autenticación de usuarios (login/registro) |
+| `/usuarios` | Gestión de perfiles de usuario |
+| `/reservas` | Creación y gestión de reservas de piscina |
+| `/pagos` | Procesamiento de pagos vía MercadoPago |
+| `/resenas` | Reseñas y calificaciones de piscinas |
 
 ---
 
-## 🚀 3. Instalar dependencias y correr el backend
+<a id="instalacion-section"></a>
+## Instalación y ejecución local
+
+### Requisitos previos
+- Node.js instalado
+- Cuenta de Supabase con base de datos PostgreSQL configurada
+- Credenciales de MercadoPago (modo prueba o producción)
+
+### Pasos
+
+**1. Clonar el repositorio**
 
 ```bash
-cd backend
+git clone <url-del-repositorio>
+cd Proyecto_Parcial03/oasis_backend
+```
+
+**2. Instalar dependencias**
+
+```bash
 npm install
-npm run dev      # con nodemon (recarga automática)
-# ó
-npm start        # sin nodemon
 ```
 
-Si todo está bien, verás en la consola:
-```
-Servidor corriendo en http://localhost:3000
+**3. Configurar variables de entorno**
+
+Crear un archivo `.env` en la raíz de `oasis_backend` con:
+
+```env
+PORT=3000
+DATABASE_URL=
+JWT_SECRET=
+MERCADOPAGO_ACCESS_TOKEN=
 ```
 
-Puedes verificar que funciona abriendo en el navegador:
+**4. Ejecutar en modo desarrollo**
+
+```bash
+npm run dev
 ```
-http://localhost:3000/
+
+**5. Ejecutar en modo producción**
+
+```bash
+npm start
 ```
-Debe responder: `{ "message": "¡API Oasis funcionando!" }`
+
+El servidor quedará corriendo en `http://localhost:3000` (o el puerto definido en `.env`).
 
 ---
 
-## 🌐 4. Abrir el frontend
+<a id="despliegue-section"></a>
+## Despliegue
 
-El frontend es un HTML estático, **no necesita servidor**. Solo abre el archivo directamente:
-
-```
-pagina/index.html  →  clic derecho → Abrir con navegador
-```
-
-> ⚠️ El frontend hace llamadas a `http://localhost:3000` — el backend **debe estar corriendo** para que el login, registro y reservas funcionen.
-
----
-
-## 🔌 Endpoints disponibles
-
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| `POST` | `/auth/register` | Registrar nuevo usuario |
-| `POST` | `/auth/login` | Iniciar sesión, devuelve JWT |
-| `GET` | `/reservas` | Obtener todas las reservas (admin) |
-| `GET` | `/reservas/usuario/:id` | Reservas de un usuario específico |
-| `POST` | `/reservas` | Crear una nueva reserva |
-| `PATCH` | `/reservas/:id` | Actualizar estado de una reserva |
+| Componente | Plataforma |
+|---|---|
+| Backend | Render |
+| Frontend | Vercel |
+| Base de datos | Supabase (PostgreSQL) |
 
 ---
 
-## 🐛 Problemas comunes
+<a id="autores-section"></a>
+## Autores
 
-**"Error conectando con el servidor"**
-→ Verifica que el backend esté corriendo en el puerto 3000.
-
-**"Error en el login" / "Error al registrar"**
-→ Verifica que el `.env` tenga las credenciales correctas de la BD y que las tablas existan.
-
-**La página carga pero no muestra imágenes**
-→ Asegúrate de que la carpeta `images/` esté en la misma carpeta que `index.html` con los archivos `logo.png` y `piscina.jpeg`.
-
-**CORS error en consola del navegador**
-→ El backend ya tiene `cors()` habilitado. Si persiste, verifica que estés llamando exactamente a `http://localhost:3000` (sin barra al final).
-
----
-
-## 👥 Roles del sistema
-
-| id_rol | Nombre | Descripción |
-|--------|--------|-------------|
-| 1 | admin | Acceso total |
-| 2 | cliente | Puede hacer reservas (rol por defecto al registrarse) |
+- [Nombres del equipo]
