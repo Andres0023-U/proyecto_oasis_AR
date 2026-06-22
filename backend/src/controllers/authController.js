@@ -44,6 +44,7 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
     try {
+        console.log('>>> VERSION NUEVA DEL REGISTER <<<');
         const { documento, nombre, apellido, correo, telefono, password } = req.body;
 
         const existingEmail = await userModel.findByEmail(correo);
