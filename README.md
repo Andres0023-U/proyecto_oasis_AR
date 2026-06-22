@@ -4,12 +4,21 @@ Aplicación web para la gestión y reserva de piscinas, con autenticación de us
 
 ---
 
+## Documentación
+
+Este README cubre lo esencial para entender y arrancar el proyecto rápidamente. Para más detalle, consultar:
+
+- **[Manual Técnico](./docs/Manual-Tecnico.docx)** — arquitectura, instalación y despliegue paso a paso, modelo de base de datos, endpoints de la API, flujos del sistema y seguridad.
+- **[Manual de Usuario](./docs/Manual-Usuario.docx)** — guía de uso de la aplicación desde la perspectiva del cliente final.
+
+---
+
 ## Tabla de contenidos
 
 - [Tecnologías](#tecnologías)
 - [Estructura del proyecto](#estructura-del-proyecto)
 - [Endpoints principales](#endpoints-principales)
-- [Instalación y ejecución local](#instalación-y-ejecución-local)
+- [Inicio rápido](#inicio-rápido)
 - [Despliegue](#despliegue)
 - [Autores](#autores)
 
@@ -44,26 +53,28 @@ Aplicación web para la gestión y reserva de piscinas, con autenticación de us
 
 ## Estructura del proyecto
 
-    proyecto_oasis_AR/
-    ├── backend/
-    │   ├── node_modules/
-    │   ├── src/
-    │   ├── .env
-    │   ├── .gitignore
-    │   ├── index.js
-    │   ├── package.json
-    │   └── package-lock.json
-    ├── database/
-    │   ├── DATABASE/
-    │   ├── DOCS/
-    │   ├── INSERTS/
-    │   ├── dbDiagram.png
-    │   └── Untitled diagram.png
-    └── frontend/
-        ├── images/
-        ├── index.html
-        ├── script.js
-        └── styles.css
+```
+proyecto_oasis_AR/
+├── backend/
+│   ├── node_modules/
+│   ├── src/
+│   ├── .env
+│   ├── .gitignore
+│   ├── index.js
+│   ├── package.json
+│   └── package-lock.json
+├── database/
+│   ├── ddl/
+│   ├── docs/
+│   └── seeds/
+└── frontend/
+    ├── images/
+    ├── index.html
+    ├── script.js
+    └── styles.css
+```
+
+> Ver el **Manual Técnico** para la descripción detallada de cada carpeta y archivo.
 
 ---
 
@@ -77,44 +88,31 @@ Aplicación web para la gestión y reserva de piscinas, con autenticación de us
 | `/pagos` | Procesamiento de pagos vía MercadoPago |
 | `/resenas` | Reseñas y calificaciones de piscinas |
 
+> El detalle de cada ruta (método, parámetros, respuesta) está en el **Manual Técnico, sección 7**.
+
 ---
 
-## Instalación y ejecución local
+## Inicio rápido
 
-### Requisitos previos
-- Node.js instalado
-- Cuenta de Supabase con base de datos PostgreSQL configurada
-- Credenciales de MercadoPago (modo prueba o producción)
+```bash
+git clone <url-del-repositorio>
+cd Proyecto_Parcial03/oasis_backend
+npm install
+npm run dev
+```
 
-### Pasos
+El servidor queda corriendo en `http://localhost:3000` (o el puerto definido en `.env`).
 
-**1. Clonar el repositorio**
+Variables de entorno necesarias (archivo `.env` en la raíz de `oasis_backend`):
 
-    git clone <url-del-repositorio>
-    cd Proyecto_Parcial03/oasis_backend
+```env
+PORT=3000
+DATABASE_URL=
+JWT_SECRET=
+MERCADOPAGO_ACCESS_TOKEN=
+```
 
-**2. Instalar dependencias**
-
-    npm install
-
-**3. Configurar variables de entorno**
-
-Crear un archivo `.env` en la raíz de `oasis_backend` con:
-
-    PORT=3000
-    DATABASE_URL=
-    JWT_SECRET=
-    MERCADOPAGO_ACCESS_TOKEN=
-
-**4. Ejecutar en modo desarrollo**
-
-    npm run dev
-
-**5. Ejecutar en modo producción**
-
-    npm start
-
-El servidor quedará corriendo en `http://localhost:3000` (o el puerto definido en `.env`).
+> Para la configuración completa (Supabase, scripts de `ddl/`/`seeds/`, despliegue en Render/Vercel), ver el **Manual Técnico, sección 5**.
 
 ---
 
@@ -130,4 +128,10 @@ El servidor quedará corriendo en `http://localhost:3000` (o el puerto definido 
 
 ## Autores
 
-- [Nombres del equipo]
+| Nombre | Rol |
+|---|---|
+| Andrés Santiago Vargas Guzmán | Backend |
+| Jonathan Andrés Becerra Jaimes | Base de datos |
+| José Leonardo Soler Duarte | Scrum Master |
+| Mauricio Isaac González Andrade | Product Owner |
+| Daniela Idrobo Cardozo | Frontend |
