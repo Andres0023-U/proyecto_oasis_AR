@@ -56,7 +56,7 @@ const register = async (req, res) => {
         const password_hash = await bcrypt.hash(password, 10);
 
         const newUser = await userModel.create({
-            id_rol: 2, // rol cliente por defecto
+            id_rol: 3, // rol cliente por defecto
             documento,
             nombre,
             apellido,
