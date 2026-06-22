@@ -35,4 +35,12 @@ const updateUser = async (id, nombre, apellido, documento, telefono) => {
     return result.rows[0];
 };
 
-module.exports = { findByEmail, create, updateUser };
+const findByDocumento = async (documento) => {
+    const result = await pool.query(
+        'SELECT * FROM oasis.users WHERE documento = $1',
+        [documento]
+    );
+    return result.rows[0];
+};
+
+module.exports = { findByEmail, findByDocumento, create, updateUser };

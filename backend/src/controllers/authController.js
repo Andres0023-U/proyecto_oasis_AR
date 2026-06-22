@@ -46,17 +46,20 @@ const register = async (req, res) => {
     try {
         const { documento, nombre, apellido, correo, telefono, password } = req.body;
 
-        // Verificar si el correo ya existe
-        const existing = await userModel.findByEmail(correo);
-        if (existing) {
+        const existingEmail = await userModel.findByEmail(correo);
+        if (existingEmail) {
             return res.status(400).json({ error: 'El correo ya está registrado' });
         }
 
-        // Encriptar contraseña
+        const existingDoc = await userModel.findByDocumento(documento);
+        if (existingDoc) {
+            return res.status(400).json({ error: 'El documento ya está registrado' });
+        }
+
         const password_hash = await bcrypt.hash(password, 10);
 
         const newUser = await userModel.create({
-            id_rol: 3, // rol cliente por defecto
+            id_rol: 3,
             documento,
             nombre,
             apellido,
@@ -68,6 +71,7 @@ const register = async (req, res) => {
         res.status(201).json(newUser);
 
     } catch (error) {
+        console.error('Error detallado en register:', error);
         res.status(500).json({ error: 'Error al registrar usuario' });
     }
 };
