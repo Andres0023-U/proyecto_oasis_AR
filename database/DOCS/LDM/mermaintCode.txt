@@ -1,9 +1,11 @@
 erDiagram
+
   roles {
     int id_rol PK
     varchar nombre_rol
     varchar descripcion
   }
+
   users {
     int id_usuario PK
     int id_rol FK
@@ -17,6 +19,7 @@ erDiagram
     timestamp created_at
     timestamp updated_at
   }
+
   services {
     int id_servicio PK
     varchar nombre
@@ -28,6 +31,7 @@ erDiagram
     timestamp created_at
     timestamp updated_at
   }
+
   reservations {
     int id_reserva PK
     int id_usuario FK
@@ -42,6 +46,7 @@ erDiagram
     timestamp created_at
     timestamp updated_at
   }
+
   reservation_details {
     int id_detalle PK
     int id_reserva FK
@@ -49,6 +54,7 @@ erDiagram
     int cantidad
     numeric precio_unitario_snap
   }
+
   payments {
     int id_pago PK
     int id_reserva FK
@@ -59,12 +65,14 @@ erDiagram
     timestamp created_at
     timestamp updated_at
   }
+
   app_config {
     int id_config PK
     varchar clave
     varchar valor
     text descripcion
   }
+
   reviews {
     int id_resena PK
     int id_usuario FK
@@ -73,10 +81,25 @@ erDiagram
     text comentario
     timestamp created_at
   }
-  roles ||--o{ users : "tiene"
-  users ||--o{ reservations : "realiza"
-  reservations ||--o{ reservation_details : "contiene"
-  services ||--o{ reservation_details : "incluido en"
-  reservations ||--o{ payments : "tiene"
-  users ||--o{ reviews : "escribe"
-  reservations ||--o{ reviews : "
+
+  audit_log {
+    int id_auditoria PK
+    varchar tabla_afectada
+    audit_action accion
+    jsonb datos_antes
+    jsonb datos_despues
+    timestamp fecha_cambio
+    varchar usuario_db
+  }
+
+  roles ||--o{ users : tiene
+
+  users ||--o{ reservations : realiza
+
+  reservations ||--o{ reservation_details : contiene
+  services ||--o{ reservation_details : incluido_en
+
+  reservations ||--o{ payments : tiene
+
+  users ||--o{ reviews : escribe
+  reservations ||--o| reviews : recibe
