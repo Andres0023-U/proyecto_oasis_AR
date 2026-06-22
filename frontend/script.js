@@ -760,7 +760,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // =============================================================================
 
     const PLANES = {
-        'cobro-normal': { nombre: 'Hourly Pass',   precio: '$15.000',  horas: 1 },
+        'cobro-normal': { nombre: 'Hourly Pass',   precio: '$9999',  horas: 1 },
         'plan-1':       { nombre: 'Fresh Day Pass', precio: '$45.000',  horas: 3 },
         'plan-2':       { nombre: 'Half Day Pass',  precio: '$75.000',  horas: 5 },
         'plan-3':       { nombre: 'Full Day Pass',  precio: '$120.000', horas: 8 },
